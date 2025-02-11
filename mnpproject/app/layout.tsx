@@ -1,6 +1,15 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import React from 'react';
+import { Search, Play } from 'lucide-react';
+import MobileNav from "./components/MobileNav";
+import NavLink from "./components/NavLink";
+import {
+  NavigationMenu,
+  NavigationMenuList
+} from "@/components/ui/navigation-menu";
+import { Button } from "@/components/ui/button";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,6 +36,35 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+
+        <nav className="sticky top-0 z-50 w-full border-b border-zinc-800 bg-black px-6 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-8">
+              <MobileNav />
+              <span className="text-zinc-100 text-2xl font-bold">Manop</span>
+
+              <NavigationMenu className="hidden md:flex">
+                <NavigationMenuList className="space-x-2">
+                  <NavLink href="#">Home</NavLink>
+                  <NavLink href="#">Artists</NavLink>
+                  <NavLink href="#">Schedule</NavLink>
+                  <NavLink href="#">Label</NavLink>
+                  <NavLink href="#">Shop</NavLink>
+                  <NavLink href="#">Channels</NavLink>
+                </NavigationMenuList>
+              </NavigationMenu>
+            </div>
+
+            <div className="flex items-center space-x-2">
+              <Button variant="ghost" size="icon" className="hover:bg-zinc-800">
+                <Search className="h-5 w-5 text-zinc-100" />
+              </Button>
+              <Button variant="ghost" size="icon" className="hover:bg-zinc-800">
+                <Play className="h-5 w-5 text-zinc-100" />
+              </Button>
+            </div>
+          </div>
+        </nav>
         {children}
       </body>
     </html>
