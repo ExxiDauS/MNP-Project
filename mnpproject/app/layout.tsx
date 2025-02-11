@@ -2,14 +2,17 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import React from 'react';
-import { Search, Play } from 'lucide-react';
-import MobileNav from "./components/MobileNav";
-import NavLink from "./components/NavLink";
+import { Search, User } from 'lucide-react';
+import MobileNav from "../components/Nav/MobileNav";
+import NavLink from "../components/Nav/NavLink";
+import SearchBar from "@/components/Nav/SearchBar";
 import {
   NavigationMenu,
   NavigationMenuList
 } from "@/components/ui/navigation-menu";
 import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,10 +37,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#1a1a1a]`}
       >
 
-        <nav className="sticky top-0 z-50 w-full border-b border-zinc-800 bg-black px-6 py-4">
+        <nav className="fixed top-0 z-50 w-full  bg-gradient-to-b from-black via-black/80 to-transparent px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-8">
               <MobileNav />
@@ -45,22 +48,21 @@ export default function RootLayout({
 
               <NavigationMenu className="hidden md:flex">
                 <NavigationMenuList className="space-x-2">
-                  <NavLink href="#">Home</NavLink>
-                  <NavLink href="#">Artists</NavLink>
-                  <NavLink href="#">Schedule</NavLink>
-                  <NavLink href="#">Label</NavLink>
-                  <NavLink href="#">Shop</NavLink>
-                  <NavLink href="#">Channels</NavLink>
+                  <NavLink href="#">หน้าหลัก</NavLink>
+                  <NavLink href="#">สำรวจ</NavLink>
+                  <NavLink href="#">การจอง</NavLink>
+                  <NavLink href="#">เกี่ยวกับ</NavLink>
+                  <SearchBar></SearchBar>
                 </NavigationMenuList>
               </NavigationMenu>
             </div>
 
             <div className="flex items-center space-x-2">
-              <Button variant="ghost" size="icon" className="hover:bg-zinc-800">
-                <Search className="h-5 w-5 text-zinc-100" />
-              </Button>
-              <Button variant="ghost" size="icon" className="hover:bg-zinc-800">
-                <Play className="h-5 w-5 text-zinc-100" />
+              <Button variant="ghost" size="icon" className="hover:bg-zinc-800 rounded-full size-11">
+                <Avatar className="size-8">
+                  <AvatarImage src="https://github.com/shadcn.png" />
+                  <AvatarFallback>KI</AvatarFallback>
+                </Avatar>
               </Button>
             </div>
           </div>

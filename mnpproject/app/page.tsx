@@ -1,9 +1,13 @@
 import React from 'react'
-import VideoBackground from './components/VideoBackground'
+import VideoBackground from '../components/hero/VideoBackground'
+import ExploreContents from '@/components/explore/ExploreContents'
 
 const page = () => {
   return (
-    <VideoBackground />
+    <>
+      <VideoBackground />
+      <ExploreContents />
+    </>
   )
 }
 
