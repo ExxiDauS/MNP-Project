@@ -2,30 +2,52 @@ import React from 'react';
 import { Button } from "@/components/ui/button";
 import { MapPin } from "lucide-react";
 
-const LocationButton = () => {
+const LocationButton = ({ 
+  location, 
+  abbreviation, 
+  logo, 
+  logo_w, 
+  logo_h, 
+  bgcolor 
+}: { 
+  location: string, 
+  abbreviation: string, 
+  logo: string, 
+  logo_w: number, 
+  logo_h: number, 
+  bgcolor: string 
+}) => {
   return (
-    <Button 
-      variant="secondary" 
-      className="w-80 white hover:bg-gray-200 h-16 flex items-center gap-3 rounded-full relative group"
+    <Button
+      className="w-96 white h-16 flex bg-[#333333] items-center gap-3 rounded-full relative group"
     >
-      {/* Logo - appears on hover */}
-      <div className="absolute right-4 opacity-0 group-hover:opacity-100 transition-opacity">
-        <img 
-          src="bangkok.png" 
-          alt="Company Logo" 
-          className="w-32 h-32"
-        />
+      {/* Logo appear when hover */}
+      <div 
+        style={{ backgroundColor: bgcolor }}
+        className="absolute opacity-0 group-hover:opacity-100 group w-96 h-16 flex items-center gap-3 rounded-full justify-center transition-opacity duration-300"
+      >
+        <div className="flex items-center">
+          <img
+            src={logo}
+            alt="Company Logo"
+            className={`opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-300`}
+            style={{ 
+              width: `${logo_w}px`, 
+              height: `${logo_h}px` 
+            }}
+          />
+        </div>
       </div>
 
       {/* Location Icon */}
-      <div className="flex items-center justify-center w-8 h-8">
-        <MapPin className="w-6 h-6" />
+      <div className="flex items-center justify-center size-8">
+        <MapPin className="text-white" />
       </div>
 
       {/* Location Text */}
       <div className="flex flex-col items-start">
-        <span className="text-sm font-normal">Bangkok</span>
-        <span className="text-xs text-zinc-400">BKK</span>
+        <span className="text-sm font-normal">{location}</span>
+        <span className="text-xs text-zinc-400">{abbreviation}</span>
       </div>
     </Button>
   )

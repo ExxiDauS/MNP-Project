@@ -1,0 +1,79 @@
+{
+  "livehouses": [
+    {
+      "name": "Ban Puen Bangkok",
+      "location": "กรุงเทพฯ",
+      "image": "./livehouse/ban-puen.png"
+    },
+    {
+      "name": "Parking Toys",
+      "location": "กรุงเทพฯ",
+      "image": "./livehouse/parking-toys.png"
+    },
+    {
+      "name": "Thonglor House",
+      "location": "กรุงเทพฯ",
+      "image": "./livehouse/thonglor-house.png"
+    },
+    {
+      "name": "Brownstone",
+      "location": "กรุงเทพฯ",
+      "image": "./livehouse/brownstone.png"
+    },
+    {
+      "name": "Saxophone Pub",
+      "location": "กรุงเทพฯ",
+      "image": "./livehouse/saxophone-pub.png"
+    },
+    {
+      "name": "Thonglor Art Space",
+      "location": "กรุงเทพฯ",
+      "image": "./livehouse/thonglor-art-space.png"
+    },
+    {
+      "name": "Northgate Jazz Co-Op",
+      "location": "เชียงใหม่",
+      "image": "./livehouse/northgate.png"
+    },
+    {
+      "name": "Warm Up Cafe",
+      "location": "เชียงใหม่",
+      "image": "./livehouse/warmup-cafe.png"
+    },
+    {
+      "name": "Thapae East",
+      "location": "เชียงใหม่",
+      "image": "./livehouse/thapae-east.png"
+    },
+    {
+      "name": "Tawan Daeng",
+      "location": "ขอนแก่น",
+      "image": "./livehouse/tawan-daeng.png"
+    },
+    {
+      "name": "U-Bar",
+      "location": "ขอนแก่น",
+      "image": "./livehouse/u-bar.png"
+    },
+    {
+      "name": "Share Bistro & Bar",
+      "location": "ขอนแก่น",
+      "image": "./livehouse/share-bistro.png"
+    },
+    {
+      "name": "Rockin' Angels",
+      "location": "ภูเก็ต",
+      "image": "./livehouse/rockin-angels.png"
+    },
+    {
+      "name": "Music Matter",
+      "location": "ภูเก็ต",
+      "image": "./livehouse/music-matter.png"
+    },
+    {
+      "name": "Sound Station",
+      "location": "ภูเก็ต",
+      "image": "./livehouse/sound-station.png"
+    }
+  ]
+}
