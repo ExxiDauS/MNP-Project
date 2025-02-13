@@ -17,7 +17,7 @@ const VideoBackground = () => {
           </video>
 
           {/* Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black via-black/70 to-transparent"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black"></div>
         </div>
     </section>
   )

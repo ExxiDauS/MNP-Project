@@ -2,14 +2,10 @@ import React from 'react';
 import {
   Card,
   CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
 } from "@/components/ui/card"
 import { MapPin } from "lucide-react";
 
-const ContentCard = ({
+const LivehouseCard = ({
   card_size,
   bg_image, 
   location, 
@@ -58,4 +54,4 @@ const ContentCard = ({
   )
 }
 
-export default ContentCard
+export default LivehouseCard

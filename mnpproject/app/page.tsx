@@ -1,12 +1,16 @@
 import React from 'react'
 import VideoBackground from '../components/hero/VideoBackground'
-import ExploreContents from '@/components/explore/ExploreContents'
+import PopularLivehouses from '@/components/explore/PopularLivehouses'
+import HowToUse from '@/components/landing/EasyToUse/HowToUse'
+import WhyChooseUs from '@/components/landing/WhyChooseUs/WhyChooseUs'
 
 const page = () => {
   return (
     <>
       <VideoBackground />
-      <ExploreContents />
+      <PopularLivehouses />
+      <WhyChooseUs />
+      <HowToUse />
     </>
   )
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import { Button } from "@/components/ui/button";
 import { MapPin } from "lucide-react";
 
-const LocationButton = ({ 
+const LogoRevealButton = ({ 
   location, 
   abbreviation, 
   logo, 
@@ -53,4 +53,4 @@ const LocationButton = ({
   )
 }
 
-export default LocationButton
+export default LogoRevealButton
