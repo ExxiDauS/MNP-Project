@@ -19,12 +19,12 @@ const LocationButton = ({
 }) => {
   return (
     <Button
-      className="w-96 white h-16 flex bg-[#333333] items-center gap-3 rounded-full relative group"
+      className="w-72 white h-16 flex items-center bg-gradient-to-l from-[#333333] to-[#646464] drop-shadow-lg gap-3 rounded-full group"
     >
       {/* Logo appear when hover */}
       <div 
         style={{ backgroundColor: bgcolor }}
-        className="absolute opacity-0 group-hover:opacity-100 group w-96 h-16 flex items-center gap-3 rounded-full justify-center transition-opacity duration-300"
+        className="absolute opacity-0 group-hover:opacity-100 group w-72 h-16 flex items-center gap-3 rounded-full justify-center transition-opacity duration-300"
       >
         <div className="flex items-center">
           <img
@@ -32,8 +32,8 @@ const LocationButton = ({
             alt="Company Logo"
             className={`opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-300`}
             style={{ 
-              width: `${logo_w}px`, 
-              height: `${logo_h}px` 
+              width: `${logo_w}px`,
+              height: `${logo_h}px`
             }}
           />
         </div>

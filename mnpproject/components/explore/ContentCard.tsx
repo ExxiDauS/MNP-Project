@@ -10,17 +10,22 @@ import {
 import { MapPin } from "lucide-react";
 
 const ContentCard = ({
+  card_size,
   bg_image, 
   location, 
   name 
   }: {
+  card_size: number,
   bg_image: string, 
   location: string, 
   name: string 
   }) => {
   return (
-    <div className="p-4"> {/* Padding container to prevent scale overflow */}
-      <Card className="w-64 bg-black relative overflow-hidden group transform transition-all duration-300 hover:scale-105">
+    <div className="p-2"> {/* Padding container to prevent scale overflow */}
+      <Card className="bg-black relative overflow-hidden group transform transition-all duration-300 hover:scale-105"
+      style={{
+        width: `${card_size}px`
+      }}>
         {/* Gradient that appears on hover */}
         <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent z-10 opacity-100" />
 
