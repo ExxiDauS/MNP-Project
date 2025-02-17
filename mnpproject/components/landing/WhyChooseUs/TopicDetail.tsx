@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from 'react';
+import React from 'react';
 import { ChevronDown } from 'lucide-react';
 
 interface TopicDetailProps {
@@ -26,7 +26,7 @@ const TopicDetail: React.FC<TopicDetailProps> = ({
                 className="cursor-pointer py-4"
             >
                 <div className="flex items-center justify-between">
-                    <h2 className="text-xl font-semibold text-white">
+                    <h2 className="text-xl font-semibold text-custom-text-primary">
                         {topic}
                     </h2>
                     <ChevronDown
@@ -43,7 +43,7 @@ const TopicDetail: React.FC<TopicDetailProps> = ({
         `}
             >
                 <div className="overflow-hidden">
-                    <p className="text-gray-400 pb-4">{description}</p>
+                    <p className="text-custom-text-secondary pb-4">{description}</p>
                 </div>
             </div>
         </div>

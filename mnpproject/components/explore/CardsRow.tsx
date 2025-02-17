@@ -25,7 +25,7 @@ const CardsRow = ({
             </div>
 
 
-            <div className="relative pb-4">
+            <div className="relative pb-4 px-4">
                 <div
                     className="flex overflow-x-auto overflow-y-hidden 
                     scrollbar scrollbar-track-[#333333] scrollbar-thumb-[#c0c0c0]

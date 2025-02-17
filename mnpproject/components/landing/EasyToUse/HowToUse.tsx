@@ -30,7 +30,7 @@ const HowToUse = () => {
         }
       ];
   return (
-    <div className="py-16 bg-gradient-to-b from-black/50 via-black/10 to-[#1a1a1a]">
+    <div className="py-16 ">
       <div className="max-w-6xl mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-4xl font-bold mb-4 text-white">Easy to Use</h2>

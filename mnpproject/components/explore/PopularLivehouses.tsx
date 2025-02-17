@@ -8,7 +8,7 @@ const PopularLivehouses = () => {
     return (
         <>
             {/* 4 buttons on top */}
-            <section className="flex relative h-24 justify-self-center justify-center w-full bg-gradient-to-b from-[black] to-[#1a1a1a]">
+            <section className="flex relative h-24 justify-self-center justify-center w-full bg-gradient-to-b from-black to-custom-background-primary">
                 <div className="flex justify-center items-center space-x-[-2rem] mt-6">
                     {/* Bangkok Button */}
                     <div className="z-10">
@@ -61,7 +61,9 @@ const PopularLivehouses = () => {
             </section>
 
             {/* Popular Livehouse showcase */}
-            <CardsRow topic="Livehouse ยอดนิยม" data={livehouses} cardSize={320}/>
+            <section className="py-4 mt-6">
+                <CardsRow topic="Livehouse ยอดนิยม" data={livehouses} cardSize={320}/>
+            </section>
         </>
     );
 }

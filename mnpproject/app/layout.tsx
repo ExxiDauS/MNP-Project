@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import React from 'react';
-import { Search, User } from 'lucide-react';
 import MobileNav from "../components/Nav/MobileNav";
 import NavLink from "../components/Nav/NavLink";
 import SearchBar from "@/components/Nav/SearchBar";
@@ -37,7 +36,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#1a1a1a]`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-custom-background-primary`}
       >
 
         <nav className="fixed top-0 z-50 w-full  bg-gradient-to-b from-black via-black/80 to-transparent px-6 py-4">
