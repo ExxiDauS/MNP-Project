@@ -22,7 +22,7 @@ const handleServerError = (res, error, message = "Internal Server Error") => {
 // Authentication Routes
 router.get("/sign-in", async (req, res) => {
   try {
-    const { username, password } = req.query;
+    const { username, password } = req.body;
 
     if (!username || !password) {
       return res.status(400).json({
@@ -60,12 +60,11 @@ router.get("/sign-in", async (req, res) => {
 
 router.post("/sign-up", async (req, res) => {
   try {
-    const { username, password, name, email, role, phone, imageURL } =
-      req.query;
+    const { username, password, name, email, role, phone, imageURL } = req.body;
 
     // Validate required fields
     const requiredFields = ["username", "password", "name", "email", "role"];
-    const missingFields = requiredFields.filter((field) => !req.query[field]);
+    const missingFields = requiredFields.filter((field) => !req.body[field]);
 
     if (missingFields.length > 0) {
       return res.status(400).json({
@@ -115,7 +114,7 @@ router.post("/verify", (req, res) => {
 
 router.patch("/edit-profile", async (req, res) => {
   try {
-    const userId = req.query.user_id;
+    const userId = req.body.user_id;
 
     if (!userId) {
       return res.status(400).json({
@@ -145,9 +144,9 @@ router.patch("/edit-profile", async (req, res) => {
 
     // Update user profile
     const updatedUser = await patch_user(
-      req.query.name || roleDetails.name,
-      req.query.phone || roleDetails.phone,
-      req.query.imageURL || roleDetails.profile_image,
+      req.body.name || roleDetails.name,
+      req.body.phone || roleDetails.phone,
+      req.body.imageURL || roleDetails.profile_image,
       userId
     );
 

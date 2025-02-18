@@ -3,7 +3,6 @@
 import { google } from "googleapis";
 import dotenv from "dotenv";
 import { Router } from "express";
-import { version } from "os";
 
 dotenv.config();
 
@@ -26,7 +25,7 @@ const TINEOFFSET = "+07:00";
 router.post("/create-event", async (req, res) => {
   try {
     const { summary, description, location, startDateTime, endDateTime } =
-      req.query;
+      req.body;
     const calendar = google.calendar("v3");
     const response = await calendar.events.insert({
       auth: auth,
