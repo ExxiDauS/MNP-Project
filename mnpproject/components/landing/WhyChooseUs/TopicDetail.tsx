@@ -43,7 +43,7 @@ const TopicDetail: React.FC<TopicDetailProps> = ({
         `}
             >
                 <div className="overflow-hidden">
-                    <p className="text-custom-text-secondary pb-4">{description}</p>
+                    <p className="text-gray-300 pb-4">{description}</p>
                 </div>
             </div>
         </div>

@@ -2,7 +2,7 @@ import React from 'react'
 import { Search, Calendar, FileText, CreditCard, CheckCircle, MoveRight } from 'lucide-react';
 import StepCard from './StepCard';
 
-const HowToUse = () => {
+const EasyToUse = () => {
   const steps = [
     {
       icon: <Search className="w-12 h-12 text-custom-purple-dark" />,
@@ -31,11 +31,11 @@ const HowToUse = () => {
     }
   ];
   return (
-    <div className="py-16 ">
+    <div className="py-24 my-20 pb-28">
       <div className="max-w-6xl mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold mb-4 text-white">Easy to Use</h2>
-          <p className="text-xl text-gray-400">Book your perfect venue in just 5 simple steps</p>
+          <h2 className="text-4xl font-bold mb-4 text-custom-text-primary">{"From Search to Stage,\nJust 5 Steps Away"}</h2>
+          <p className="text-xl text-custom-text-secondary">Your journey from finding to performing, simplified</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
@@ -50,7 +50,7 @@ const HowToUse = () => {
 
               {/* Connector line */}
               {index < steps.length - 1 && (
-                <MoveRight className="text-custom-purple absolute top-1/3 -right-8 size-12" />
+                <MoveRight className="text-custom-purple-deeper absolute top-1/3 -right-7 size-12" />
               )}
             </div>
           ))}
@@ -60,4 +60,4 @@ const HowToUse = () => {
   )
 }
 
-export default HowToUse
+export default EasyToUse

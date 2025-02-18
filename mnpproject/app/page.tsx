@@ -1,8 +1,9 @@
 import React from 'react'
-import VideoBackground from '../components/hero/VideoBackground'
+import VideoBackground from '../components/landing/hero/VideoBackground'
 import PopularLivehouses from '@/components/explore/PopularLivehouses'
-import HowToUse from '@/components/landing/EasyToUse/HowToUse'
+import EasyToUse from '@/components/landing/EasyToUse/EasyToUse'
 import WhyChooseUs from '@/components/landing/WhyChooseUs/WhyChooseUs'
+import Footer from '@/components/landing/Footer/Footer'
 
 const page = () => {
   return (
@@ -10,7 +11,8 @@ const page = () => {
       <VideoBackground />
       <PopularLivehouses />
       <WhyChooseUs />
-      <HowToUse />
+      <EasyToUse />
+      <Footer />
     </>
   )
 }
