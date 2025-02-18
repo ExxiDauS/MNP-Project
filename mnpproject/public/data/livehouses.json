@@ -1,76 +1,91 @@
 {
   "livehouses": [
     {
+      "id": 1,
       "name": "Ban Puen Bangkok",
       "location": "กรุงเทพฯ",
       "image": "./livehouse/ban-puen.png"
     },
     {
+      "id": 2,
       "name": "Parking Toys",
       "location": "กรุงเทพฯ",
       "image": "./livehouse/parking-toys.png"
     },
     {
+      "id": 3,
       "name": "Thonglor House",
       "location": "กรุงเทพฯ",
       "image": "./livehouse/thonglor-house.png"
     },
     {
+      "id": 4,
       "name": "Brownstone",
       "location": "กรุงเทพฯ",
       "image": "./livehouse/brownstone.png"
     },
     {
+      "id": 5,
       "name": "Saxophone Pub",
       "location": "กรุงเทพฯ",
       "image": "./livehouse/saxophone-pub.png"
     },
     {
+      "id": 6,
       "name": "Thonglor Art Space",
       "location": "กรุงเทพฯ",
       "image": "./livehouse/thonglor-art-space.png"
     },
     {
+      "id": 7,
       "name": "Northgate Jazz Co-Op",
       "location": "เชียงใหม่",
       "image": "./livehouse/northgate.png"
     },
     {
+      "id": 8,
       "name": "Warm Up Cafe",
       "location": "เชียงใหม่",
       "image": "./livehouse/warmup-cafe.png"
     },
     {
+      "id": 9,
       "name": "Thapae East",
       "location": "เชียงใหม่",
       "image": "./livehouse/thapae-east.png"
     },
     {
+      "id": 10,
       "name": "Tawan Daeng",
       "location": "ขอนแก่น",
       "image": "./livehouse/tawan-daeng.png"
     },
     {
+      "id": 11,
       "name": "U-Bar",
       "location": "ขอนแก่น",
       "image": "./livehouse/u-bar.png"
     },
     {
+      "id": 12,
       "name": "Share Bistro & Bar",
       "location": "ขอนแก่น",
       "image": "./livehouse/share-bistro.png"
     },
     {
+      "id": 13,
       "name": "Rockin' Angels",
       "location": "ภูเก็ต",
       "image": "./livehouse/rockin-angels.png"
     },
     {
+      "id": 14,
       "name": "Music Matter",
       "location": "ภูเก็ต",
       "image": "./livehouse/music-matter.png"
     },
     {
+      "id": 15,
       "name": "Sound Station",
       "location": "ภูเก็ต",
       "image": "./livehouse/sound-station.png"

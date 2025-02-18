@@ -18,7 +18,7 @@ const LivehouseCard = ({
   }) => {
   return (
     <div className="p-2"> {/* Padding container to prevent scale overflow */}
-      <Card className="bg-black relative overflow-hidden group transform transition-all duration-300 hover:scale-105"
+      <Card className="bg-black overflow-hidden relative group transform transition-all duration-300 hover:scale-105"
       style={{
         width: `${card_size}px`
       }}>

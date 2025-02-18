@@ -62,7 +62,7 @@ const PopularLivehouses = () => {
 
             {/* Popular Livehouse showcase */}
             <section className="py-4 mt-6">
-                <CardsRow topic="Livehouse ยอดนิยม" data={livehouses} cardSize={320}/>
+                <CardsRow topic="Livehouse ยอดนิยม" data={livehouses} cardSize={220}/>
             </section>
         </>
     );
