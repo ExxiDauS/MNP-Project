@@ -80,18 +80,14 @@ export default {
 				sm: 'calc(var(--radius) - 4px)'
 			},
 			backgroundImage: {
-				'gradient-primary': 'linear-gradient(to bottom, rgb(88 28 135 / 0.5), rgb(0 0 0))',        // Hero sections and main content areas
-				'gradient-horizontal': 'linear-gradient(to right, rgb(0 0 0), rgb(88 28 135 / 0.2))',      // Section dividers and horizontal transitions
-				'gradient-card': 'linear-gradient(to bottom right, rgb(24 24 27 / 0.8), rgb(0 0 0))',      // Card backgrounds and hoverable elements
-				'gradient-hover': 'linear-gradient(to bottom, rgb(147 51 234 / 0.1), rgb(88 28 135 / 0.2))'// Hover states for interactive elements
+				'gradient-primary': 'linear-gradient(to bottom, #7e22ce, #000000)',        // Hero sections and main content areas
+				'gradient-horizontal': 'linear-gradient(to right, #000000, #7e22ce)',      // Section dividers and horizontal transitions
+				'gradient-card': 'linear-gradient(to bottom right, #18181b, #000000)',      // Card backgrounds and hoverable elements
+				'gradient-hover': 'linear-gradient(to bottom, #9333EA, #581C87)'// Hover states for interactive elements
 			},
 
 
 		}
 	},
-	plugins: [
-		require("tailwindcss-animate"),
-		require('tailwind-scrollbar'),
-	],
 
 } satisfies Config;
