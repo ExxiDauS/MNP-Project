@@ -1,7 +1,6 @@
 import React from 'react';
-import LogoRevealButton from './LogoRevealButton';
 import livehousesData from '@/public/data/livehouses.json';
-import CardsCarousel from './CardsCarousel';
+import CardsCarousel from '../../cards/CardsCarousel';
 
 const PopularLivehouses = () => {
     const livehouses = livehousesData.livehouses;
