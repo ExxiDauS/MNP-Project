@@ -10,7 +10,7 @@ interface DetailHeaderProps {
 
 const DetailHeader: React.FC<DetailHeaderProps> = ({ name, address, price }) => {
   return (
-    <div className="flex justify-between items-start w-full h-1/5 px-6 py-6">
+    <div className="flex justify-between items-start w-full h-1/5 px-6 pt-6">
                             {/* Left section */}
                             <div className="space-y-2">
                                 <h1 className="text-2xl font-bold text-custom-text-primary">

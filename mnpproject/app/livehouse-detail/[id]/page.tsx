@@ -4,14 +4,14 @@ import React from 'react'
 import DetailHeader from '@/components/livehouseDetail/DetailHeader'
 import ImageGallery from '@/components/livehouseDetail/ImageGallery'
 import Description from '@/components/livehouseDetail/Description'
-import Location from '@/components/livehouseDetail/Location'
+import Contacts from '@/components/livehouseDetail/Contacts'
 import livehouses from '@/public/data/detailslivehouses.json'
 import { useParams } from 'next/navigation'
 import { notFound } from 'next/navigation'
 
 const Page = () => {
     const params = useParams<{ id: string }>()
-    
+
     // Find the livehouse by id from the URL
     const livehouse = livehouses.livehouses.find(
         (house) => house.id.toString() === params.id
@@ -33,13 +33,12 @@ const Page = () => {
                     <DetailHeader name={livehouse.name} address={livehouse.address} price={livehouse.price} />
                     <ImageGallery images={livehouse.images} />
 
-                    <div className="grid grid-cols-3">
-                        <Description description={livehouse.description} />
+                    <div className="grid grid-cols-5">
+                        <div className="col-span-3">
+                            <Description description={livehouse.description} />
+                        </div>
                         <div className="col-span-2">
-                            <Location 
-                                address={livehouse.address}
-                                coordinates={livehouse.coordinates}
-                            />
+                            <Contacts />
                         </div>
                     </div>
                 </div>
