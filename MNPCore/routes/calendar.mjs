@@ -32,7 +32,7 @@ router.post("/create-event", async (req, res) => {
       calendarId: calendarID,
       requestBody: {
         summary,
-        description,
+        description, // time
         location,
         start: {
           dateTime: new Date(startDateTime),

@@ -196,6 +196,45 @@ export async function get_reserve_from_id(booking_id) {
   }
 }
 
+export async function upload_payment_proof(booking_id, type, data) {
+  try {
+    const [rows] = await pool.query(
+      "UPDATE mnp_booking SET mimetype = ?, payment_proof = ? WHERE booking_id = ?",
+      [type, data, booking_id]
+    );
+    return rows;
+  } catch (error) {
+    console.error("Error uploading image:", error);
+    throw error;
+  }
+}
+
+export async function get_proof(booking_id) {
+  try {
+    const [rows] = await pool.query(
+      "SELECT mimetype, payment_proof FROM mnp_booking WHERE booking_id = ?",
+      [booking_id]
+    );
+    return rows;
+  } catch (error) {
+    console.error("Error getting image:", error);
+    throw error;
+  }
+}
+
+export async function verify_reserve(booking_id) {
+  try {
+    const rows = await pool.query(
+      "UPDATE mnp_booking SET status = 'completed' WHERE booking_id = ?",
+      [booking_id]
+    );
+    return rows;
+  } catch (error) {
+    console.error("Error verifying reserve:", error);
+    throw error;
+  }
+}
+
 // const reserve = create_reserve(
 //   1,
 //   1,
