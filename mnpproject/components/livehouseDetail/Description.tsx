@@ -5,10 +5,10 @@ interface DescriptionProps {
 
 const Description: React.FC<DescriptionProps> = ({ description }) => {
   return (
-    <div className="w-full max-w-3xl pr-3  pl-6 py-3">
+    <div className="w-full py-3">
       <h2 className="text-xl font-semibold mb-4 text-custom-text-primary">Description</h2>
-      <div className="bg-gray-300 rounded-lg p-6 h-[300px]">
-        <p className="text-custom-text-subtle">{description}</p>
+      <div className="bg-gradient-card rounded-lg p-6 h-[272px]">
+        <p className="text-gray-400">{description}</p>
       </div>
     </div>
   );

@@ -6,9 +6,9 @@ interface ImageGalleryProps {
 
 const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
   return (
-    <div className="w-full grid grid-cols-12 gap-2 mt-4 px-6 pb-4">
+    <div className="w-full grid grid-cols-12 gap-2 mt-4 px-6">
       {/* Main large image */}
-      <div className="col-span-6 relative bg-gray-200 rounded-lg aspect-[4/3]">
+      <div className="col-span-6 relative bg-gray-200 rounded-lg aspect-[4/3] h-full">
         <Image className="w-12 h-12 text-gray-400 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
       </div>
 

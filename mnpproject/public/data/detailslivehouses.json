@@ -12,10 +12,32 @@
                 "/images/livehouse-001-3.jpg",
                 "/images/livehouse-001-4.jpg"
             ],
-            "coordinates": {
-                "lat": 13.781126,
-                "lng": 100.521107
-            }
+            "contactDetails": [
+                {
+                    "type": "email",
+                    "label": "Email",
+                    "value": "contact@banpuenbkk.com",
+                    "url": "-"
+                },
+                {
+                    "type": "facebook",
+                    "label": "Facebook",
+                    "value": "facebook.com/banpuenbangkok",
+                    "url": "https://www.facebook.com/banpuenbangkok"
+                },
+                {
+                    "type": "instagram",
+                    "label": "Instagram",
+                    "value": "@banpuenbkk",
+                    "url": "https://www.instagram.com/banpuenbkk"
+                },
+                {
+                    "type": "phone",
+                    "label": "Telephone",
+                    "value": "+66 2 123 4567",
+                    "url": "-"
+                }
+            ]
         },
         {
             "id": "2",
@@ -29,10 +51,32 @@
                 "/images/livehouse-002-3.jpg",
                 "/images/livehouse-002-4.jpg"
             ],
-            "coordinates": {
-                "lat": 13.737376,
-                "lng": 100.563735
-            }
+            "contactDetails": [
+                {
+                    "type": "email",
+                    "label": "Email",
+                    "value": "info@brownstonestudio.th",
+                    "url": "-"
+                },
+                {
+                    "type": "facebook",
+                    "label": "Facebook",
+                    "value": "facebook.com/brownstonestudio",
+                    "url": "https://www.facebook.com/manopapp"
+                },
+                {
+                    "type": "instagram",
+                    "label": "Instagram",
+                    "value": "@brownstone.bkk",
+                    "url": "https://www.facebook.com/manopapp"
+                },
+                {
+                    "type": "phone",
+                    "label": "Telephone",
+                    "value": "+66 2 234 5678",
+                    "url": "-"
+                }
+            ]
         },
         {
             "id": "3",
@@ -46,10 +90,32 @@
                 "/images/livehouse-003-3.jpg",
                 "/images/livehouse-003-4.jpg"
             ],
-            "coordinates": {
-                "lat": 13.750490,
-                "lng": 100.541300
-            }
+            "contactDetails": [
+                {
+                    "type": "email",
+                    "label": "Email",
+                    "value": "bookings@therockpub.com",
+                    "url": "-"
+                },
+                {
+                    "type": "facebook",
+                    "label": "Facebook",
+                    "value": "facebook.com/therockpubbkk",
+                    "url": "https://www.facebook.com/therockpubbkk"
+                },
+                {
+                    "type": "instagram",
+                    "label": "Instagram",
+                    "value": "@therockpub",
+                    "url": "https://www.instagram.com/therockpub"
+                },
+                {
+                    "type": "phone",
+                    "label": "Telephone",
+                    "value": "+66 2 345 6789",
+                    "url": "-"
+                }
+            ]
         }
     ]
 }
