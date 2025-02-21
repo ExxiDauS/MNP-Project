@@ -13,12 +13,10 @@ const MobileNav = () => {
     </SheetTrigger>
     <SheetContent side="left" className="w-64 bg-black p-0">
       <div className="flex flex-col space-y-4 p-4">
-        <a href="#" className="text-zinc-100 hover:text-zinc-300">Home</a>
-        <a href="#" className="text-zinc-100 hover:text-zinc-300">Artists</a>
-        <a href="#" className="text-zinc-100 hover:text-zinc-300">Schedule</a>
-        <a href="#" className="text-zinc-100 hover:text-zinc-300">Label</a>
-        <a href="#" className="text-zinc-100 hover:text-zinc-300">Shop</a>
-        <a href="#" className="text-zinc-100 hover:text-zinc-300">Channels</a>
+        <a href="/" className="text-zinc-100 hover:text-zinc-300">หน้าหลัก</a>
+        <a href="#" className="text-zinc-100 hover:text-zinc-300">สำรวจ</a>
+        <a href="#" className="text-zinc-100 hover:text-zinc-300">การจอง</a>
+        <a href="#" className="text-zinc-100 hover:text-zinc-300">เกี่ยวกับ</a>
       </div>
     </SheetContent>
   </Sheet>

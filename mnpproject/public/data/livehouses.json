@@ -1,94 +1,604 @@
 {
   "livehouses": [
     {
-      "id": 1,
+      "id": "1",
       "name": "Ban Puen Bangkok",
+      "address": "36 ซอย 2 ถ. ประชาราษฎร์ 1 แขวงบางซื่อ เขตบางซื่อ กรุงเทพมหานคร 10800",
       "location": "กรุงเทพฯ",
-      "image": "./livehouse/ban-puen.png"
+      "price": 2500,
+      "description": "A cozy livehouse venue perfect for intimate performances and acoustic sessions. Features professional sound system and comfortable seating arrangement.",
+      "images": [
+        "./livehouse/ban-puen.png",
+        "/images/livehouse-001-1.jpg",
+        "/images/livehouse-001-2.jpg",
+        "/images/livehouse-001-3.jpg"
+      ],
+      "contactDetails": [
+        {
+          "type": "email",
+          "label": "Email",
+          "value": "info@banpuenbkk.com",
+          "url": "-"
+        },
+        {
+          "type": "facebook",
+          "label": "Facebook",
+          "value": "BanPuenBangkok",
+          "url": "https://www.facebook.com/BanPuenBangkok"
+        },
+        {
+          "type": "instagram",
+          "label": "Instagram",
+          "value": "@banpuenbkk",
+          "url": "https://www.instagram.com/banpuenbkk"
+        },
+        {
+          "type": "phone",
+          "label": "Phone",
+          "value": "02-123-4567",
+          "url": "-"
+        }
+      ]
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "Parking Toys",
+      "address": "Rama 9 ซอย 58 แขวงสวนหลวง เขตสวนหลวง กรุงเทพมหานคร 10250",
       "location": "กรุงเทพฯ",
-      "image": "./livehouse/parking-toys.png"
+      "price": 3000,
+      "description": "Iconic live music venue known for hosting both local and international acts. Spacious venue with state-of-the-art sound system.",
+      "images": [
+        "./livehouse/parking-toys.png",
+        "/images/livehouse-002-1.jpg",
+        "/images/livehouse-002-2.jpg",
+        "/images/livehouse-002-3.jpg"
+      ],
+      "contactDetails": [
+        {
+          "type": "email",
+          "label": "Email",
+          "value": "contact@parkingtoys.com",
+          "url": "-"
+        },
+        {
+          "type": "facebook",
+          "label": "Facebook",
+          "value": "ParkingToys",
+          "url": "https://www.facebook.com/ParkingToys"
+        },
+        {
+          "type": "instagram",
+          "label": "Instagram",
+          "value": "@parkingtoysbkk",
+          "url": "https://www.instagram.com/parkingtoysbkk"
+        },
+        {
+          "type": "phone",
+          "label": "Phone",
+          "value": "02-234-5678",
+          "url": "-"
+        }
+      ]
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "Thonglor House",
+      "address": "ซอยทองหล่อ 10 แขวงคลองตันเหนือ เขตวัฒนา กรุงเทพมหานคร 10110",
       "location": "กรุงเทพฯ",
-      "image": "./livehouse/thonglor-house.png"
+      "price": 3500,
+      "description": "Modern venue in the heart of Thonglor, featuring diverse musical performances and events. Known for its excellent acoustics.",
+      "images": [
+        "./livehouse/thonglor-house.png",
+        "/images/livehouse-003-1.jpg",
+        "/images/livehouse-003-2.jpg",
+        "/images/livehouse-003-3.jpg"
+      ],
+      "contactDetails": [
+        {
+          "type": "email",
+          "label": "Email",
+          "value": "info@thonglorhouse.com",
+          "url": "-"
+        },
+        {
+          "type": "facebook",
+          "label": "Facebook",
+          "value": "ThonglorHouse",
+          "url": "https://www.facebook.com/ThonglorHouse"
+        },
+        {
+          "type": "instagram",
+          "label": "Instagram",
+          "value": "@thonglorhouse",
+          "url": "https://www.instagram.com/thonglorhouse"
+        },
+        {
+          "type": "phone",
+          "label": "Phone",
+          "value": "02-345-6789",
+          "url": "-"
+        }
+      ]
     },
     {
-      "id": 4,
+      "id": "4",
       "name": "Brownstone",
+      "address": "ซอยสุขุมวิท 23 แขวงคลองเตยเหนือ เขตวัฒนา กรุงเทพมหานคร 10110",
       "location": "กรุงเทพฯ",
-      "image": "./livehouse/brownstone.png"
+      "price": 4000,
+      "description": "Contemporary music venue with industrial chic design. Features regular live band performances and special events.",
+      "images": [
+        "./livehouse/brownstone.png",
+        "/images/livehouse-004-1.jpg",
+        "/images/livehouse-004-2.jpg",
+        "/images/livehouse-004-3.jpg"
+      ],
+      "contactDetails": [
+        {
+          "type": "email",
+          "label": "Email",
+          "value": "contact@brownstone.com",
+          "url": "-"
+        },
+        {
+          "type": "facebook",
+          "label": "Facebook",
+          "value": "BrownstoneBKK",
+          "url": "https://www.facebook.com/BrownstoneBKK"
+        },
+        {
+          "type": "instagram",
+          "label": "Instagram",
+          "value": "@brownstonebkk",
+          "url": "https://www.instagram.com/brownstonebkk"
+        },
+        {
+          "type": "phone",
+          "label": "Phone",
+          "value": "02-456-7890",
+          "url": "-"
+        }
+      ]
     },
     {
-      "id": 5,
+      "id": "5",
       "name": "Saxophone Pub",
+      "address": "3/8 ถนนพญาไท แขวงพญาไท เขตราชเทวี กรุงเทพมหานคร 10400",
       "location": "กรุงเทพฯ",
-      "image": "./livehouse/saxophone-pub.png"
+      "price": 3500,
+      "description": "Legendary jazz venue showcasing talented musicians nightly. Known for its intimate atmosphere and quality performances.",
+      "images": [
+        "./livehouse/saxophone-pub.png",
+        "/images/livehouse-005-1.jpg",
+        "/images/livehouse-005-2.jpg",
+        "/images/livehouse-005-3.jpg"
+      ],
+      "contactDetails": [
+        {
+          "type": "email",
+          "label": "Email",
+          "value": "info@saxophonepub.com",
+          "url": "-"
+        },
+        {
+          "type": "facebook",
+          "label": "Facebook",
+          "value": "SaxophonePub",
+          "url": "https://www.facebook.com/SaxophonePub"
+        },
+        {
+          "type": "instagram",
+          "label": "Instagram",
+          "value": "@saxophonepub",
+          "url": "https://www.instagram.com/saxophonepub"
+        },
+        {
+          "type": "phone",
+          "label": "Phone",
+          "value": "02-567-8901",
+          "url": "-"
+        }
+      ]
     },
     {
-      "id": 6,
+      "id": "6",
       "name": "Thonglor Art Space",
+      "address": "ซอยทองหล่อ 18 แขวงคลองตันเหนือ เขตวัฒนา กรุงเทพมหานคร 10110",
       "location": "กรุงเทพฯ",
-      "image": "./livehouse/thonglor-art-space.png"
+      "price": 4500,
+      "description": "Multi-purpose creative space hosting live music, art exhibitions, and cultural events. Features top-notch acoustics and lighting.",
+      "images": [
+        "./livehouse/thonglor-art-space.png",
+        "/images/livehouse-006-1.jpg",
+        "/images/livehouse-006-2.jpg",
+        "/images/livehouse-006-3.jpg"
+      ],
+      "contactDetails": [
+        {
+          "type": "email",
+          "label": "Email",
+          "value": "contact@thonglorartspace.com",
+          "url": "-"
+        },
+        {
+          "type": "facebook",
+          "label": "Facebook",
+          "value": "ThonglorArtSpace",
+          "url": "https://www.facebook.com/ThonglorArtSpace"
+        },
+        {
+          "type": "instagram",
+          "label": "Instagram",
+          "value": "@thonglorartspace",
+          "url": "https://www.instagram.com/thonglorartspace"
+        },
+        {
+          "type": "phone",
+          "label": "Phone",
+          "value": "02-678-9012",
+          "url": "-"
+        }
+      ]
     },
     {
-      "id": 7,
+      "id": "7",
       "name": "Northgate Jazz Co-Op",
+      "address": "ถนนมณีนพรัตน์ ตำบลศรีภูมิ อำเภอเมืองเชียงใหม่ เชียงใหม่ 50200",
       "location": "เชียงใหม่",
-      "image": "./livehouse/northgate.png"
+      "price": 2500,
+      "description": "Vibrant jazz cooperative featuring local and international artists. Known for its community atmosphere and jam sessions.",
+      "images": [
+        "./livehouse/northgate.png",
+        "/images/livehouse-007-1.jpg",
+        "/images/livehouse-007-2.jpg",
+        "/images/livehouse-007-3.jpg"
+      ],
+      "contactDetails": [
+        {
+          "type": "email",
+          "label": "Email",
+          "value": "info@northgatejazz.com",
+          "url": "-"
+        },
+        {
+          "type": "facebook",
+          "label": "Facebook",
+          "value": "NorthgateJazz",
+          "url": "https://www.facebook.com/NorthgateJazz"
+        },
+        {
+          "type": "instagram",
+          "label": "Instagram",
+          "value": "@northgatejazz",
+          "url": "https://www.instagram.com/northgatejazz"
+        },
+        {
+          "type": "phone",
+          "label": "Phone",
+          "value": "053-123-456",
+          "url": "-"
+        }
+      ]
     },
     {
-      "id": 8,
+      "id": "8",
       "name": "Warm Up Cafe",
+      "address": "40 ถนนนิมมานเหมินทร์ ตำบลสุเทพ อำเภอเมืองเชียงใหม่ เชียงใหม่ 50200",
       "location": "เชียงใหม่",
-      "image": "./livehouse/warmup-cafe.png"
+      "price": 3000,
+      "description": "Popular nightlife destination featuring live bands and DJs. Known for its energetic atmosphere and diverse music selection.",
+      "images": [
+        "./livehouse/warmup-cafe.png",
+        "/images/livehouse-008-1.jpg",
+        "/images/livehouse-008-2.jpg",
+        "/images/livehouse-008-3.jpg"
+      ],
+      "contactDetails": [
+        {
+          "type": "email",
+          "label": "Email",
+          "value": "contact@warmupcafe.com",
+          "url": "-"
+        },
+        {
+          "type": "facebook",
+          "label": "Facebook",
+          "value": "WarmUpCafe",
+          "url": "https://www.facebook.com/WarmUpCafe"
+        },
+        {
+          "type": "instagram",
+          "label": "Instagram",
+          "value": "@warmupcafe",
+          "url": "https://www.instagram.com/warmupcafe"
+        },
+        {
+          "type": "phone",
+          "label": "Phone",
+          "value": "053-234-567",
+          "url": "-"
+        }
+      ]
     },
     {
-      "id": 9,
+      "id": "9",
       "name": "Thapae East",
+      "address": "88 ถนนท่าแพ ตำบลช้างม่อย อำเภอเมืองเชียงใหม่ เชียงใหม่ 50300",
       "location": "เชียงใหม่",
-      "image": "./livehouse/thapae-east.png"
+      "price": 2800,
+      "description": "Alternative music venue showcasing indie bands and experimental performances. Popular spot for emerging artists.",
+      "images": [
+        "./livehouse/thapae-east.png",
+        "/images/livehouse-009-1.jpg",
+        "/images/livehouse-009-2.jpg",
+        "/images/livehouse-009-3.jpg"
+      ],
+      "contactDetails": [
+        {
+          "type": "email",
+          "label": "Email",
+          "value": "info@thapaeeast.com",
+          "url": "-"
+        },
+        {
+          "type": "facebook",
+          "label": "Facebook",
+          "value": "ThapaeEast",
+          "url": "https://www.facebook.com/ThapaeEast"
+        },
+        {
+          "type": "instagram",
+          "label": "Instagram",
+          "value": "@thapaeeast",
+          "url": "https://www.instagram.com/thapaeeast"
+        },
+        {
+          "type": "phone",
+          "label": "Phone",
+          "value": "053-345-678",
+          "url": "-"
+        }
+      ]
     },
     {
-      "id": 10,
+      "id": "10",
       "name": "Tawan Daeng",
+      "address": "165 ถนนมิตรภาพ ตำบลในเมือง อำเภอเมืองขอนแก่น ขอนแก่น 40000",
       "location": "ขอนแก่น",
-      "image": "./livehouse/tawan-daeng.png"
+      "price": 2500,
+      "description": "Famous Isaan music venue featuring traditional mor lam performances and modern interpretations. Known for its authentic northeastern Thai atmosphere and live shows.",
+      "images": [
+        "./livehouse/tawan-daeng.png",
+        "/images/livehouse-010-1.jpg",
+        "/images/livehouse-010-2.jpg",
+        "/images/livehouse-010-3.jpg"
+      ],
+      "contactDetails": [
+        {
+          "type": "email",
+          "label": "Email",
+          "value": "info@tawandaeng.com",
+          "url": "-"
+        },
+        {
+          "type": "facebook",
+          "label": "Facebook",
+          "value": "TawanDaengKhonKaen",
+          "url": "https://www.facebook.com/TawanDaengKhonKaen"
+        },
+        {
+          "type": "instagram",
+          "label": "Instagram",
+          "value": "@tawandaengkk",
+          "url": "https://www.instagram.com/tawandaengkk"
+        },
+        {
+          "type": "phone",
+          "label": "Phone",
+          "value": "043-123-456",
+          "url": "-"
+        }
+      ]
     },
     {
-      "id": 11,
+      "id": "11",
       "name": "U-Bar",
+      "address": "123 ถนนศรีจันทร์ ตำบลในเมือง อำเภอเมืองขอนแก่น ขอนแก่น 40000",
       "location": "ขอนแก่น",
-      "image": "./livehouse/u-bar.png"
+      "price": 2200,
+      "description": "Popular student hangout featuring live bands and local artists. Dynamic venue with a mix of Thai and international music performances.",
+      "images": [
+        "./livehouse/u-bar.png",
+        "/images/livehouse-011-1.jpg",
+        "/images/livehouse-011-2.jpg",
+        "/images/livehouse-011-3.jpg"
+      ],
+      "contactDetails": [
+        {
+          "type": "email",
+          "label": "Email",
+          "value": "contact@ubar.com",
+          "url": "-"
+        },
+        {
+          "type": "facebook",
+          "label": "Facebook",
+          "value": "UBarKhonKaen",
+          "url": "https://www.facebook.com/UBarKhonKaen"
+        },
+        {
+          "type": "instagram",
+          "label": "Instagram",
+          "value": "@ubarkk",
+          "url": "https://www.instagram.com/ubarkk"
+        },
+        {
+          "type": "phone",
+          "label": "Phone",
+          "value": "043-234-567",
+          "url": "-"
+        }
+      ]
     },
     {
-      "id": 12,
+      "id": "12",
       "name": "Share Bistro & Bar",
+      "address": "456 ถนนมะลิวัลย์ ตำบลในเมือง อำเภอเมืองขอนแก่น ขอนแก่น 40000",
       "location": "ขอนแก่น",
-      "image": "./livehouse/share-bistro.png"
+      "price": 2800,
+      "description": "Modern bistro and bar offering live acoustic performances and jazz nights. Features a sophisticated atmosphere and craft cocktails.",
+      "images": [
+        "./livehouse/share-bistro.png",
+        "/images/livehouse-012-1.jpg",
+        "/images/livehouse-012-2.jpg",
+        "/images/livehouse-012-3.jpg"
+      ],
+      "contactDetails": [
+        {
+          "type": "email",
+          "label": "Email",
+          "value": "info@sharebistro.com",
+          "url": "-"
+        },
+        {
+          "type": "facebook",
+          "label": "Facebook",
+          "value": "ShareBistroKK",
+          "url": "https://www.facebook.com/ShareBistroKK"
+        },
+        {
+          "type": "instagram",
+          "label": "Instagram",
+          "value": "@sharebistrokk",
+          "url": "https://www.instagram.com/sharebistrokk"
+        },
+        {
+          "type": "phone",
+          "label": "Phone",
+          "value": "043-345-678",
+          "url": "-"
+        }
+      ]
     },
     {
-      "id": 13,
+      "id": "13",
       "name": "Rockin' Angels",
+      "address": "78/4 ถนนราษฎร์อุทิศ 200 ปี ตำบลป่าตอง อำเภอกะทู้ ภูเก็ต 83150",
       "location": "ภูเก็ต",
-      "image": "./livehouse/rockin-angels.png"
+      "price": 3500,
+      "description": "Energetic rock music venue hosting both local and international bands. Famous for its electric atmosphere and professional sound system.",
+      "images": [
+        "./livehouse/rockin-angels.png",
+        "/images/livehouse-013-1.jpg",
+        "/images/livehouse-013-2.jpg",
+        "/images/livehouse-013-3.jpg"
+      ],
+      "contactDetails": [
+        {
+          "type": "email",
+          "label": "Email",
+          "value": "booking@rockinangels.com",
+          "url": "-"
+        },
+        {
+          "type": "facebook",
+          "label": "Facebook",
+          "value": "RockinAngelsPhuket",
+          "url": "https://www.facebook.com/RockinAngelsPhuket"
+        },
+        {
+          "type": "instagram",
+          "label": "Instagram",
+          "value": "@rockinangelsphuket",
+          "url": "https://www.instagram.com/rockinangelsphuket"
+        },
+        {
+          "type": "phone",
+          "label": "Phone",
+          "value": "076-123-456",
+          "url": "-"
+        }
+      ]
     },
     {
-      "id": 14,
+      "id": "14",
       "name": "Music Matter",
+      "address": "169 ถนนพังงา ตำบลตลาดใหญ่ อำเภอเมืองภูเก็ต ภูเก็ต 83000",
       "location": "ภูเก็ต",
-      "image": "./livehouse/music-matter.png"
+      "price": 3000,
+      "description": "Sophisticated jazz and blues venue with regular live performances. Known for its intimate setting and quality sound experience.",
+      "images": [
+        "./livehouse/music-matter.png",
+        "/images/livehouse-014-1.jpg",
+        "/images/livehouse-014-2.jpg",
+        "/images/livehouse-014-3.jpg"
+      ],
+      "contactDetails": [
+        {
+          "type": "email",
+          "label": "Email",
+          "value": "contact@musicmatter.com",
+          "url": "-"
+        },
+        {
+          "type": "facebook",
+          "label": "Facebook",
+          "value": "MusicMatterPhuket",
+          "url": "https://www.facebook.com/MusicMatterPhuket"
+        },
+        {
+          "type": "instagram",
+          "label": "Instagram",
+          "value": "@musicmatterphuket",
+          "url": "https://www.instagram.com/musicmatterphuket"
+        },
+        {
+          "type": "phone",
+          "label": "Phone",
+          "value": "076-234-567",
+          "url": "-"
+        }
+      ]
     },
     {
-      "id": 15,
+      "id": "15",
       "name": "Sound Station",
+      "address": "89/1 ถนนเทพกระษัตรี ตำบลรัษฎา อำเภอเมืองภูเก็ต ภูเก็ต 83000",
       "location": "ภูเก็ต",
-      "image": "./livehouse/sound-station.png"
+      "price": 2800,
+      "description": "Modern music venue showcasing indie bands and electronic music performances. Features state-of-the-art sound system and lighting equipment.",
+      "images": [
+        "./livehouse/sound-station.png",
+        "/images/livehouse-015-1.jpg",
+        "/images/livehouse-015-2.jpg",
+        "/images/livehouse-015-3.jpg"
+      ],
+      "contactDetails": [
+        {
+          "type": "email",
+          "label": "Email",
+          "value": "info@soundstation.com",
+          "url": "-"
+        },
+        {
+          "type": "facebook",
+          "label": "Facebook",
+          "value": "SoundStationPhuket",
+          "url": "https://www.facebook.com/SoundStationPhuket"
+        },
+        {
+          "type": "instagram",
+          "label": "Instagram",
+          "value": "@soundstationphuket",
+          "url": "https://www.instagram.com/soundstationphuket"
+        },
+        {
+          "type": "phone",
+          "label": "Phone",
+          "value": "076-345-678",
+          "url": "-"
+        }
+      ]
     }
   ]
 }

@@ -8,11 +8,22 @@ import {
     CarouselPrevious,
 } from "@/components/ui/carousel";
 
+interface contactDetailProps {
+    type: string,
+    label: string,
+    value: string,
+    url: string
+}
+
 interface Livehouse {
-    id: number,
+    id: string,
     name: string,
+    address: string,
     location: string,
-    image: string
+    price: number,
+    description: string,
+    images: string[],
+    contactDetails: contactDetailProps[]
 }
 
 interface Livehouses extends Array<Livehouse> { }
@@ -42,8 +53,9 @@ const CardsCarousel = ({
                         {data.map((livehouse) => (
                             <CarouselItem key={livehouse.id} className="pl-2 basis-1/5">
                                 <LivehouseCard
+                                    id={livehouse.id}
                                     card_size={cardSize}
-                                    bg_image={livehouse.image}
+                                    bg_image={livehouse.images[0]}
                                     location={livehouse.location}
                                     name={livehouse.name}
                                 />
