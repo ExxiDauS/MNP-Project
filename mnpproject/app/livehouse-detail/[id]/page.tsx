@@ -8,7 +8,7 @@ import ImageGallery from '@/components/livehouseDetail/ImageGallery'
 import Description from '@/components/livehouseDetail/Description'
 import Contacts from '@/components/contacts/Contacts'
 
-import livehouses from '@/public/data/detailslivehouses.json'
+import livehouses from '@/public/data/livehouses.json'
 
 
 const Page = () => {

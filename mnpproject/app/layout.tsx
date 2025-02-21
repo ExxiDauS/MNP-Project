@@ -47,7 +47,7 @@ export default function RootLayout({
 
               <NavigationMenu className="hidden md:flex">
                 <NavigationMenuList className="space-x-2">
-                  <NavLink href="#">หน้าหลัก</NavLink>
+                  <NavLink href="/">หน้าหลัก</NavLink>
                   <NavLink href="#">สำรวจ</NavLink>
                   <NavLink href="#">การจอง</NavLink>
                   <NavLink href="#">เกี่ยวกับ</NavLink>
