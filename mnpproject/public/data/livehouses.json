@@ -8,7 +8,7 @@
       "price": 2500,
       "description": "A cozy livehouse venue perfect for intimate performances and acoustic sessions. Features professional sound system and comfortable seating arrangement.",
       "images": [
-        "./livehouse/ban-puen.png",
+        "ban-puen.png",
         "/images/livehouse-001-1.jpg",
         "/images/livehouse-001-2.jpg",
         "/images/livehouse-001-3.jpg"
@@ -48,7 +48,7 @@
       "price": 3000,
       "description": "Iconic live music venue known for hosting both local and international acts. Spacious venue with state-of-the-art sound system.",
       "images": [
-        "./livehouse/parking-toys.png",
+        "parking-toys.png",
         "/images/livehouse-002-1.jpg",
         "/images/livehouse-002-2.jpg",
         "/images/livehouse-002-3.jpg"
@@ -88,7 +88,7 @@
       "price": 3500,
       "description": "Modern venue in the heart of Thonglor, featuring diverse musical performances and events. Known for its excellent acoustics.",
       "images": [
-        "./livehouse/thonglor-house.png",
+        "thonglor-house.png",
         "/images/livehouse-003-1.jpg",
         "/images/livehouse-003-2.jpg",
         "/images/livehouse-003-3.jpg"
@@ -128,7 +128,7 @@
       "price": 4000,
       "description": "Contemporary music venue with industrial chic design. Features regular live band performances and special events.",
       "images": [
-        "./livehouse/brownstone.png",
+        "brownstone.png",
         "/images/livehouse-004-1.jpg",
         "/images/livehouse-004-2.jpg",
         "/images/livehouse-004-3.jpg"
@@ -168,7 +168,7 @@
       "price": 3500,
       "description": "Legendary jazz venue showcasing talented musicians nightly. Known for its intimate atmosphere and quality performances.",
       "images": [
-        "./livehouse/saxophone-pub.png",
+        "saxophone-pub.png",
         "/images/livehouse-005-1.jpg",
         "/images/livehouse-005-2.jpg",
         "/images/livehouse-005-3.jpg"
@@ -208,7 +208,7 @@
       "price": 4500,
       "description": "Multi-purpose creative space hosting live music, art exhibitions, and cultural events. Features top-notch acoustics and lighting.",
       "images": [
-        "./livehouse/thonglor-art-space.png",
+        "thonglor-art-space.png",
         "/images/livehouse-006-1.jpg",
         "/images/livehouse-006-2.jpg",
         "/images/livehouse-006-3.jpg"
@@ -248,7 +248,7 @@
       "price": 2500,
       "description": "Vibrant jazz cooperative featuring local and international artists. Known for its community atmosphere and jam sessions.",
       "images": [
-        "./livehouse/northgate.png",
+        "northgate.png",
         "/images/livehouse-007-1.jpg",
         "/images/livehouse-007-2.jpg",
         "/images/livehouse-007-3.jpg"
@@ -288,7 +288,7 @@
       "price": 3000,
       "description": "Popular nightlife destination featuring live bands and DJs. Known for its energetic atmosphere and diverse music selection.",
       "images": [
-        "./livehouse/warmup-cafe.png",
+        "warmup-cafe.png",
         "/images/livehouse-008-1.jpg",
         "/images/livehouse-008-2.jpg",
         "/images/livehouse-008-3.jpg"
@@ -328,7 +328,7 @@
       "price": 2800,
       "description": "Alternative music venue showcasing indie bands and experimental performances. Popular spot for emerging artists.",
       "images": [
-        "./livehouse/thapae-east.png",
+        "thapae-east.png",
         "/images/livehouse-009-1.jpg",
         "/images/livehouse-009-2.jpg",
         "/images/livehouse-009-3.jpg"
@@ -368,7 +368,7 @@
       "price": 2500,
       "description": "Famous Isaan music venue featuring traditional mor lam performances and modern interpretations. Known for its authentic northeastern Thai atmosphere and live shows.",
       "images": [
-        "./livehouse/tawan-daeng.png",
+        "tawan-daeng.png",
         "/images/livehouse-010-1.jpg",
         "/images/livehouse-010-2.jpg",
         "/images/livehouse-010-3.jpg"
@@ -408,7 +408,7 @@
       "price": 2200,
       "description": "Popular student hangout featuring live bands and local artists. Dynamic venue with a mix of Thai and international music performances.",
       "images": [
-        "./livehouse/u-bar.png",
+        "u-bar.png",
         "/images/livehouse-011-1.jpg",
         "/images/livehouse-011-2.jpg",
         "/images/livehouse-011-3.jpg"
@@ -448,7 +448,7 @@
       "price": 2800,
       "description": "Modern bistro and bar offering live acoustic performances and jazz nights. Features a sophisticated atmosphere and craft cocktails.",
       "images": [
-        "./livehouse/share-bistro.png",
+        "share-bistro.png",
         "/images/livehouse-012-1.jpg",
         "/images/livehouse-012-2.jpg",
         "/images/livehouse-012-3.jpg"
@@ -488,7 +488,7 @@
       "price": 3500,
       "description": "Energetic rock music venue hosting both local and international bands. Famous for its electric atmosphere and professional sound system.",
       "images": [
-        "./livehouse/rockin-angels.png",
+        "rockin-angels.png",
         "/images/livehouse-013-1.jpg",
         "/images/livehouse-013-2.jpg",
         "/images/livehouse-013-3.jpg"
@@ -528,7 +528,7 @@
       "price": 3000,
       "description": "Sophisticated jazz and blues venue with regular live performances. Known for its intimate setting and quality sound experience.",
       "images": [
-        "./livehouse/music-matter.png",
+        "music-matter.png",
         "/images/livehouse-014-1.jpg",
         "/images/livehouse-014-2.jpg",
         "/images/livehouse-014-3.jpg"
@@ -568,7 +568,7 @@
       "price": 2800,
       "description": "Modern music venue showcasing indie bands and electronic music performances. Features state-of-the-art sound system and lighting equipment.",
       "images": [
-        "./livehouse/sound-station.png",
+        "sound-station.png",
         "/images/livehouse-015-1.jpg",
         "/images/livehouse-015-2.jpg",
         "/images/livehouse-015-3.jpg"

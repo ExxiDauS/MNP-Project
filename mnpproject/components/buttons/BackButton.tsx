@@ -1,6 +1,5 @@
 import React from 'react';
 import { ChevronLeft } from 'lucide-react';
-import { useRouter } from 'next/navigation';
 
 interface BackButtonProps {
   href?: string;  // Optional path to navigate to 
@@ -8,8 +7,6 @@ interface BackButtonProps {
 }
 
 const BackButton: React.FC<BackButtonProps> = ({ href, className = '' }) => {
-  const router = useRouter();
-
 
   return (
     <a href={href}>

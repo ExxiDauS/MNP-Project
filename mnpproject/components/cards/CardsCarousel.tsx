@@ -55,7 +55,7 @@ const CardsCarousel = ({
                                 <LivehouseCard
                                     id={livehouse.id}
                                     card_size={cardSize}
-                                    bg_image={livehouse.images[0]}
+                                    bg_image={`../livehouse/${livehouse.images[0]}`}
                                     location={livehouse.location}
                                     name={livehouse.name}
                                 />
