@@ -1,21 +1,20 @@
 import React from 'react'
-import { MapPin, ChevronLeft } from 'lucide-react';
-import PurpleButton from '../buttons/PurpleButton';
-import BackButton from '../buttons/BackButton';
+import BackButton from '../buttons/BackButton'
+import { MapPin } from 'lucide-react'
 
-interface DetailHeaderProps {
+interface BookingHeaderProps {
     name: string
     address: string
+    artistName: string
     price: number
     id: string
 }
 
-const DetailHeader: React.FC<DetailHeaderProps> = ({ name, address, price, id }) => {
-
-    return (
-        <div className="px-6 pt-6">
+const BookingHeader: React.FC<BookingHeaderProps> = ({ name, address, artistName, price, id }) => {
+  return (
+    <div className="px-6 pt-6">
             {/* Back button */}
-            <BackButton className="mb-4" href="/" />
+            <BackButton className="mb-4" href={`/livehouse-detail/${id}`} />
 
             <div className="flex justify-between items-start w-full">
                 {/* Left section */}
@@ -35,13 +34,13 @@ const DetailHeader: React.FC<DetailHeaderProps> = ({ name, address, price, id })
                     <span className="text-2xl font-bold text-custom-text-primary">
                         ฿{price} / Hour
                     </span>
-                    <a href={`${id}/booking`}>
-                        <PurpleButton label="Booking Stage" />
-                    </a>
+                    <span className="text-2xl font-bold text-custom-text-primary">
+                        Booking By : {artistName}
+                    </span>
                 </div>
             </div>
         </div>
-    )
+  )
 }
 
-export default DetailHeader
+export default BookingHeader

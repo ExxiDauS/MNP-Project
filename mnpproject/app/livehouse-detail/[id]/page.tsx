@@ -33,7 +33,7 @@ const Page = () => {
                 {/* Solid background content container */}
                 <div className='relative flex flex-col w-full m-2 bg-custom-background-elevated outline outline-custom-purple-light outline-offset-2 rounded-3xl'>
 
-                    <DetailHeader name={livehouse.name} address={livehouse.address} price={livehouse.price} />
+                    <DetailHeader name={livehouse.name} address={livehouse.address} price={livehouse.price} id={params.id}/>
                     <div className="mb-2">
                         <ImageGallery images={livehouse.images} />
                     </div>
