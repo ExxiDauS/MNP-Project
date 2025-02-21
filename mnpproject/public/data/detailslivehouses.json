@@ -1,0 +1,121 @@
+{
+    "livehouses": [
+        {
+            "id": "1",
+            "name": "Ban Puen Bangkok",
+            "address": "36 ซอย 2 ถ. ประชาราษฎร์ 1 แขวงบางซื่อ เขตบางซื่อ กรุงเทพมหานคร 10800 ไทย",
+            "price": 2500,
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+            "images": [
+                "/images/livehouse-001-1.jpg",
+                "/images/livehouse-001-2.jpg",
+                "/images/livehouse-001-3.jpg",
+                "/images/livehouse-001-4.jpg"
+            ],
+            "contactDetails": [
+                {
+                    "type": "email",
+                    "label": "Email",
+                    "value": "contact@banpuenbkk.com",
+                    "url": "-"
+                },
+                {
+                    "type": "facebook",
+                    "label": "Facebook",
+                    "value": "facebook.com/banpuenbangkok",
+                    "url": "https://www.facebook.com/banpuenbangkok"
+                },
+                {
+                    "type": "instagram",
+                    "label": "Instagram",
+                    "value": "@banpuenbkk",
+                    "url": "https://www.instagram.com/banpuenbkk"
+                },
+                {
+                    "type": "phone",
+                    "label": "Telephone",
+                    "value": "+66 2 123 4567",
+                    "url": "-"
+                }
+            ]
+        },
+        {
+            "id": "2",
+            "name": "Brownstone Studio",
+            "address": "ซอย สุขุมวิท 23 แขวงคลองเตยเหนือ เขตวัฒนา กรุงเทพมหานคร 10110",
+            "price": 3000,
+            "description": "Modern studio space perfect for band practice and small performances. Equipped with professional sound system and recording capabilities. Available for hourly bookings with flexible scheduling options.",
+            "images": [
+                "/images/livehouse-002-1.jpg",
+                "/images/livehouse-002-2.jpg",
+                "/images/livehouse-002-3.jpg",
+                "/images/livehouse-002-4.jpg"
+            ],
+            "contactDetails": [
+                {
+                    "type": "email",
+                    "label": "Email",
+                    "value": "info@brownstonestudio.th",
+                    "url": "-"
+                },
+                {
+                    "type": "facebook",
+                    "label": "Facebook",
+                    "value": "facebook.com/brownstonestudio",
+                    "url": "https://www.facebook.com/manopapp"
+                },
+                {
+                    "type": "instagram",
+                    "label": "Instagram",
+                    "value": "@brownstone.bkk",
+                    "url": "https://www.facebook.com/manopapp"
+                },
+                {
+                    "type": "phone",
+                    "label": "Telephone",
+                    "value": "+66 2 234 5678",
+                    "url": "-"
+                }
+            ]
+        },
+        {
+            "id": "3",
+            "name": "The Rock Pub",
+            "address": "Hollywood Street Building ชั้น 2 ถนนราชปรารภ แขวงมักกะสัน เขตราชเทวี กรุงเทพมหานคร 10400",
+            "price": 5000,
+            "description": "Iconic rock venue with full stage setup and professional lighting system. Known for hosting both local and international acts. Perfect for rock concerts and band performances.",
+            "images": [
+                "/images/livehouse-003-1.jpg",
+                "/images/livehouse-003-2.jpg",
+                "/images/livehouse-003-3.jpg",
+                "/images/livehouse-003-4.jpg"
+            ],
+            "contactDetails": [
+                {
+                    "type": "email",
+                    "label": "Email",
+                    "value": "bookings@therockpub.com",
+                    "url": "-"
+                },
+                {
+                    "type": "facebook",
+                    "label": "Facebook",
+                    "value": "facebook.com/therockpubbkk",
+                    "url": "https://www.facebook.com/therockpubbkk"
+                },
+                {
+                    "type": "instagram",
+                    "label": "Instagram",
+                    "value": "@therockpub",
+                    "url": "https://www.instagram.com/therockpub"
+                },
+                {
+                    "type": "phone",
+                    "label": "Telephone",
+                    "value": "+66 2 345 6789",
+                    "url": "-"
+                }
+            ]
+        }
+    ]
+}
