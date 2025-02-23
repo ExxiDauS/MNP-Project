@@ -4,6 +4,7 @@ import React from 'react';
 import { useParams } from 'next/navigation';
 import { notFound } from 'next/navigation'
 import livehouses from '@/public/data/livehouses.json'
+import facilities from '@/public/data/facilities.json'
 import BookingHeader from '@/components/booking/BookingHeader';
 import BookingForm from '@/components/forms/BookingForm';
 
@@ -26,7 +27,7 @@ const page = () => {
 
             <div className='relative flex flex-col w-full m-2 bg-custom-background-elevated outline outline-custom-purple-light outline-offset-2 rounded-3xl'>
                 <BookingHeader name={livehouse.name} address={livehouse.address} artistName={"Kawin"} price={livehouse.price} id={params.id}/>
-                <BookingForm livehousePrice={livehouse.price}/>
+                <BookingForm livehousePrice={livehouse.price} facilitiesData={facilities.facilities}/>
             </div>
         </section>
     )

@@ -1,6 +1,6 @@
 import React from 'react'
 import { MapPin, ChevronLeft } from 'lucide-react';
-import PurpleButton from '../buttons/PurpleButton';
+import { Button } from '../ui/button';
 import BackButton from '../buttons/BackButton';
 
 interface DetailHeaderProps {
@@ -36,7 +36,9 @@ const DetailHeader: React.FC<DetailHeaderProps> = ({ name, address, price, id })
                         ฿{price} / Hour
                     </span>
                     <a href={`${id}/booking`}>
-                        <PurpleButton label="Booking Stage" />
+                        <Button className="bg-custom-purple-dark hover:bg-custom-purple text-white px-6">
+                            Booking Stage
+                        </Button>
                     </a>
                 </div>
             </div>

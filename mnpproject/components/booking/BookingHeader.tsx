@@ -30,11 +30,11 @@ const BookingHeader: React.FC<BookingHeaderProps> = ({ name, address, artistName
                 </div>
 
                 {/* Right section */}
-                <div className="flex items-center gap-4 pt-3">
-                    <span className="text-2xl font-bold text-custom-text-primary">
+                <div className="flex flex-col gap-2">
+                    <span className="text-xl font-bold text-custom-text-primary">
                         ฿{price} / Hour
                     </span>
-                    <span className="text-2xl font-bold text-custom-text-primary">
+                    <span className="text-xl font-bold text-custom-text-primary">
                         Booking By : {artistName}
                     </span>
                 </div>
