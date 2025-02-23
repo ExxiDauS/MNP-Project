@@ -1,16 +1,27 @@
 import React from "react";
-import ExCard from "../mainpart/ExCard";
+import ExploreCard from "./ExploreCard";
+
+interface contactDetailProps {
+    type: string,
+    label: string,
+    value: string,
+    url: string
+}
 
 interface Livehouse {
-  id: number;
-  name: string;
-  location: string;
-  image: string;
+  id: string,
+  name: string,
+  address: string,
+  location: string,
+  price: number,
+  description: string,
+  images: string[],
+  contactDetails: contactDetailProps[]
 }
 
 interface Livehouses extends Array<Livehouse> {}
 
-const CardsCarousel = ({
+const ExploreCardContainer = ({
   data,
   cardSize,
 }: {
@@ -21,10 +32,10 @@ const CardsCarousel = ({
     <section className="px-10 sm:px-20 md:px-30 lg:px-40">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {data.map((livehouse) => (
-          <ExCard
+          <ExploreCard
             key={livehouse.name}
             card_size={cardSize}
-            bg_image={livehouse.image}
+            bg_image={`../livehouse/${livehouse.images[0]}`}
             location={livehouse.location}
             name={livehouse.name}
           />
@@ -34,4 +45,4 @@ const CardsCarousel = ({
   );
 };
 
-export default CardsCarousel;
+export default ExploreCardContainer;

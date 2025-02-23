@@ -1,6 +1,6 @@
 import React from "react";
 
-const ExCard = ({
+const ExploreCard = ({
   card_size,
   bg_image,
   location,
@@ -35,4 +35,4 @@ const ExCard = ({
   );
 };
 
-export default ExCard;
+export default ExploreCard;

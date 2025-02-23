@@ -1,7 +1,7 @@
 // import { Card } from '@/components/ui/card'
 import React from "react";
-import PopularLivehouses from "@/components/cards/PopularLivehouses";
-import MainPart from "@/components/mainpart/MainPart";
+import PopularLivehouses from "@/components/landing/hero/PopularLivehouses";
+import MainExPart from "@/components/Explorepart/MainExPart";
 
 const page = () => {
   return (
@@ -9,8 +9,7 @@ const page = () => {
       <div className="pt-20">
         <PopularLivehouses></PopularLivehouses>
       </div>
-
-      <MainPart></MainPart>
+      <MainExPart></MainExPart>
     </>
   );
 };
