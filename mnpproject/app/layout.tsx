@@ -3,8 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import React from 'react';
 import { Search, User } from 'lucide-react';
-import MobileNav from "../../components/Nav/MobileNav";
-import NavLink from "../../components/Nav/NavLink";
+import MobileNav from "../components/Nav/MobileNav";
+import NavLink from "@/components/Nav/NavLink";
 import SearchBar from "@/components/Nav/SearchBar";
 import {
   NavigationMenu,
@@ -48,7 +48,7 @@ export default function RootLayout({
 
               <NavigationMenu className="hidden md:flex">
                 <NavigationMenuList className="space-x-2">
-                  <NavLink href="/Landing">หน้าหลัก</NavLink>
+                  <NavLink href="/">หน้าหลัก</NavLink>
                   <NavLink href="/Explore">สำรวจ</NavLink>
                   <NavLink href="#">การจอง</NavLink>
                   <NavLink href="#">เกี่ยวกับ</NavLink>

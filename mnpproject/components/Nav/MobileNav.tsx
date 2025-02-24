@@ -13,7 +13,7 @@ const MobileNav = () => {
     </SheetTrigger>
     <SheetContent side="left" className="w-64 bg-black p-0">
       <div className="flex flex-col space-y-4 p-4">
-        <a href="/Landing" className="text-zinc-100 hover:text-zinc-300">หน้าหลัก</a>
+        <a href="/" className="text-zinc-100 hover:text-zinc-300">หน้าหลัก</a>
         <a href="/Explore" className="text-zinc-100 hover:text-zinc-300">สำรวจ</a>
         <a href="#" className="text-zinc-100 hover:text-zinc-300">การจอง</a>
         <a href="#" className="text-zinc-100 hover:text-zinc-300">เกี่ยวกับ</a>

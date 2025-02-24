@@ -30,7 +30,7 @@ const ExploreCard = ({
           </div>
           <a href={`/livehouse-detail/${id}`} className="block">
           <button className="bg-gradient-to-r from-custom-purple-deeper to-custom-purple text-white font-bold py-3 px-6 rounded-full shadow-lg hover:scale-105 transition-transform mt-3">
-            จอง
+            รายละเอียด
           </button>
           </a>
         </div>
