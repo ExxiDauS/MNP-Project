@@ -5,8 +5,8 @@ import { useParams } from 'next/navigation';
 import { notFound } from 'next/navigation'
 import livehouses from '@/public/data/livehouses.json'
 import facilities from '@/public/data/facilities.json'
-import BookingHeader from '@/components/booking/BookingHeader';
-import BookingForm from '@/components/forms/BookingForm';
+import BookingHeader from '@/components/forms/booking/BookingHeader';
+import BookingForm from '@/components/forms/booking/BookingForm';
 
 const page = () => {
     const params = useParams<{ id: string }>()
@@ -27,7 +27,7 @@ const page = () => {
 
             <div className='relative flex flex-col w-full m-2 bg-custom-background-elevated outline outline-custom-purple-light outline-offset-2 rounded-3xl'>
                 <BookingHeader name={livehouse.name} address={livehouse.address} artistName={"Kawin"} price={livehouse.price} id={params.id}/>
-                <BookingForm livehousePrice={livehouse.price} facilitiesData={facilities.facilities}/>
+                <BookingForm livehousePrice={livehouse.price} livehouseName={livehouse.name}  facilitiesData={facilities.facilities}/>
             </div>
         </section>
     )

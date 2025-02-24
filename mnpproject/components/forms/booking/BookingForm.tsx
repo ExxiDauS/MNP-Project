@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
-import { Button } from "@/components/ui/button"
-import { format } from "date-fns"
+import React, { useState, useEffect } from 'react';
+import { Button } from "@/components/ui/button";
+import { format } from "date-fns";
 
-import DateSelect from './DateSelect';
-import TimeSelect from './TimeSelect';
-import FacilitiesCarousel from './FacilitiesCarousel';
+import DateSelect from '../DateSelect';
+import TimeSelect from '../TimeSelect';
+import FacilitiesCarousel from '../FacilitiesCarousel';
+import PaymentDialog from '@/components/payments/PaymentDialog';
 
 interface Facility {
   id: string;
@@ -15,7 +16,14 @@ interface Facility {
 
 interface BookingFormProps {
   livehousePrice: number;
+  livehouseName: string;
   facilitiesData: Facility[];
+}
+
+interface PriceBreakdown {
+  totalLivehousePrice: number;
+  facilitiesPrice: number;
+  totalPrice: number;
 }
 
 // Generate time 00:00 to 23:30 separate by 30 mins
@@ -31,23 +39,30 @@ const generateTimeSlots = () => {
   return slots;
 };
 
-const BookingForm: React.FC<BookingFormProps> = ({ livehousePrice, facilitiesData }) => {
-  const [date, setDate] = useState<Date | undefined>(new Date())
-  const [startTime, setStartTime] = useState<string>('')
-  const [endTime, setEndTime] = useState<string>('')
-  const [selectedFacilities, setSelectedFacilities] = useState<string[]>([])
+const BookingForm: React.FC<BookingFormProps> = ({ livehousePrice, livehouseName, facilitiesData }) => {
+  const [date, setDate] = useState<Date | undefined>(new Date());
+  const [startTime, setStartTime] = useState<string>('');
+  const [endTime, setEndTime] = useState<string>('');
+  const [selectedFacilities, setSelectedFacilities] = useState<string[]>([]);
+  const [isPaymentDialogOpen, setIsPaymentDialogOpen] = useState<boolean>(false);
+  const [priceBreakdown, setPriceBreakdown] = useState<PriceBreakdown>({
+    totalLivehousePrice: 0,
+    facilitiesPrice: 0,
+    totalPrice: 0
+  });
+  
   const timeSlots = generateTimeSlots();
 
-  // create array of all previous facilities that check and include/exclude the current select facility
+  // Handle facility toggle
   const handleFacilityToggle = (facilityId: string) => {
     setSelectedFacilities(prev =>
       prev.includes(facilityId)
         ? prev.filter(id => id !== facilityId)
         : [...prev, facilityId]
     );
-  }
+  };
 
-  // Calculate Booking Price
+  // Calculate Booking Hours
   const calculateBookingHours = () => {
     if (!startTime || !endTime) return 0;
 
@@ -65,12 +80,11 @@ const BookingForm: React.FC<BookingFormProps> = ({ livehousePrice, facilitiesDat
 
     // Calculate difference in hours
     return (endMinutes - startMinutes) / 60;
-  }
+  };
 
   // Calculate Total price (Booking + Facilities)
-  const calculateTotalPrice = () => {
+  const calculateTotalPrice = (): PriceBreakdown => {
     const hours = calculateBookingHours();
-
     const totalLivehousePrice = livehousePrice * hours;
 
     const selectedFacilitiesDetails = facilitiesData.filter(facility =>
@@ -87,29 +101,32 @@ const BookingForm: React.FC<BookingFormProps> = ({ livehousePrice, facilitiesDat
       facilitiesPrice,
       totalPrice: totalLivehousePrice + facilitiesPrice
     };
-  }
+  };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Update price breakdown when relevant inputs change
+  useEffect(() => {
+    if (startTime && endTime) {
+      const newPrices = calculateTotalPrice();
+      setPriceBreakdown(newPrices);
+    }
+  }, [startTime, endTime, selectedFacilities, livehousePrice]);
+
+  const handleBookNow = (e: React.FormEvent) => {
     e.preventDefault();
-
-    const prices = calculateTotalPrice();
-
+    setIsPaymentDialogOpen(true);
+    
     console.log('Booking Details:', {
       date: date ? format(date, 'PPP') : null,
       startTime,
       endTime,
       selectedFacilities,
-      prices: {
-        totalLivehousePrice: prices.totalLivehousePrice,
-        facilitiesPrice: prices.facilitiesPrice,
-        totalPrice: prices.totalPrice
-      }
+      prices: priceBreakdown
     });
-  }
+  };
 
   return (
     <div className="mx-6 my-6 p-6 bg-gradient-card shadow-md rounded-xl">
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={handleBookNow} className="space-y-6">
         <div className="grid grid-cols-2 gap-6">
           {/* Left Column - Date & Time Selection */}
           <div className="p-4 space-y-4">
@@ -140,24 +157,40 @@ const BookingForm: React.FC<BookingFormProps> = ({ livehousePrice, facilitiesDat
           <div className="bg-custom-background-elevated rounded-lg p-4 space-y-2 text-custom-text-primary">
             <div className="flex justify-between">
               <span>Livehouse Rental:</span>
-              <span>฿{calculateTotalPrice().totalLivehousePrice}</span>
+              <span>฿{priceBreakdown.totalLivehousePrice}</span>
             </div>
             <div className="flex justify-between">
               <span>Facilities:</span>
-              <span>฿{calculateTotalPrice().facilitiesPrice}</span>
+              <span>฿{priceBreakdown.facilitiesPrice}</span>
             </div>
             <div className="flex justify-between font-bold">
               <span>Total Price:</span>
-              <span>฿{calculateTotalPrice().totalPrice}</span>
+              <span>฿{priceBreakdown.totalPrice}</span>
             </div>
           </div>
         )}
-          <Button type="submit" className="w-full bg-custom-purple-dark hover:bg-custom-purple text-white">
-            Book Appointment
-          </Button>
+        <Button 
+          type="submit" 
+          className="w-full bg-custom-purple-dark hover:bg-custom-purple text-white"
+        >
+          Book Appointment
+        </Button>
       </form>
+      
+      <PaymentDialog
+        isOpen={isPaymentDialogOpen}
+        onOpenChange={setIsPaymentDialogOpen}
+        livehouseName={livehouseName}
+        livehousePrice={priceBreakdown.totalLivehousePrice}
+        facilitiesPrice={priceBreakdown.facilitiesPrice}
+        qrCodeUrl="/api/placeholder/200/200"
+        onPaymentComplete={() => {
+          console.log("Payment completed");
+          // Add your payment handling logic here
+        }}
+      />
     </div>
   );
-}
+};
 
-export default BookingForm
+export default BookingForm;

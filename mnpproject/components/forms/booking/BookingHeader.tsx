@@ -1,5 +1,5 @@
 import React from 'react'
-import BackButton from '../buttons/BackButton'
+import BackButton from '../../buttons/BackButton'
 import { MapPin } from 'lucide-react'
 
 interface BookingHeaderProps {
