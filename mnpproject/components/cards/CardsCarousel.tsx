@@ -37,36 +37,36 @@ const CardsCarousel = ({
 }) => {
 
     return (
-        <section>
-
-            {/* Cards Carousel */}
-            <div className="w-full flex justify-center items-center">
-                <Carousel
-                    opts={{
-                        align: "start",
-                        loop: true,
-                        skipSnaps: false
-                    }}
-                    className="w-full max-w-[85rem] px-16"
-                >
-                    <CarouselContent className="-ml-2">
-                        {data.map((livehouse) => (
-                            <CarouselItem key={livehouse.id} className="pl-2 basis-1/5">
-                                <LivehouseCard
-                                    id={livehouse.id}
-                                    card_size={cardSize}
-                                    bg_image={`../livehouse/${livehouse.images[0]}`}
-                                    location={livehouse.location}
-                                    name={livehouse.name}
-                                />
-                            </CarouselItem>
-                        ))}
-                    </CarouselContent>
-                    <CarouselPrevious className="left-2" />
-                    <CarouselNext className="right-2" />
-                </Carousel>
-            </div>
-        </section>
+      <section className="w-full flex justify-center items-center py-6">
+      <Carousel
+          opts={{
+              align: "start",
+              loop: true,
+              skipSnaps: false
+          }}
+          className="w-full max-w-[85rem] px-4 sm:px-8 md:px-12 lg:px-16"
+      >
+          <CarouselContent className="-ml-2">
+              {data.map((livehouse) => (
+                  <CarouselItem
+                      key={livehouse.id}
+                      className="pl-2 basis-1/2 sm:basis-1/3 md:basis-1/4.5 lg:basis-1/5"
+                  >
+                      <LivehouseCard
+                          id={livehouse.id}
+                          card_size={cardSize}
+                          bg_image={`../livehouse/${livehouse.images[0]}`}
+                          location={livehouse.location}
+                          name={livehouse.name}
+                      />
+                  </CarouselItem>
+              ))}
+          </CarouselContent>
+          <CarouselPrevious className="left-2 sm:left-4" />
+          <CarouselNext className="right-2 sm:right-4" />
+      </Carousel>
+  </section>
+  
     )
 }
 
