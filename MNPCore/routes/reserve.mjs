@@ -3,35 +3,54 @@
 // reject reserve
 // edit reserve
 import { Router } from "express";
-import { create_reserve } from "../database.mjs";
+import { create_booking, create_reserve, get_livehouse_by_id, get_user_by_id } from "../database.mjs";
+
+const handleServerError = (res, error, message = "Internal Server Error") => {
+  console.error("Server Error:", error);
+  return res.status(500).json({
+    error: message,
+    details: error.message,
+  });
+};
 
 const router = Router();
 
-router.post("/create_reserve", async (req, res) => {
+router.post("/create-booking", async (req, res) => {
   try {
-    const { artist_id, livehouse_id, start_time, end_time } = req.body;
-    const new_reserve = await create_reserve(
-      artist_id,
+    const {
+      user_id,
       livehouse_id,
       start_time,
       end_time,
-      "pending"
+      total_price,
+      guitar,
+      bass,
+      drum,
+      mic,
+      pa_monitor,
+    } = req.body;
+    const result = await create_booking(
+      user_id,
+      livehouse_id,
+      start_time,
+      end_time,
+      total_price,
+      "Pending",
+      guitar || 0,
+      bass || 0,
+      drum || 0,
+      mic || 0,
+      pa_monitor || 0
     );
-    res.status(201).json({
-      message: "Reserve created",
-      new_reserve: {
-        artist_id: new_reserve.artist_id,
-        livehouse_id: new_reserve.livehouse_id,
-        start_time: new_reserve.start_time,
-        end_time: new_reserve.end_time,
-        status: "pending",
-      },
+    console.log(result);
+    res.status(200).json({
+      result: result.insertId,
+      user_id,
+      livehouse_id,
     });
   } catch (error) {
-    console.error(error);
-    res.status(500).send("Internal server error");
+    return handleServerError(res, error);
   }
-  
 });
 
 export default router;

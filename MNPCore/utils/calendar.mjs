@@ -2,11 +2,8 @@
 // get data from calendar that have date & time, location
 import { google } from "googleapis";
 import dotenv from "dotenv";
-import { Router } from "express";
 
 dotenv.config();
-
-const router = Router();
 
 const CREDENTIALS = JSON.parse(process.env.CREDENTIALS);
 const calendarID = process.env.CALENDAR_ID;
@@ -22,12 +19,16 @@ const auth = new google.auth.JWT(
 
 const TINEOFFSET = "+07:00";
 
-router.post("/create-event", async (req, res) => {
+export async function createEvent(
+  summary,
+  description,
+  location,
+  startDateTime,
+  endDateTime
+) {
   try {
-    const { summary, description, location, startDateTime, endDateTime } =
-      req.body;
     const calendar = google.calendar("v3");
-    const response = await calendar.events.insert({
+    await calendar.events.insert({
       auth: auth,
       calendarId: calendarID,
       requestBody: {
@@ -44,12 +45,22 @@ router.post("/create-event", async (req, res) => {
         },
       },
     });
-    console.log(response);
-    res.status(200).send("Event created");
+    return "Event created";
   } catch (err) {
     console.error(err);
-    res.status(500).send("Internal server error");
   }
-});
+}
 
-export default router;
+// router.post("/create-event", async (req, res) => {
+//   try {
+//     const { summary, description, location, startDateTime, endDateTime } =
+//       req.body;
+
+//     console.log(response);
+//     res.status(200).send("Event created");
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).send("Internal server error");
+//   }
+// });
+// export default router;
