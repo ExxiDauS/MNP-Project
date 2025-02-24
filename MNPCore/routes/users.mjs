@@ -1,14 +1,22 @@
 import { Router } from "express";
 import {
-  get_userbyname,
   create_user,
-  get_userbyid,
-  patch_user,
-  get_managerbyid,
-  get_artistbyid,
+  get_user_by_id,
+  get_user_by_username,
+  update_user,
 } from "../database.mjs";
+import multer from "multer";
 
 const router = Router();
+
+const storage = multer.memoryStorage();
+const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 5 * 1024 * 1024, // 5MB limit
+  },
+});
+
 
 // Utility function to handle server errors
 const handleServerError = (res, error, message = "Internal Server Error") => {
@@ -18,6 +26,59 @@ const handleServerError = (res, error, message = "Internal Server Error") => {
     details: error.message,
   });
 };
+
+router.get("/profile/:id", async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const user = await get_user_by_id(userId);
+
+    if (!user) {
+      return res.status(404).json({
+        error: "User not found",
+      });
+    }
+
+    return res.status(200).json({
+      user,
+    });
+  } catch (error) {}
+});
+
+router.get("/profile/image/:id", async (req, res) => {
+  try{
+    const userId = req.params.id;
+    const user = await get_user_by_id(userId);
+
+    if (!user) {
+      return res.status(404).json({
+        error: "User not found",
+      });
+    }
+
+    res.setHeader("Content-Type", "image/jpeg");
+    return res.send(user.profile_image);
+  }catch(error){
+    return handleServerError(res, error);
+  }
+});
+
+router.get("/profile/verify/:id", async (req, res) => {
+  try{
+    const userId = req.params.id;
+    const user = await get_user_by_id(userId);
+
+    if (!user) {
+      return res.status(404).json({
+        error: "User not found",
+      });
+    }
+
+    res.setHeader("Content-Type", "image/jpeg");
+    return res.send(user.verify_proof);
+  }catch(error){
+    return handleServerError(res, error);
+  }
+});
 
 // Authentication Routes
 router.get("/sign-in", async (req, res) => {
@@ -30,7 +91,7 @@ router.get("/sign-in", async (req, res) => {
       });
     }
 
-    const [user] = await get_userbyname(username);
+    const user = await get_user_by_username(username);
 
     if (!user) {
       return res.status(404).json({
@@ -58,63 +119,92 @@ router.get("/sign-in", async (req, res) => {
   }
 });
 
-router.post("/sign-up", async (req, res) => {
-  try {
-    const { username, password, name, email, role, phone, imageURL } = req.body;
+router.post(
+  "/sign-up",
+  upload.fields([
+    { name: "profileImage", maxCount: 1 },
+    { name: "verify", maxCount: 1 },
+  ]),
+  async (req, res) => {
+    try {
+      const {
+        username,
+        password,
+        email,
+        role,
+        name,
+        phone,
+        facebook_link,
+        facebook_name,
+        instagram_link,
+        instagram_name,
+      } = req.body;
 
-    // Validate required fields
-    const requiredFields = ["username", "password", "name", "email", "role"];
-    const missingFields = requiredFields.filter((field) => !req.body[field]);
+      // Validate required fields
+      const requiredFields = [
+        "username",
+        "password",
+        "name",
+        "email",
+        "role",
+        "phone",
+      ];
+      const missingFields = requiredFields.filter((field) => !req.body[field]);
 
-    if (missingFields.length > 0) {
-      return res.status(400).json({
-        error: "Missing required fields",
-        fields: missingFields,
+      if (missingFields.length > 0) {
+        return res.status(400).json({
+          error: "Missing required fields",
+          fields: missingFields,
+        });
+      }
+
+      // Check if username already exists
+      const existingUser = await get_user_by_username(username);
+      if (existingUser) {
+        return res.status(409).json({
+          error: "Username already exists",
+        });
+      }
+
+      const profileImageBuffer = req.files?.profileImage?.[0]?.buffer || null;
+      const verifyImageBuffer = req.files?.verifyImage?.[0]?.buffer || null;
+
+      // Create new user
+      const newUser = await create_user(
+        username,
+        password,
+        email,
+        role,
+        name,
+        phone,
+        facebook_link || null,
+        facebook_name || null,
+        instagram_link || null,
+        instagram_name || null,
+        profileImageBuffer,
+        verifyImageBuffer
+      );
+
+      return res.status(201).json({
+        message: "User created successfully",
+        user: {
+          id: newUser.id,
+          username: newUser.username,
+          email: newUser.email,
+          role: newUser.role,
+          name: newUser.name,
+          phone: newUser.phone,
+        },
       });
+    } catch (error) {
+      return handleServerError(res, error, "Error creating user");
     }
-
-    // Check if username already exists
-    const [existingUser] = await get_userbyname(username);
-    if (existingUser) {
-      return res.status(409).json({
-        error: "Username already exists",
-      });
-    }
-
-    // Create new user
-    const newUser = await create_user(
-      username,
-      password, // Note: Should hash password in production
-      name,
-      email,
-      role,
-      phone || null,
-      imageURL || null
-    );
-
-    return res.status(201).json({
-      message: "User created successfully",
-      user: {
-        id: newUser.id,
-        username: newUser.username,
-        role: newUser.role,
-      },
-    });
-  } catch (error) {
-    return handleServerError(res, error, "Error creating user");
   }
-});
+);
 
-router.post("/verify", (req, res) => {
-  // TODO: Implement proper verification logic
-  return res.status(200).json({
-    message: "Verification successful",
-  });
-});
-
-router.patch("/edit-profile", async (req, res) => {
+router.patch("/edit-profile/:id", upload.single("image"), async (req, res) => {
   try {
-    const userId = req.body.user_id;
+    const userId = req.params.id;
 
     if (!userId) {
       return res.status(400).json({
@@ -123,7 +213,7 @@ router.patch("/edit-profile", async (req, res) => {
     }
 
     // Get base user info
-    const [user] = await get_userbyid(userId);
+    const user = await get_user_by_id(userId);
 
     if (!user) {
       return res.status(404).json({
@@ -131,23 +221,16 @@ router.patch("/edit-profile", async (req, res) => {
       });
     }
 
-    // Get role-specific details
-    const [roleDetails] = await (user.role === "manager"
-      ? get_managerbyid(userId)
-      : get_artistbyid(userId));
-
-    if (!roleDetails) {
-      return res.status(404).json({
-        error: `${user.role} details not found`,
-      });
-    }
-
     // Update user profile
-    const updatedUser = await patch_user(
-      req.body.name || roleDetails.name,
-      req.body.phone || roleDetails.phone,
-      req.body.imageURL || roleDetails.profile_image,
-      userId
+    const updatedUser = await update_user(
+      userId,
+      req.body.name || user.name,
+      req.body.phone || user.phone,
+      req.body.facebook_link || user.facebook_link,
+      req.body.facebook_name || user.facebook_name,
+      req.body.instagram_link || user.instagram_link,
+      req.body.instagram_name || user.instagram_name,
+      req.file ? req.file.buffer : user.profile_image
     );
 
     return res.status(200).json({
@@ -156,6 +239,30 @@ router.patch("/edit-profile", async (req, res) => {
     });
   } catch (error) {
     return handleServerError(res, error, "Error updating profile");
+  }
+});
+
+router.patch("/profile/change-status/:id", async (req, res) => {
+  try{
+    const userId = req.params.id;
+    const user = await get_user_by_id(userId);
+
+    if(!user){
+      return res.status(404).json({
+        error: "User not found",
+      });
+    }
+
+    const status = req.body.status || user.verify_status;
+
+    const updatedUser = await update_user(status, userId);
+
+    return res.status(200).json({
+      message: "User status updated successfully",
+      user: updatedUser,
+    });
+  }catch(error){
+    return handleServerError(res, error);
   }
 });
 

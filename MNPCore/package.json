@@ -5,7 +5,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ./app.mjs",
-    "dev": "nodemon ./app.mjs"
+    "dev": "nodemon ./app.mjs",
+    "swagger-autogen": "node swagger.mjs"
   },
   "keywords": [],
   "author": "",
@@ -22,7 +23,10 @@
     "mysql2": "^3.12.0",
     "nodemailer": "^6.10.0",
     "promptpay-qr": "^0.5.0",
-    "qrcode": "^1.5.4"
+    "qrcode": "^1.5.4",
+    "swagger-autogen": "^2.23.7",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
     "nodemon": "^3.1.9"
