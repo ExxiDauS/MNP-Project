@@ -2,10 +2,12 @@ import React from "react";
 
 const ExploreCard = ({
   card_size,
+  id,
   bg_image,
   location,
   name,
 }: {
+  id: string;
   card_size: number;
   bg_image: string;
   location: string;
@@ -26,9 +28,11 @@ const ExploreCard = ({
             <h3 className="text-secondary text-lg font-bold mt-2">{name}</h3>
             <p className="text-custom-purple-light text-sm mt-1">{location}</p>
           </div>
+          <a href={`/livehouse-detail/${id}`} className="block">
           <button className="bg-gradient-to-r from-custom-purple-deeper to-custom-purple text-white font-bold py-3 px-6 rounded-full shadow-lg hover:scale-105 transition-transform mt-3">
             จอง
           </button>
+          </a>
         </div>
       </div>
     </>

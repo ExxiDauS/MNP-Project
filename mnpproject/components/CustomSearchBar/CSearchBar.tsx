@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Search } from "lucide-react";
 
 interface SearchBarProps {
-  handleSearch?: (query: string) => void; // Function type annotation
+  handleSearch?: (query: string) => void;
   placeholder?: string;
 }
 
@@ -16,14 +16,13 @@ const CSearchBar: React.FC<SearchBarProps> = ({
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
     if (handleSearch) handleSearch(e.target.value);
-    
   };
 
   return (
-    <>
-      <div className="relative w-full max-w-md">
+    <div className="flex justify-center w-full px-4">
+      <div className="relative w-full max-w-[90%] sm:max-w-lg">
         <Search
-          className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+          className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"
           size={20}
         />
         <input
@@ -31,10 +30,11 @@ const CSearchBar: React.FC<SearchBarProps> = ({
           value={query}
           onChange={onChange}
           placeholder={placeholder}
-          className="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+          className="w-full h-12 pl-12 pr-4 rounded-full bg-[#1b181a] text-white border border-gray-700 
+          focus:outline-none focus:ring-2 focus:ring-white focus:border-white transition-all text-sm sm:text-base"
         />
       </div>
-    </>
+    </div>
   );
 };
 
