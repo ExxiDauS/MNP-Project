@@ -37,10 +37,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-custom-background-primary`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-custom-background-primary w-screen`}
       >
-
-        <nav className="fixed top-0 z-50 w-full  bg-gradient-to-b from-black via-black/80 to-transparent px-6 py-4">
+        <nav className="fixed top-0 z-50 w-screen bg-gradient-to-b from-black via-black/80 to-transparent px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-8">
               <MobileNav />
@@ -58,7 +57,11 @@ export default function RootLayout({
             </div>
 
             <div className="flex items-center space-x-2">
-              <Button variant="ghost" size="icon" className="hover:bg-zinc-800 rounded-full size-11">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="hover:bg-zinc-800 rounded-full size-11"
+              >
                 <Avatar className="size-8">
                   <AvatarImage src="https://github.com/shadcn.png" />
                   <AvatarFallback>KI</AvatarFallback>
@@ -67,7 +70,7 @@ export default function RootLayout({
             </div>
           </div>
         </nav>
-        {children}
+        <main className="flex w-screen overflow-y-hidden">{children}</main>
       </body>
     </html>
   );
