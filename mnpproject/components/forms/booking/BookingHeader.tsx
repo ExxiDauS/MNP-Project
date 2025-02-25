@@ -1,21 +1,20 @@
 import React from 'react'
-import { MapPin, ChevronLeft } from 'lucide-react';
-import { Button } from '../ui/button';
-import BackButton from '../buttons/BackButton';
+import BackButton from '../../buttons/BackButton'
+import { MapPin } from 'lucide-react'
 
-interface DetailHeaderProps {
+interface BookingHeaderProps {
     name: string
     address: string
+    artistName: string
     price: number
     id: string
 }
 
-const DetailHeader: React.FC<DetailHeaderProps> = ({ name, address, price, id }) => {
-
-    return (
-        <div className="px-6 pt-6">
+const BookingHeader: React.FC<BookingHeaderProps> = ({ name, address, artistName, price, id }) => {
+  return (
+    <div className="px-6 pt-6">
             {/* Back button */}
-            <BackButton className="mb-4" href="/" />
+            <BackButton className="mb-4" href={`/livehouse-detail/${id}`} />
 
             <div className="flex justify-between items-start w-full">
                 {/* Left section */}
@@ -31,19 +30,17 @@ const DetailHeader: React.FC<DetailHeaderProps> = ({ name, address, price, id })
                 </div>
 
                 {/* Right section */}
-                <div className="flex items-center gap-4 pt-3">
-                    <span className="text-2xl font-bold text-custom-text-primary">
+                <div className="flex flex-col gap-2">
+                    <span className="text-xl font-bold text-custom-text-primary">
                         ฿{price} / Hour
                     </span>
-                    <a href={`${id}/booking`}>
-                        <Button className="bg-custom-purple-dark hover:bg-custom-purple text-white px-6">
-                            Booking Stage
-                        </Button>
-                    </a>
+                    <span className="text-xl font-bold text-custom-text-primary">
+                        Booking By : {artistName}
+                    </span>
                 </div>
             </div>
         </div>
-    )
+  )
 }
 
-export default DetailHeader
+export default BookingHeader

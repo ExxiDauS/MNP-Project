@@ -1,0 +1,40 @@
+{
+    "facilities": [
+      {
+        "id": "microphone",
+        "name": "Microphone",
+        "details": "Shure SM58",
+        "pricePerHour": 300
+      },
+      {
+        "id": "guitar",
+        "name": "Guitar",
+        "details": "Fender Vintera II Strat",
+        "pricePerHour": 500
+      },
+      {
+        "id": "bass",
+        "name": "Bass",
+        "details": "Fender Precision Bass",
+        "pricePerHour": 450
+      },
+      {
+        "id": "drum",
+        "name": "Drum",
+        "details": "Pearl Export Series",
+        "pricePerHour": 600
+      },
+      {
+        "id": "keyboard",
+        "name": "Keyboard",
+        "details": "Yamaha MODX6",
+        "pricePerHour": 400
+      },
+      {
+        "id": "paMonitor",
+        "name": "PA Monitor",
+        "details": "QSC K12.2",
+        "pricePerHour": 350
+      }
+    ]
+  }

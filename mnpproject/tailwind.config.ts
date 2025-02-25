@@ -85,8 +85,6 @@ export default {
 				'gradient-card': 'linear-gradient(to bottom right, #18181b, #000000)',      // Card backgrounds and hoverable elements
 				'gradient-hover': 'linear-gradient(to bottom, #9333EA, #581C87)'// Hover states for interactive elements
 			},
-
-
 		}
 	},
 
