@@ -1,12 +1,12 @@
 import React from 'react'
-import { MapPin, ChevronLeft } from 'lucide-react';
+import { MapPin } from 'lucide-react';
 import { Button } from '../ui/button';
 import BackButton from '../buttons/BackButton';
 
 interface DetailHeaderProps {
     name: string
     address: string
-    price: number
+    price: string
     id: string
 }
 
