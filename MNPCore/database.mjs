@@ -560,6 +560,16 @@ export async function get_proof(booking_id) {
     throw err;
   }
 }
-export async function create_reserve() {}
-export async function get_reserve() {}
-export async function get_reserve_from_id() {}
+
+export async function get_booking_by_user_id(user_id){
+  try {
+    const rows = await pool.query(
+      `SELECT * FROM mnp_booking WHERE user_id = ?`,
+      [user_id]
+    );
+    return rows;
+  } catch (err) {
+    console.log("Error getting booking by user id:", err);
+    throw err;
+  }
+}

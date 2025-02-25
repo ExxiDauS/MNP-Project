@@ -3,7 +3,7 @@
 // reject reserve
 // edit reserve
 import { Router } from "express";
-import { create_booking, create_reserve, get_livehouse_by_id, get_user_by_id } from "../database.mjs";
+import { create_booking, get_booking_by_id, get_booking_by_user_id } from "../database.mjs";
 
 const handleServerError = (res, error, message = "Internal Server Error") => {
   console.error("Server Error:", error);
@@ -50,6 +50,17 @@ router.post("/create-booking", async (req, res) => {
     });
   } catch (error) {
     return handleServerError(res, error);
+  }
+});
+
+router.get("/get_booking/:user_id", async (req, res) => {
+  try {
+    const user_id = req.params.user_id;
+    const [result] = await get_booking_by_user_id(user_id);
+    console.log(result);
+    res.status(200).json(result);
+  } catch (err) {
+    return handleServerError(res, err);
   }
 });
 
