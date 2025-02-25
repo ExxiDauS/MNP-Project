@@ -42,7 +42,11 @@ const SearchBar = () => {
           onFocus={() => setIsOpen(true)}
         />
         {searchQuery && (
-          <Button variant="ghost" size="icon" onClick={() => setSearchQuery("")}>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setSearchQuery("")}
+          >
             <X className="h-4 w-4 text-white" />
           </Button>
         )}
@@ -54,17 +58,19 @@ const SearchBar = () => {
             <CommandList>
               <CommandGroup heading="Suggestions" className=" bg-[#1b181a]">
                 {filteredSuggestions.map((house) => (
-                  <CommandItem
-                    key={house.id}
-                    className="flex items-center px-3 py-2 text-sm text-gray-300 bg-[#1b181a] cursor-pointer rounded-md"
-                    onClick={() => {
-                      setSearchQuery(house.name);
-                      // handleSearch(house.name);
-                      setIsOpen(false);
-                    }}
-                  >
-                    {house.name}
-                  </CommandItem>
+                  <a href={`/livehouse-detail/${house.id}`}>
+                    <CommandItem
+                      key={house.id}
+                      className="flex items-center px-3 py-2 text-sm text-gray-300 bg-[#1b181a] cursor-pointer rounded-md"
+                      onClick={() => {
+                        setSearchQuery(house.name);
+                        // handleSearch(house.name);
+                        setIsOpen(false);
+                      }}
+                    >
+                      {house.name}
+                    </CommandItem>
+                  </a>
                 ))}
               </CommandGroup>
             </CommandList>

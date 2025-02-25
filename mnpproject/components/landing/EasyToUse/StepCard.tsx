@@ -1,6 +1,5 @@
 import React, { ReactNode } from 'react';
 
-// Define the main props interface for StepCard
 interface StepCardProps {
   index: number;
   title: string;
@@ -8,30 +7,27 @@ interface StepCardProps {
   icon: ReactNode;
 }
 
-const StepCard: React.FC<StepCardProps> = ({
-  index,
-  title,
-  description,
-  icon
-}) => {
+const StepCard: React.FC<StepCardProps> = ({ index, title, description, icon }) => {
   return (
-    <>
+    <div className="relative w-full max-w-xs sm:max-w-sm md:max-w-none">
       {/* Step number bubble */}
-      <div className="absolute -top-4 left-0 w-8 h-8 bg-custom-purple-dark text-white rounded-full flex items-center justify-center font-bold">
+      <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 sm:left-0 sm:translate-x-0 w-8 h-8 bg-custom-purple-dark text-white rounded-full flex items-center justify-center font-bold">
         {index}
       </div>
 
-      {/* Content */}
-      <div className="bg-gradient-card p-6 rounded-lg shadow-sm w-full text-center h-full flex flex-col items-center outline outline-custom-purple-light outline-offset-2">
+      {/* Card Content */}
+      <div className="bg-gradient-card p-6 rounded-lg shadow-sm w-full text-center h-full flex flex-col items-center border border-custom-purple-light">
         <div className="mb-4">
-          {icon}  {/* Simply render the passed icon */}
+          {icon}
         </div>
-        <div className="h-14 flex items-center justify-center">
-          <h3 className="text-xl font-semibold mb-2 whitespace-pre-line text-custom-text-primary">{title}</h3>
-        </div>
-        <p className="text-custom-text-secondary text-sm">{description}</p>
+        <h3 className="text-xl font-semibold mb-2 whitespace-pre-line text-custom-text-primary text-center sm:text-left">
+          {title}
+        </h3>
+        <p className="text-custom-text-secondary text-sm text-center sm:text-left">
+          {description}
+        </p>
       </div>
-    </>
+    </div>
   );
 };
 
