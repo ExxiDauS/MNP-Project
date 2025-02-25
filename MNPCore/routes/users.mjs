@@ -167,7 +167,7 @@ router.post(
       }
 
       const profileImageBuffer = req.files?.profileImage?.[0]?.buffer || null;
-      const verifyImageBuffer = req.files?.verifyImage?.[0]?.buffer || null;
+      const verifyImageBuffer = req.files?.verify?.[0]?.buffer || null;
 
       // Create new user
       const newUser = await create_user(
@@ -188,7 +188,7 @@ router.post(
       return res.status(201).json({
         message: "User created successfully",
         user: {
-          id: newUser.id,
+          id: newUser.user_id,
           username: newUser.username,
           email: newUser.email,
           role: newUser.role,

@@ -78,11 +78,11 @@ router.post(
       const { user_id, name, location, province, description, price_per_hour } =
         req.body;
 
-      const sampleimg01Buffer = req.files?.sampleimg01?.[0]?.buffer || null;
-      const sampleimg02Buffer = req.files?.sampleimg02?.[0]?.buffer || null;
-      const sampleimg03Buffer = req.files?.sampleimg03?.[0]?.buffer || null;
-      const sampleimg04Buffer = req.files?.sampleimg04?.[0]?.buffer || null;
-      const sampleimg05Buffer = req.files?.sampleimg05?.[0]?.buffer || null;
+      const sampleimg01Buffer = req.files?.sample_image01?.[0]?.buffer || null;
+      const sampleimg02Buffer = req.files?.sample_image02?.[0]?.buffer || null;
+      const sampleimg03Buffer = req.files?.sample_image03?.[0]?.buffer || null;
+      const sampleimg04Buffer = req.files?.sample_image04?.[0]?.buffer || null;
+      const sampleimg05Buffer = req.files?.sample_image05?.[0]?.buffer || null;
 
       const newLivehouse = await create_livehouse(
         user_id,
