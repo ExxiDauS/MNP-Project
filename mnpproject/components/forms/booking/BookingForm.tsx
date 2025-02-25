@@ -7,6 +7,8 @@ import TimeSelect from '../TimeSelect';
 import FacilitiesCarousel from '../FacilitiesCarousel';
 import PaymentDialog from '@/components/payments/PaymentDialog';
 
+import payment_qr from '@/public/payment_qr.png'
+
 interface Facility {
   id: string;
   name: string;
@@ -14,7 +16,7 @@ interface Facility {
   pricePerHour: number;
 }
 
-interface BookingFormProps {
+interface BookingFormProps {  
   livehousePrice: number;
   livehouseName: string;
   facilitiesData: Facility[];
@@ -50,7 +52,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ livehousePrice, livehouseName
     facilitiesPrice: 0,
     totalPrice: 0
   });
-  
+
   const timeSlots = generateTimeSlots();
 
   // Handle facility toggle
@@ -114,11 +116,12 @@ const BookingForm: React.FC<BookingFormProps> = ({ livehousePrice, livehouseName
   const handleBookNow = (e: React.FormEvent) => {
     e.preventDefault();
     setIsPaymentDialogOpen(true);
-    
+    const formattedStartDateTime = date ? `${format(date, "yyyy-MM-dd")}T${startTime}:00` : null;
+    const formattedEndDateTime = date ? `${format(date, "yyyy-MM-dd")}T${endTime}:00` : null;
+
     console.log('Booking Details:', {
-      date: date ? format(date, 'PPP') : null,
-      startTime,
-      endTime,
+      formattedStartDateTime,
+      formattedEndDateTime,
       selectedFacilities,
       prices: priceBreakdown
     });
@@ -169,21 +172,21 @@ const BookingForm: React.FC<BookingFormProps> = ({ livehousePrice, livehouseName
             </div>
           </div>
         )}
-        <Button 
-          type="submit" 
+        <Button
+          type="submit"
           className="w-full bg-custom-purple-dark hover:bg-custom-purple text-white"
         >
           Book Appointment
         </Button>
       </form>
-      
+
       <PaymentDialog
         isOpen={isPaymentDialogOpen}
         onOpenChange={setIsPaymentDialogOpen}
         livehouseName={livehouseName}
         livehousePrice={priceBreakdown.totalLivehousePrice}
         facilitiesPrice={priceBreakdown.facilitiesPrice}
-        qrCodeUrl="/api/placeholder/200/200"
+        qrCodeUrl={payment_qr}
         onPaymentComplete={() => {
           console.log("Payment completed");
           // Add your payment handling logic here

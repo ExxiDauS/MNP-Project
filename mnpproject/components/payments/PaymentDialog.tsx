@@ -7,7 +7,6 @@ import {
     DialogContent,
     DialogHeader,
     DialogTitle,
-    DialogDescription
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -15,7 +14,7 @@ import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Upload, X } from "lucide-react";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 
 interface PaymentDialogProps {
     isOpen: boolean;
@@ -23,7 +22,7 @@ interface PaymentDialogProps {
     livehouseName: string;
     livehousePrice: number;
     facilitiesPrice: number;
-    qrCodeUrl: string;
+    qrCodeUrl: StaticImageData;
     onPaymentComplete?: () => void;
     onFileUpload?: (file: File) => void;
 }
@@ -34,9 +33,9 @@ export default function PaymentDialog({
     livehouseName,
     livehousePrice,
     facilitiesPrice,
-    qrCodeUrl = "/api/placeholder/200/200", // Placeholder image
+    qrCodeUrl, // Placeholder image
     onPaymentComplete = () => { },
-    onFileUpload = () => { }
+    onFileUpload = () => {}
 }: PaymentDialogProps) {
     const [file, setFile] = useState<File | null>(null);
     const [isDragging, setIsDragging] = useState<boolean>(false);
@@ -48,16 +47,6 @@ export default function PaymentDialog({
         if (e.target.files && e.target.files[0]) {
             const uploadedFile = e.target.files[0];
             setFile(uploadedFile);
-
-            // Log file information
-            console.log('File uploaded:', {
-                name: uploadedFile.name,
-                type: uploadedFile.type,
-                size: `${(uploadedFile.size / 1024).toFixed(2)} KB`,
-                lastModified: new Date(uploadedFile.lastModified).toLocaleString()
-            });
-
-            // Call the onFileUpload callback if provided
             if (onFileUpload) {
                 onFileUpload(uploadedFile);
             }
@@ -72,16 +61,6 @@ export default function PaymentDialog({
         if (e.dataTransfer.files && e.dataTransfer.files[0]) {
             const droppedFile = e.dataTransfer.files[0];
             setFile(droppedFile);
-
-            // Log file information
-            console.log('File dropped:', {
-                name: droppedFile.name,
-                type: droppedFile.type,
-                size: `${(droppedFile.size / 1024).toFixed(2)} KB`,
-                lastModified: new Date(droppedFile.lastModified).toLocaleString()
-            });
-
-            // Call onFileUpload callback if provided
             if (onFileUpload) {
                 onFileUpload(droppedFile);
             }
@@ -109,13 +88,11 @@ export default function PaymentDialog({
 
     // Handle payment completion
     const handlePaymentComplete = (): void => {
-        // Log payment completion with file information
         console.log('Payment completed with file:', file ? {
             fileName: file.name,
             fileType: file.type,
             fileSize: `${(file.size / 1024).toFixed(2)} KB`
         } : 'No file uploaded');
-
         removeFile();
         onPaymentComplete();
         onOpenChange(false);
@@ -123,64 +100,66 @@ export default function PaymentDialog({
 
     return (
         <Dialog open={isOpen} onOpenChange={onOpenChange}>
-            <DialogContent className="sm:max-w-md">
+            <DialogContent className="sm:max-w-md max-h-[90vh] overflow-y-auto">
                 <DialogHeader>
-                    <DialogTitle className="text-center text-xl font-bold">Payment Details</DialogTitle>
-                    <DialogDescription>
-                    </DialogDescription>
+                    <DialogTitle className="text-center font-bold">Payment Details</DialogTitle>
                 </DialogHeader>
 
-                <div className="flex flex-col items-center space-y-4 py-4">
+                <div className="flex flex-col items-center space-y-2 py-2">
                     <Card className="w-full">
-                        <CardContent className="pt-6">
-                            {/* QR Code Section */}
-                            <div className="flex flex-col items-center mb-6">
-                                <p className="text-sm text-gray-500 mb-2">Scan to pay</p>
-                                <div className="bg-white p-2 rounded-md mb-2">
-                                    <Image
-                                        src={qrCodeUrl}
-                                        alt="Payment QR Code"
-                                        width={200}
-                                        height={200}
-                                        className="mx-auto"
-                                    />
-                                </div>
-                            </div>
-
-                            {/* Payment Information Section */}
-                            <div className="space-y-3">
-                                <div className="flex justify-between">
-                                    <span className="text-gray-600">Livehouse</span>
-                                    <span className="font-medium">{livehouseName}</span>
+                        <CardContent className="pt-4 px-4">
+                            {/* Two-column layout for QR and payment info */}
+                            <div className="flex flex-row gap-4">
+                                {/* QR Code Column */}
+                                <div className="flex-shrink-0">
+                                    <div className="bg-white p-1 rounded-md">
+                                        <Image
+                                            src={qrCodeUrl}
+                                            alt="Payment QR Code"
+                                            width={120}
+                                            height={120}
+                                            className="mx-auto"
+                                        />
+                                    </div>
+                                    <p className="text-xs text-gray-500 text-center mt-1">Scan to pay</p>
                                 </div>
 
-                                <div className="flex justify-between">
-                                    <span className="text-gray-600">Livehouse Price</span>
-                                    <span>฿{livehousePrice}</span>
-                                </div>
+                                {/* Payment Information Column */}
+                                <div className="flex-grow space-y-2">
+                                    <div className="flex justify-between text-sm">
+                                        <span className="text-gray-600">Livehouse</span>
+                                        <span className="font-medium">{livehouseName}</span>
+                                    </div>
 
-                                <div className="flex justify-between">
-                                    <span className="text-gray-600">Facilities Price</span>
-                                    <span>฿{facilitiesPrice}</span>
-                                </div>
+                                    <div className="flex justify-between text-sm">
+                                        <span className="text-gray-600">Livehouse Price</span>
+                                        <span>฿{livehousePrice}</span>
+                                    </div>
 
-                                <Separator className="my-2" />
+                                    <div className="flex justify-between text-sm">
+                                        <span className="text-gray-600">Facilities Price</span>
+                                        <span>฿{facilitiesPrice}</span>
+                                    </div>
 
-                                <div className="flex justify-between">
-                                    <span className="font-semibold">Total Price</span>
-                                    <span className="font-bold text-lg">฿{totalPrice}</span>
+                                    <Separator className="my-1" />
+
+                                    <div className="flex justify-between">
+                                        <span className="font-semibold">Total Price</span>
+                                        <span className="font-bold">฿{totalPrice}</span>
+                                    </div>
                                 </div>
                             </div>
 
                             {/* File Upload Section */}
-                            <div className="mt-6">
-                                <Label htmlFor="payment-proof" className="text-sm font-medium mb-2 block">
+                            <div className="mt-4">
+                                <Label htmlFor="payment-proof" className="text-xs font-medium mb-1 block">
                                     Upload Payment Proof
                                 </Label>
 
                                 <div
-                                    className={`border-2 border-dashed rounded-lg p-6 mt-2 text-center cursor-pointer transition-colors ${isDragging ? 'border-primary bg-primary/5' : 'border-gray-300 hover:border-gray-400'
-                                        }`}
+                                    className={`border-2 border-dashed rounded-lg p-3 mt-1 text-center cursor-pointer transition-colors ${
+                                        isDragging ? 'border-primary bg-primary/5' : 'border-gray-300 hover:border-gray-400'
+                                    }`}
                                     onDragOver={handleDragOver}
                                     onDragLeave={handleDragLeave}
                                     onDrop={handleDrop}
@@ -198,11 +177,11 @@ export default function PaymentDialog({
                                     {file ? (
                                         <div className="flex items-center justify-between">
                                             <div className="flex items-center">
-                                                <div className="bg-primary/10 p-2 rounded-full mr-3">
-                                                    <Upload size={16} className="text-primary" />
+                                                <div className="bg-primary/10 p-1 rounded-full mr-2">
+                                                    <Upload size={14} className="text-primary" />
                                                 </div>
                                                 <div className="text-left">
-                                                    <p className="text-sm font-medium truncate max-w-[180px]">{file.name}</p>
+                                                    <p className="text-xs font-medium truncate max-w-[150px]">{file.name}</p>
                                                     <p className="text-xs text-gray-500">{(file.size / 1024).toFixed(1)} KB</p>
                                                 </div>
                                             </div>
@@ -213,18 +192,18 @@ export default function PaymentDialog({
                                                     e.stopPropagation();
                                                     removeFile();
                                                 }}
+                                                className="h-6 w-6"
                                             >
-                                                <X size={16} />
+                                                <X size={14} />
                                             </Button>
                                         </div>
                                     ) : (
-                                        <div className="space-y-2">
-                                            <div className="mx-auto w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
-                                                <Upload size={20} className="text-primary" />
+                                        <div className="flex items-center justify-center gap-2">
+                                            <div className="w-6 h-6 bg-primary/10 rounded-full flex items-center justify-center">
+                                                <Upload size={12} className="text-primary" />
                                             </div>
-                                            <div className="space-y-1">
-                                                <p className="text-sm font-medium">Drop files here or click to upload</p>
-                                                <p className="text-xs text-gray-500">Upload payment receipt or confirmation</p>
+                                            <div>
+                                                <p className="text-xs font-medium">Click to upload or drop files here</p>
                                             </div>
                                         </div>
                                     )}
@@ -233,16 +212,16 @@ export default function PaymentDialog({
                         </CardContent>
                     </Card>
 
-                    <div className="flex gap-2 mt-4 w-full">
+                    <div className="flex gap-2 w-full">
                         <Button
                             variant="outline"
-                            className="w-1/2"
+                            className="w-1/2 py-1 h-8 text-sm"
                             onClick={() => onOpenChange(false)}
                         >
                             Cancel
                         </Button>
                         <Button
-                            className="w-1/2"
+                            className="w-1/2 py-1 h-8 text-sm"
                             onClick={handlePaymentComplete}
                         >
                             Confirm Payment
