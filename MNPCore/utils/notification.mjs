@@ -34,7 +34,7 @@ export async function sendMail(to, subject) {
 
     await transporter.sendMail({
         to: to,
-        subject: 'Test',
+        subject: subject,
         html: htmlTemplate,
   });
 

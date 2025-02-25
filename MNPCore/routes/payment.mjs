@@ -16,6 +16,7 @@ import {
 } from "../database.mjs";
 import multer from "multer";
 import { createEvent } from "../utils/calendar.mjs";
+import { sendMail } from "../utils/notification.mjs";
 
 const router = Router();
 
@@ -93,6 +94,14 @@ router.patch("/upload", upload.single("image"), async (req, res) => {
       req.file.mimetype
     );
 
+    const booking = await get_booking_by_id(req.body.booking_id);
+    const livehouse = await get_livehouse_by_id(booking.livehouse_id);
+    const artist = await get_user_by_id(booking.user_id);
+    const manager = await get_user_by_id(livehouse.user_id);
+
+    const artist_email = await sendMail(artist.email, "Payment Proof Uploaded");
+    const manager_email = await sendMail(manager.email, "Need Verification");
+
     res.json({
       message: "Image uploaded successfully",
       imageId: result,
@@ -130,7 +139,7 @@ router.patch("/verify/:booking_id", async (req, res) => {
     const result = await verify_reserve(req.params.booking_id);
     const booking = await get_booking_by_id(req.params.booking_id);
     const livehouse = await get_livehouse_by_id(booking.livehouse_id);
-    const user = await get_user_by_id(livehouse.user_id);
+    const user = await get_user_by_id(booking.user_id);
     const event = await createEvent(
       `${user.name} perfrom in ${livehouse.name}`,
       `Come join us when ${booking.start_time} to ${booking.end_time}`,
@@ -138,6 +147,7 @@ router.patch("/verify/:booking_id", async (req, res) => {
       booking.start_time,
       booking.end_time
     );
+    const artist_email = await sendMail(user.email, "Booking has been accepted."); // * Accept Case
     res.status(200).json({ message: "Reserve verified", event: event });
   } catch (error) {
     console.error("Error verifying reserve:", error);

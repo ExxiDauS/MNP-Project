@@ -104,7 +104,7 @@ router.get("/sign-in", async (req, res) => {
       return res.status(200).json({
         message: "Sign in successful",
         user: {
-          id: user.id,
+          id: user.user_id,
           username: user.username,
           role: user.role,
         },
