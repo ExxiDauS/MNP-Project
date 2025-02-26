@@ -12,7 +12,7 @@ interface LivehouseCardProps {
 
 const LivehouseCard: React.FC<LivehouseCardProps> = ({ id, bg_image, location, name }) => {
   return (
-    <a href={`/livehouse-detail/${id}`} className="block">
+    <a href={`/(with-navbar)/livehouse-detail/${id}`} className="block">
       <div className="p-2">
         <Card
           className="bg-black overflow-hidden relative group transform transition-all duration-300 hover:scale-105 

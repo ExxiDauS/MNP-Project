@@ -81,7 +81,7 @@ router.get("/profile/verify/:id", async (req, res) => {
 });
 
 // Authentication Routes
-router.get("/sign-in", async (req, res) => {
+router.post("/sign-in", async (req, res) => {
   try {
     const { username, password } = req.body;
 
