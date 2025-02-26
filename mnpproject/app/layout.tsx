@@ -37,7 +37,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-custom-background-primary w-screen`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-custom-background-primary w-screen overflow-y`}
       >
         <nav className="fixed top-0 z-50 w-screen bg-gradient-to-b from-black via-black/80 to-transparent px-6 py-4">
           <div className="flex items-center justify-between">
@@ -70,7 +70,7 @@ export default function RootLayout({
             </div>
           </div>
         </nav>
-        <main className="flex w-screen overflow-y-hidden">{children}</main>
+        {children}
       </body>
     </html>
   );
