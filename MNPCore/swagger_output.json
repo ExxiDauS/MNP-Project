@@ -513,6 +513,153 @@
           }
         }
       }
+    },
+    "/api/facilities/create-facility": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "livehouse_id": {
+                  "example": "any"
+                },
+                "mic": {
+                  "example": "any"
+                },
+                "guitar": {
+                  "example": "any"
+                },
+                "bass": {
+                  "example": "any"
+                },
+                "drum": {
+                  "example": "any"
+                },
+                "keyboard": {
+                  "example": "any"
+                },
+                "pa_monitor": {
+                  "example": "any"
+                },
+                "mic_price": {
+                  "example": "any"
+                },
+                "guitar_price": {
+                  "example": "any"
+                },
+                "bass_price": {
+                  "example": "any"
+                },
+                "drum_price": {
+                  "example": "any"
+                },
+                "keyboard_price": {
+                  "example": "any"
+                },
+                "pa_monitor_price": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/facilities/update-facility/{facility_id}": {
+      "patch": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "facility_id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "mic": {
+                  "example": "any"
+                },
+                "guitar": {
+                  "example": "any"
+                },
+                "bass": {
+                  "example": "any"
+                },
+                "drum": {
+                  "example": "any"
+                },
+                "keyboard": {
+                  "example": "any"
+                },
+                "pa_monitor": {
+                  "example": "any"
+                },
+                "mic_price": {
+                  "example": "any"
+                },
+                "guitar_price": {
+                  "example": "any"
+                },
+                "bass_price": {
+                  "example": "any"
+                },
+                "drum_price": {
+                  "example": "any"
+                },
+                "keyboard_price": {
+                  "example": "any"
+                },
+                "pa_monitor_price": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/facilities/get-facilities/{livehouse_id}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "livehouse_id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
     }
   }
 }
