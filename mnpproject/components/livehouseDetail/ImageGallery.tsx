@@ -1,12 +1,12 @@
-import React from "react";
-import { Image } from "lucide-react";
+import React from 'react';
+import { Image } from 'lucide-react';
 interface ImageGalleryProps {
-  images: string[];
+  images: string[]
 }
 
 const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
   return (
-    <div className="w-full grid grid-cols-12 gap-2 mt-4 px-6">
+    <div className="w-full grid grid-cols-1 md:grid-cols-12 md gap-2 mt-4 px-6">
       {/* Main large image */}
       <div className="col-span-6 relative bg-gray-200 rounded-lg aspect-[4/3] h-full">
         <img
@@ -14,7 +14,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
           alt=""
           className="w-full h-full object-cover rounded-lg"
           onError={(e) => {
-            e.currentTarget.style.display = "none";
+            e.currentTarget.style.display = 'none';
           }}
         />
       </div>
@@ -28,7 +28,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
             alt=""
             className="w-full h-full object-cover rounded-lg"
             onError={(e) => {
-              e.currentTarget.style.display = "none";
+              e.currentTarget.style.display = 'none';
             }}
           />
         </div>
@@ -38,7 +38,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
             alt=""
             className="w-full h-full object-cover rounded-lg"
             onError={(e) => {
-              e.currentTarget.style.display = "none";
+              e.currentTarget.style.display = 'none';
             }}
           />
         </div>
@@ -50,7 +50,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
             alt=""
             className="w-full h-full object-cover rounded-lg"
             onError={(e) => {
-              e.currentTarget.style.display = "none";
+              e.currentTarget.style.display = 'none';
             }}
           />
         </div>
@@ -60,7 +60,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
             alt=""
             className="w-full h-full object-cover rounded-lg"
             onError={(e) => {
-              e.currentTarget.style.display = "none";
+              e.currentTarget.style.display = 'none';
             }}
           />
         </div>
