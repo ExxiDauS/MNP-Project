@@ -1,7 +1,7 @@
-import React from 'react';
-import { MapPin } from 'lucide-react';
-import { Button } from '../ui/button';
-import BackButton from '../buttons/BackButton';
+import React from "react";
+import { MapPin, ChevronLeft } from "lucide-react";
+import { Button } from "../ui/button";
+import BackButton from "../buttons/BackButton";
 
 interface DetailHeaderProps {
   name: string;
@@ -10,16 +10,23 @@ interface DetailHeaderProps {
   id: string;
 }
 
-const DetailHeader: React.FC<DetailHeaderProps> = ({ name, address, price, id }) => {
+const DetailHeader: React.FC<DetailHeaderProps> = ({
+  name,
+  address,
+  price,
+  id,
+}) => {
   return (
-    <div className="px-4 md:px-6 pt-6">
+    <div className="px-6 pt-6">
       {/* Back button */}
       <BackButton className="mb-4" href="/" />
 
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center w-full gap-4">
+      <div className="flex justify-between items-start w-full">
         {/* Left section */}
         <div className="space-y-2">
-          <h1 className="text-xl md:text-2xl font-bold text-custom-text-primary">{name}</h1>
+          <h1 className="text-2xl font-bold text-custom-text-primary">
+            {name}
+          </h1>
 
           <div className="flex items-start gap-2 text-sm text-gray-600">
             <MapPin className="w-4 h-4 mt-1 flex-shrink-0 text-white" />
@@ -28,12 +35,12 @@ const DetailHeader: React.FC<DetailHeaderProps> = ({ name, address, price, id })
         </div>
 
         {/* Right section */}
-        <div className="flex flex-col md:flex-row items-start md:items-center gap-2 md:gap-4">
-          <span className="text-lg md:text-2xl font-bold text-custom-text-primary">
+        <div className="flex items-center gap-4 pt-3">
+          <span className="text-2xl font-bold text-custom-text-primary">
             ฿{price} / Hour
           </span>
           <a href={`${id}/booking`}>
-            <Button className="bg-custom-purple-dark hover:bg-custom-purple text-white px-4 md:px-6 py-2 md:py-3">
+            <Button className="bg-custom-purple-dark hover:bg-custom-purple text-white px-6">
               Booking Stage
             </Button>
           </a>

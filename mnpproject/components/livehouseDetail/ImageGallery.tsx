@@ -1,7 +1,7 @@
-import React from 'react';
-import { Image } from 'lucide-react';
+import React from "react";
+import { Image } from "lucide-react";
 interface ImageGalleryProps {
-  images: string[]
+  images: string[];
 }
 
 const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
@@ -14,7 +14,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
           alt=""
           className="w-full h-full object-cover rounded-lg"
           onError={(e) => {
-            e.currentTarget.style.display = 'none';
+            e.currentTarget.style.display = "none";
           }}
         />
       </div>
@@ -28,7 +28,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
             alt=""
             className="w-full h-full object-cover rounded-lg"
             onError={(e) => {
-              e.currentTarget.style.display = 'none';
+              e.currentTarget.style.display = "none";
             }}
           />
         </div>
@@ -38,7 +38,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
             alt=""
             className="w-full h-full object-cover rounded-lg"
             onError={(e) => {
-              e.currentTarget.style.display = 'none';
+              e.currentTarget.style.display = "none";
             }}
           />
         </div>
@@ -50,7 +50,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
             alt=""
             className="w-full h-full object-cover rounded-lg"
             onError={(e) => {
-              e.currentTarget.style.display = 'none';
+              e.currentTarget.style.display = "none";
             }}
           />
         </div>
@@ -60,7 +60,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
             alt=""
             className="w-full h-full object-cover rounded-lg"
             onError={(e) => {
-              e.currentTarget.style.display = 'none';
+              e.currentTarget.style.display = "none";
             }}
           />
         </div>
