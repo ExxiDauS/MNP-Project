@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import { notFound } from 'next/navigation'
 import livehouses from '@/public/data/livehouses.json'
@@ -9,7 +9,34 @@ import BookingHeader from '@/components/forms/booking/BookingHeader';
 import BookingForm from '@/components/forms/booking/BookingForm';
 
 const page = () => {
-    const params = useParams<{ id: string }>()
+    const [isLoading, setIsLoading] = useState(true);
+    const params = useParams<{ id: string }>();
+
+    // Simulate loading data
+    useEffect(() => {
+        const loadData = async () => {
+            try {
+                // Simulate network delay - you can remove this in production
+                // and replace with your actual data fetching logic
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                setIsLoading(false);
+            } catch (error) {
+                console.error("Error loading data:", error);
+                setIsLoading(false);
+            }
+        };
+
+        loadData();
+    }, []);
+
+    // Show loading state
+    if (isLoading) {
+        return (
+            <div className="flex items-center justify-center min-h-screen">
+                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-purple-500"></div>
+            </div>
+        );
+    }
 
     // Find the livehouse by id from the URL
     const livehouse = livehouses.livehouses.find(
@@ -27,7 +54,7 @@ const page = () => {
 
             <div className='relative flex flex-col w-full m-2 bg-custom-background-elevated outline outline-custom-purple-light outline-offset-2 rounded-3xl'>
                 <BookingHeader name={livehouse.name} address={livehouse.address} artistName={"Kawin"} price={livehouse.price} id={params.id}/>
-                <BookingForm livehousePrice={livehouse.price} livehouseName={livehouse.name}  facilitiesData={facilities.facilities}/>
+                <BookingForm livehousePrice={livehouse.price} livehouseName={livehouse.name} facilitiesData={facilities.facilities}/>
             </div>
         </section>
     )

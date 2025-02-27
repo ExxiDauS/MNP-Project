@@ -31,6 +31,7 @@ interface Livehouse {
 
 interface Livehouses extends Array<Livehouse> {}
 
+// Convert Buffer Image into Url
 export const bufferToDataUrl = (bufferImage: BufferImage | null): string => {
     if (!bufferImage || !bufferImage.data || !Array.isArray(bufferImage.data)) {
       return '';
@@ -54,13 +55,25 @@ export const bufferToDataUrl = (bufferImage: BufferImage | null): string => {
     }
 };
 
+// Main Carousel
 const CardsCarousel = ({
     data,
     cardSize
 }: {
-    data: Livehouses,
-    cardSize: number
+    data?: Livehouses, // Made optional with '?'
+    cardSize: number 
 }) => {
+    // Early return if data is undefined or empty
+    if (!data || data.length === 0) {
+        return (
+            <section className="w-full flex justify-center items-center py-6">
+                <div className="text-center p-8">
+                    <p className="text-lg text-gray-500">No livehouses available at the moment.</p>
+                </div>
+            </section>
+        );
+    }
+
     return (
         <section className="w-full flex justify-center items-center py-6">
             <Carousel
