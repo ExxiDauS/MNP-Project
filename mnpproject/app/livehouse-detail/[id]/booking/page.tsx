@@ -11,7 +11,7 @@ import BookingHeader from '@/components/forms/booking/BookingHeader';
 import BookingForm from '@/components/forms/booking/BookingForm';
 
 const Page = () => {
-    const params = useParams();
+    const params = useParams<{ id: string }>()
     const livehouse = livehouses.livehouses.find(
         (house) => house.id.toString() === params.id
     );

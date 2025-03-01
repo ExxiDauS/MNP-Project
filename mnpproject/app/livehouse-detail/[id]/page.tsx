@@ -12,7 +12,7 @@ import Contacts from '@/components/contacts/Contacts';
 import livehouses from '@/public/data/livehouses.json';
 
 const Page = () => {
-    const params = useParams();
+    const params = useParams<{ id: string }>()
 
     // Find the livehouse by id from the URL
     const livehouse = livehouses.livehouses.find(
