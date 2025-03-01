@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,6 +13,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@/components/ui/avatar";
+import { Upload, X, User } from "lucide-react";
 
 interface FormData {
   username: string;
@@ -26,6 +32,7 @@ interface FormData {
   facebook_name: string;
   instagram_link: string;
   instagram_name: string;
+  profileImage: File | null;
 }
 
 export default function SignUpForm() {
@@ -34,19 +41,22 @@ export default function SignUpForm() {
     password: '',
     confirmPassword: '',
     email: '',
-    role: 'artist', // Default role changed to artist
+    role: 'artist',
     name: '',
     phone: '',
     facebook_link: '',
     facebook_name: '',
     instagram_link: '',
     instagram_name: '',
+    profileImage: null,
   });
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({});
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -58,6 +68,20 @@ export default function SignUpForm() {
 
     // Clear the specific field error when user starts typing
     setFieldErrors(prev => ({ ...prev, [name]: '' }));
+    
+    // Check if field is empty and mark as error immediately
+    if (value.trim() === '') {
+      const fieldLabel = name === 'username' ? 'ชื่อผู้ใช้' :
+                         name === 'password' ? 'รหัสผ่าน' :
+                         name === 'confirmPassword' ? 'ยืนยันรหัสผ่าน' :
+                         name === 'email' ? 'อีเมล' :
+                         name === 'name' ? 'ชื่อ-นามสกุล' :
+                         name === 'phone' ? 'เบอร์โทรศัพท์' : '';
+      
+      if (fieldLabel) {
+        setFieldErrors(prev => ({ ...prev, [name]: `กรุณากรอก${fieldLabel}` }));
+      }
+    }
 
     // Real-time validation for specific fields
     if (name === 'email' && value) {
@@ -90,6 +114,60 @@ export default function SignUpForm() {
     }
   };
 
+  // Handle profile image upload
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      
+      // Validate file type
+      const validTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+      if (!validTypes.includes(file.type)) {
+        setFieldErrors(prev => ({ 
+          ...prev, 
+          profileImage: 'กรุณาอัปโหลดไฟล์ภาพเฉพาะ JPG, JPEG หรือ PNG เท่านั้น' 
+        }));
+        return;
+      }
+      
+      // Validate file size (max 5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        setFieldErrors(prev => ({ 
+          ...prev, 
+          profileImage: 'ขนาดไฟล์ต้องไม่เกิน 5MB' 
+        }));
+        return;
+      }
+
+      // Clear any previous errors
+      setFieldErrors(prev => ({ ...prev, profileImage: '' }));
+      
+      // Set the file in form data
+      setFormData(prev => ({ ...prev, profileImage: file }));
+      
+      // Create and set image preview
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    } else {
+      // If file selection was cancelled or cleared, set error
+      setFieldErrors(prev => ({ 
+        ...prev, 
+        profileImage: 'กรุณาอัปโหลดรูปโปรไฟล์' 
+      }));
+    }
+  };
+
+  // Remove profile image
+  const removeImage = () => {
+    setFormData(prev => ({ ...prev, profileImage: null }));
+    setImagePreview(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
+
   const handleRoleChange = (value: string) => {
     setFormData(prev => ({ ...prev, role: value }));
   };
@@ -105,11 +183,17 @@ export default function SignUpForm() {
       { key: 'confirmPassword', label: 'ยืนยันรหัสผ่าน' },
       { key: 'email', label: 'อีเมล' },
       { key: 'name', label: 'ชื่อ-นามสกุล' },
-      { key: 'phone', label: 'เบอร์โทรศัพท์' }
+      { key: 'phone', label: 'เบอร์โทรศัพท์' },
+      { key: 'profileImage', label: 'รูปโปรไฟล์' }
     ];
 
     for (const field of requiredFields) {
-      if (!formData[field.key as keyof FormData] || formData[field.key as keyof FormData].trim() === '') {
+      if (field.key === 'profileImage') {
+        if (!formData.profileImage) {
+          newFieldErrors.profileImage = `กรุณาอัปโหลด${field.label}`;
+          isValid = false;
+        }
+      } else if (!formData[field.key as keyof FormData] || (typeof formData[field.key as keyof FormData] === 'string' && (formData[field.key as keyof FormData] as string).trim() === '')) {
         newFieldErrors[field.key] = `กรุณากรอก${field.label}`;
         isValid = false;
       }
@@ -160,17 +244,32 @@ export default function SignUpForm() {
     setIsLoading(true);
 
     try {
-      // Create a data object without the confirmPassword field
-      const { confirmPassword, ...dataToSend } = formData;
+      // Create FormData object for multipart/form-data submission (for file upload)
+      const formDataToSend = new FormData();
+      
+      // Append all text fields
+      Object.entries(formData).forEach(([key, value]) => {
+        if (key !== 'confirmPassword' && key !== 'profileImage') {
+          formDataToSend.append(key, value as string);
+        }
+      });
+      
+      // Append profile image if exists
+      if (formData.profileImage) {
+        formDataToSend.append('profileImage', formData.profileImage);
+      }
+      
+      // COMMENT: The profile image will be sent as 'profileImage' field in FormData
+      // The backend should handle this multipart/form-data to save the image file
+      // and store the file path or reference in the database
 
       const response = await fetch('http://localhost:5000/api/users/sign-up', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(dataToSend),
+        // Do not set Content-Type header when using FormData, browser will set it automatically
+        body: formDataToSend,
       });
 
+      // all data is here
       const data = await response.json();
 
       if (!response.ok) {
@@ -194,7 +293,7 @@ export default function SignUpForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       {error && (
-        <Alert variant="destructive">
+        <Alert variant="destructive" className='mt-4'>
           <AlertDescription>{error}</AlertDescription>
         </Alert>
       )}
@@ -205,10 +304,69 @@ export default function SignUpForm() {
         </Alert>
       )}
 
+      {/* Profile Image Upload Section using shadcn/ui Avatar */}
+      <div className="space-y-4 flex flex-col items-center mt-3">
+        <Label htmlFor="profileImage" className="text-white">รูปโปรไฟล์ *</Label>
+        
+        <div className="relative">
+          <Avatar 
+            className={`w-24 h-24 cursor-pointer border-2 ${fieldErrors.profileImage ? 'border-red-500' : 'border-zinc-600'}`}
+            onClick={() => fileInputRef.current?.click()}
+          >
+            <AvatarImage src={imagePreview || ''} alt="Profile Preview" />
+            <AvatarFallback className="bg-zinc-700">
+              <User className="w-10 h-10 text-zinc-400" />
+            </AvatarFallback>
+          </Avatar>
+          
+          {imagePreview && (
+            <Button
+              type="button"
+              variant="destructive"
+              size="icon"
+              className="absolute -top-2 -right-2 h-6 w-6 rounded-full"
+              onClick={removeImage}
+            >
+              <X className="h-4 w-4" />
+            </Button>
+          )}
+          
+          {!imagePreview && (
+            <Button
+              type="button"
+              variant="outline"
+              size="icon"
+              className="absolute bottom-0 right-0 h-8 w-8 rounded-full bg-zinc-800 border-zinc-700"
+              onClick={() => fileInputRef.current?.click()}
+            >
+              <Upload className="h-4 w-4" />
+            </Button>
+          )}
+        </div>
+        
+        <input
+          ref={fileInputRef}
+          id="profileImage"
+          name="profileImage"
+          type="file"
+          accept="image/png, image/jpeg, image/jpg"
+          onChange={handleImageUpload}
+          className="hidden"
+        />
+        
+        {fieldErrors.profileImage && (
+          <p className="text-sm text-red-500 text-center">{fieldErrors.profileImage}</p>
+        )}
+        
+        <p className="text-xs text-zinc-400 text-center max-w-sm">
+          อัปโหลดรูปโปรไฟล์ (รองรับไฟล์ JPG, JPEG, PNG ขนาดไม่เกิน 5MB)
+        </p>
+      </div>
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Required Fields */}
         <div className="space-y-2">
-          <Label htmlFor="username">ชื่อผู้ใช้ *</Label>
+          <Label htmlFor="username" className="text-white">ชื่อผู้ใช้ *</Label>
           <Input
             id="username"
             name="username"
@@ -218,7 +376,6 @@ export default function SignUpForm() {
             placeholder="กรอกชื่อผู้ใช้"
             className={`bg-zinc-700 border-zinc-600 text-zinc-100 ${fieldErrors.username ? 'border-red-500 focus:ring-red-500' : ''
               }`}
-            required
           />
           {fieldErrors.username && (
             <p className="text-sm text-red-500">{fieldErrors.username}</p>
@@ -226,7 +383,7 @@ export default function SignUpForm() {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="email">อีเมล *</Label>
+          <Label htmlFor="email" className="text-white">อีเมล *</Label>
           <Input
             id="email"
             name="email"
@@ -236,7 +393,6 @@ export default function SignUpForm() {
             placeholder="example@email.com"
             className={`bg-zinc-700 border-zinc-600 text-zinc-100 ${fieldErrors.email ? 'border-red-500 focus:ring-red-500' : ''
               }`}
-            required
           />
           {fieldErrors.email && (
             <p className="text-sm text-red-500">{fieldErrors.email}</p>
@@ -244,7 +400,7 @@ export default function SignUpForm() {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="password">รหัสผ่าน *</Label>
+          <Label htmlFor="password" className="text-white">รหัสผ่าน *</Label>
           <Input
             id="password"
             name="password"
@@ -254,7 +410,6 @@ export default function SignUpForm() {
             placeholder="กรอกรหัสผ่าน"
             className={`bg-zinc-700 border-zinc-600 text-zinc-100 ${fieldErrors.password ? 'border-red-500 focus:ring-red-500' : ''
               }`}
-            required
           />
           {fieldErrors.password && (
             <p className="text-sm text-red-500">{fieldErrors.password}</p>
@@ -262,7 +417,7 @@ export default function SignUpForm() {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="confirmPassword">ยืนยันรหัสผ่าน *</Label>
+          <Label htmlFor="confirmPassword" className="text-white">ยืนยันรหัสผ่าน *</Label>
           <Input
             id="confirmPassword"
             name="confirmPassword"
@@ -272,7 +427,6 @@ export default function SignUpForm() {
             placeholder="กรอกรหัสผ่านอีกครั้ง"
             className={`bg-zinc-700 border-zinc-600 text-zinc-100 ${fieldErrors.confirmPassword ? 'border-red-500 focus:ring-red-500' : ''
               }`}
-            required
           />
           {fieldErrors.confirmPassword && (
             <p className="text-sm text-red-500">{fieldErrors.confirmPassword}</p>
@@ -280,7 +434,7 @@ export default function SignUpForm() {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="name">ชื่อ-นามสกุล *</Label>
+          <Label htmlFor="name" className="text-white">ชื่อ-นามสกุล *</Label>
           <Input
             id="name"
             name="name"
@@ -290,7 +444,6 @@ export default function SignUpForm() {
             placeholder="กรอกชื่อและนามสกุล"
             className={`bg-zinc-700 border-zinc-600 text-zinc-100 ${fieldErrors.name ? 'border-red-500 focus:ring-red-500' : ''
               }`}
-            required
           />
           {fieldErrors.name && (
             <p className="text-sm text-red-500">{fieldErrors.name}</p>
@@ -298,7 +451,7 @@ export default function SignUpForm() {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="phone">เบอร์โทรศัพท์ *</Label>
+          <Label htmlFor="phone" className="text-white">เบอร์โทรศัพท์ *</Label>
           <Input
             id="phone"
             name="phone"
@@ -308,7 +461,6 @@ export default function SignUpForm() {
             placeholder="0812345678"
             className={`bg-zinc-700 border-zinc-600 text-zinc-100 ${fieldErrors.phone ? 'border-red-500 focus:ring-red-500' : ''
               }`}
-            required
           />
           {fieldErrors.phone && (
             <p className="text-sm text-red-500">{fieldErrors.phone}</p>
@@ -316,13 +468,12 @@ export default function SignUpForm() {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="role">บทบาท *</Label>
+          <Label htmlFor="role" className="text-white">บทบาท *</Label>
           <Select onValueChange={handleRoleChange} defaultValue="artist">
             <SelectTrigger className="bg-zinc-700 border-zinc-600 text-zinc-100">
               <SelectValue placeholder="เลือกบทบาท" />
             </SelectTrigger>
             <SelectContent className="bg-zinc-800 border-zinc-700 text-zinc-100">
-              {/* return 'artist' or 'manager' */}
               <SelectItem value="artist">ศิลปิน</SelectItem>
               <SelectItem value="manager">ผู้จัดการ</SelectItem>
             </SelectContent>
@@ -331,7 +482,7 @@ export default function SignUpForm() {
 
         {/* Optional Social Media Fields - Full Width */}
         <div className="space-y-2 md:col-span-2">
-          <Label htmlFor="facebook_link">ลิงก์ Facebook (ไม่บังคับ)</Label>
+          <Label htmlFor="facebook_link" className="text-white">ลิงก์ Facebook (ไม่บังคับ)</Label>
           <Input
             id="facebook_link"
             name="facebook_link"
@@ -344,7 +495,7 @@ export default function SignUpForm() {
         </div>
 
         <div className="space-y-2 md:col-span-2">
-          <Label htmlFor="facebook_name">ชื่อ Facebook (ไม่บังคับ)</Label>
+          <Label htmlFor="facebook_name" className="text-white">ชื่อ Facebook (ไม่บังคับ)</Label>
           <Input
             id="facebook_name"
             name="facebook_name"
@@ -357,7 +508,7 @@ export default function SignUpForm() {
         </div>
 
         <div className="space-y-2 md:col-span-2">
-          <Label htmlFor="instagram_link">ลิงก์ Instagram (ไม่บังคับ)</Label>
+          <Label htmlFor="instagram_link" className="text-white">ลิงก์ Instagram (ไม่บังคับ)</Label>
           <Input
             id="instagram_link"
             name="instagram_link"
@@ -370,7 +521,7 @@ export default function SignUpForm() {
         </div>
 
         <div className="space-y-2 md:col-span-2">
-          <Label htmlFor="instagram_name">ชื่อ Instagram (ไม่บังคับ)</Label>
+          <Label htmlFor="instagram_name" className="text-white">ชื่อ Instagram (ไม่บังคับ)</Label>
           <Input
             id="instagram_name"
             name="instagram_name"
