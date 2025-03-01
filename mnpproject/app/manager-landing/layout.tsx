@@ -4,6 +4,7 @@ import "./globals.css";
 import React from 'react';
 import Navbar from "@/components/Nav/MainNavBar";
 import { UserProvider } from '@/contexts/UserContext';
+import ErrorBoundary from '@/components/ErrorBoundary';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,7 +23,7 @@ export const metadata: Metadata = {
 
 console.log('Layout rendering');
 
-export default function RootLayout({
+export default function ManagerLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -32,10 +33,11 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-custom-background-primary`}
       >
-        <UserProvider>
-          <Navbar />
-          {children}
-        </UserProvider>
+        <ErrorBoundary>
+          <UserProvider>
+            {children}
+          </UserProvider>
+        </ErrorBoundary>
       </body>
     </html>
   );

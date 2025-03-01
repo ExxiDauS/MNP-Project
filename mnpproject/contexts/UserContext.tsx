@@ -36,7 +36,6 @@ interface UserContextType {
   setUser: React.Dispatch<React.SetStateAction<UserProfile | null>>;
   isLoading: boolean;
   signOut: () => void;
-  redirectBasedOnRole: () => string | null;
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -86,22 +85,22 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
   };
   
   const confirmSignOut = () => {
+    setShowSignOutDialog(false);
+  
+  // Wait for dialog to close before clearing user
+  setTimeout(() => {
     localStorage.removeItem('user');
     setUser(null);
-    setShowSignOutDialog(false);
-    // Navigate to home page after sign out
-    window.location.href = '/';
-  };
-  
-  // We don't implement the redirect function directly in the context
-  // It will be implemented in a custom hook that combines this context with the router
-  const redirectBasedOnRole = () => {
-    // This is a placeholder, actual implementation will be in a hook
-    return user?.role || null;
+    
+    // Use a small delay before navigation  
+    setTimeout(() => {
+      window.location.href = '/main-landing';
+    }, 50);
+  }, 100);
   };
 
   return (
-    <UserContext.Provider value={{ user, setUser, isLoading, signOut, redirectBasedOnRole }}>
+    <UserContext.Provider value={{ user, setUser, isLoading, signOut }}>
       {children}
       {showSignOutDialog && (
         <AlertDialog open={showSignOutDialog} onOpenChange={() => setShowSignOutDialog(false)}>

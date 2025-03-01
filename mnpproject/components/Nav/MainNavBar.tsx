@@ -25,14 +25,6 @@ export default function Navbar() {
   const { user, signOut, isLoading } = useUser();
   const router = useRouter();
   const [navLoading, setNavLoading] = useState(true);
-
-  // Add debugging for user state changes
-  useEffect(() => {
-    if (user) {
-      console.log("User state updated in navbar:", user);
-      console.log("User role:", user.role);
-    }
-  }, [user]);
   
   // Add direct localStorage check for redundancy
   useEffect(() => {
@@ -72,18 +64,13 @@ export default function Navbar() {
 
   // Function to handle authentication check for navigation
   const handleNavigation = (path: string) => {
-    console.log("Navigation triggered for path:", path);
-    console.log("Current user:", user ? `Role: ${user.role}, Name: ${user.name}` : "Not logged in");
     
     // Special case for Home navigation based on role
-    if (path === '/') {
-      console.log("Handling home navigation...");
+    if (path === '/main-landing') {
       if (user && user.role && user.role.toLowerCase().trim() === 'manager') {
-        console.log("--> User is a manager, navigating to: /manager-landing");
         window.location.href = '/manager-landing';
       } else {
-        console.log("--> User is NOT a manager or not logged in, navigating to: /");
-        window.location.href = '/';
+        window.location.href = '/main-landing';
       }
       return;
     }
@@ -101,30 +88,6 @@ export default function Navbar() {
       router.push('/sign-in');
     }
   };
-
-  // Render the Navigation Menu Items
-  const renderNavItems = () => (
-    <NavigationMenuList className="space-x-2">
-      <div onClick={() => handleNavigation('/')}>
-        <NavLink>หน้าหลัก</NavLink>
-      </div>
-      {/* Only show Explore link if user is not a manager */}
-      {(!user || (user && user.role && user.role.toLowerCase().trim() !== 'manager')) && (
-        <div onClick={() => handleNavigation('/Explore')}>
-          <NavLink>สำรวจ</NavLink>
-        </div>
-      )}
-      <div onClick={() => handleNavigation('/booking')}>
-        <NavLink>การจอง</NavLink>
-      </div>
-      <div onClick={() => handleNavigation('/about')}>
-        <NavLink>เกี่ยวกับ</NavLink>
-      </div>
-      <div onClick={() => !user && router.push('/sign-in')}>
-        <SearchBar />
-      </div>
-    </NavigationMenuList>
-  );
 
   // Render the User Profile or Sign In buttons
   const renderUserProfile = () => {
@@ -217,6 +180,29 @@ export default function Navbar() {
       <Skeleton className="w-20 h-8 rounded-md bg-zinc-700" />
       <Skeleton className="w-24 h-8 rounded-md bg-zinc-700" />
       <Skeleton className="w-36 h-10 rounded-md bg-zinc-700" />
+    </NavigationMenuList>
+  );
+
+  const renderNavItems = () => (
+    <NavigationMenuList className="space-x-2">
+      <div onClick={() => handleNavigation('/main-landing')}>
+        <NavLink>หน้าหลัก</NavLink>
+      </div>
+      {/* Only show Explore link if user is not a manager */}
+      {(!user || (user && user.role && user.role.toLowerCase().trim() !== 'manager')) && (
+        <div onClick={() => handleNavigation('/Explore')}>
+          <NavLink>สำรวจ</NavLink>
+        </div>
+      )}
+      <div onClick={() => handleNavigation('/booking')}>
+        <NavLink>การจอง</NavLink>
+      </div>
+      <div onClick={() => handleNavigation('/about')}>
+        <NavLink>เกี่ยวกับ</NavLink>
+      </div>
+      <div onClick={() => !user && router.push('/sign-in')}>
+        <SearchBar />
+      </div>
     </NavigationMenuList>
   );
 

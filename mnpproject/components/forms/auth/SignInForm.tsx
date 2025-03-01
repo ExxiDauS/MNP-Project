@@ -1,12 +1,31 @@
 'use client'
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useUser } from '@/contexts/UserContext';
+import { Eye, EyeOff } from 'lucide-react'; // Import eye icons
+
+// Add global style to hide browser's default password reveal button
+const globalStyles = `
+  ::-ms-reveal,
+  ::-ms-clear {
+    display: none;
+  }
+  
+  input[type="password"]::-webkit-contacts-auto-fill-button,
+  input[type="password"]::-webkit-credentials-auto-fill-button {
+    visibility: hidden;
+    display: none !important;
+    pointer-events: none;
+    height: 0;
+    width: 0;
+    margin: 0;
+  }
+`;
 
 export default function SignInForm() {
   const [username, setUsername] = useState('');
@@ -14,8 +33,10 @@ export default function SignInForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [fieldErrors, setFieldErrors] = useState<{[key: string]: string}>({});
+  const [showPassword, setShowPassword] = useState(false); // State for password visibility
   const router = useRouter();
   const { setUser } = useUser();
+  
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -97,7 +118,9 @@ export default function SignInForm() {
       const userData = profileData.user;
       
       // Save user data both to localStorage and context
-      localStorage.setItem('user', JSON.stringify(userData));
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('user', JSON.stringify(userData));
+      }
       setUser(userData);
       
       // Handle redirection with a delay to ensure state is updated
@@ -105,11 +128,9 @@ export default function SignInForm() {
         if (userData.role === 'manager') {
           window.location.href = '/manager-landing';
         } else if (userData.role === 'artist') {
-          window.location.href = '/';
-        } else {
-          window.location.href = '/';
+          window.location.href = '/main-landing';
         }
-      }, 500);
+      }, 2000);
       
     } catch (err) {
       setError(err instanceof Error ? err.message : 'เกิดข้อผิดพลาด กรุณาลองอีกครั้ง');
@@ -117,16 +138,23 @@ export default function SignInForm() {
     }
   };
 
+  // Toggle password visibility
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <>
+      <style jsx global>{globalStyles}</style>
+      <form onSubmit={handleSubmit} className="space-y-6">
       {error && (
-        <Alert variant="destructive">
+        <Alert variant="destructive" className='mt-4'>
           <AlertDescription>{error}</AlertDescription>
         </Alert>
       )}
       
       <div className="space-y-2">
-        <Label htmlFor="username">ชื่อผู้ใช้</Label>
+        <Label htmlFor="username" className='text-zinc-100'>ชื่อผู้ใช้</Label>
         <Input
           id="username"
           name="username"
@@ -144,18 +172,35 @@ export default function SignInForm() {
       </div>
       
       <div className="space-y-2">
-        <Label htmlFor="password">รหัสผ่าน</Label>
-        <Input
-          id="password"
-          name="password"
-          type="password"
-          value={password}
-          onChange={handleChange}
-          placeholder="กรอกรหัสผ่าน"
-          className={`bg-zinc-700 border-zinc-600 text-zinc-100 ${
-            fieldErrors.password ? 'border-red-500 focus:ring-red-500' : ''
-          }`}
-        />
+        <Label htmlFor="password" className='text-zinc-100'>รหัสผ่าน</Label>
+        <div className="relative">
+          <Input
+            id="password"
+            name="password"
+            type={showPassword ? "text" : "password"}
+            value={password}
+            onChange={handleChange}
+            placeholder="กรอกรหัสผ่าน"
+            className={`bg-zinc-700 border-zinc-600 text-zinc-100 pr-10 ${
+              fieldErrors.password ? 'border-red-500 focus:ring-red-500' : ''
+            }`}
+            autoComplete="new-password"
+            aria-autocomplete="none"
+            spellCheck="false"
+          />
+          <button
+            type="button"
+            onClick={togglePasswordVisibility}
+            className="absolute inset-y-0 right-0 pr-3 flex items-center text-zinc-400 hover:text-zinc-300"
+            tabIndex={-1}
+          >
+            {showPassword ? (
+              <EyeOff size={20} />
+            ) : (
+              <Eye size={20} />
+            )}
+          </button>
+        </div>
         {fieldErrors.password && (
           <p className="text-sm text-red-500">{fieldErrors.password}</p>
         )}
@@ -168,6 +213,21 @@ export default function SignInForm() {
       >
         {isLoading ? 'กำลังเข้าสู่ระบบ...' : 'เข้าสู่ระบบ'}
       </Button>
+
+      <div className="mt-4 text-center">
+        <p className="text-zinc-400">
+          หากคุณยังไม่มีบัญชี{' '}
+          <button
+            type="button"
+            onClick={() => router.push('/sign-up')}
+            className="text-zinc-100 hover:underline font-medium"
+          >
+            สมัครสมาชิกที่นี่
+          </button>
+        </p>
+      </div>
     </form>
+    </>
+
   );
 }

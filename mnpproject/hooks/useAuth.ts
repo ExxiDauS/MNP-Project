@@ -28,8 +28,8 @@ export function useAuth(requireAuth = false) {
       }
 
       // If user is an artist (or other role) and on the sign-in page
-      if (user.role !== 'manager' && pathname === '/sign-in') {
-        router.push('/');
+      if (user.role === 'artist' && pathname === '/sign-in') {
+        router.push('/main-landing');
         return;
       }
     }
@@ -42,20 +42,22 @@ export function useAuth(requireAuth = false) {
 export function useManagerAuth() {
   const { user, isLoading } = useUser();
   const router = useRouter();
-
+  const pathname = usePathname();
+  
   useEffect(() => {
     if (isLoading) return;
-
+    
+    // Skip if already on the correct page
+    if (!user && pathname === '/sign-in') return;
+    if (user?.role !== 'manager' && pathname === '/main-landing') return;
+    
+    // Only navigate when necessary
     if (!user) {
       router.push('/sign-in');
-      return;
+    } else if (user.role !== 'manager') {
+      router.push('/main-landing');
     }
-
-    if (user.role !== 'manager') {
-      router.push('/');
-      return;
-    }
-  }, [user, isLoading, router]);
+  }, [user, isLoading, router, pathname]);
 
   return { user, isLoading };
 }
