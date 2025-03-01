@@ -15,7 +15,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = ({ name, address, price, id })
     return (
         <div className="px-6 pt-6">
             {/* Back button */}
-            <BackButton className="mb-4" href="/" />
+            <BackButton className="mb-4" href="/main-landing" />
 
             <div className="flex justify-between items-start w-full">
                 {/* Left section */}
