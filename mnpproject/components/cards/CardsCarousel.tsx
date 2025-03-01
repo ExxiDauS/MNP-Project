@@ -90,7 +90,7 @@ const CardsCarousel = ({
                         return (
                             <CarouselItem
                                 key={livehouse.livehouse_id}
-                                className="pl-2 basis-1/2 sm:basis-1/3 md:basis-1/4.5 lg:basis-1/5"
+                                className="pl-2 basis-10/12 sm:basis-1/3 md:basis-1/4.5 lg:basis-1/5"
                             >
                                 <LivehouseCard
                                     id={(livehouse.livehouse_id).toString()}

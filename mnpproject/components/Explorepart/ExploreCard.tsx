@@ -29,9 +29,9 @@ const ExploreCard = ({
             <p className="text-custom-purple-light text-sm mt-1">{location}</p>
           </div>
           <a href={`/livehouse-detail/${id}`} className="block">
-          <button className="bg-gradient-to-r from-custom-purple-deeper to-custom-purple text-white font-bold py-3 px-6 rounded-full shadow-lg hover:scale-105 transition-transform mt-3">
-            รายละเอียด
-          </button>
+            <button className="bg-gradient-to-r from-custom-purple-deeper to-custom-purple text-white text-xs font-bold py-3 px-6 rounded-full shadow-lg transform transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-xl hover:bg-gradient-to-l  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-purple mt-3 ">
+              รายละเอียด
+            </button>
           </a>
         </div>
       </div>

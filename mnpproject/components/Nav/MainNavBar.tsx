@@ -39,18 +39,18 @@ export default function Navbar() {
       console.error("Error reading user from localStorage:", error);
     }
   }, []);
-  
   // Initialize loading state
   useEffect(() => {
     // Set a small delay to ensure user context has loaded
     const timer = setTimeout(() => {
       setNavLoading(isLoading);
     }, 50);
-    
+
     return () => clearTimeout(timer);
   }, [isLoading]);
 
   const handleSignIn = () => {
+
     router.push('/sign-in');
   };
 
@@ -206,7 +206,6 @@ export default function Navbar() {
       </div>
     </NavigationMenuList>
   );
-
 
   return (
     <nav className="fixed top-0 z-50 w-full bg-gradient-to-b from-black via-black/80 to-transparent px-6 py-4">

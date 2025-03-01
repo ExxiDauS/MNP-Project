@@ -41,7 +41,11 @@ const SearchBar = () => {
           onFocus={() => setIsOpen(true)}
         />
         {searchQuery && (
-          <Button variant="ghost" size="icon" onClick={() => setSearchQuery("")}>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setSearchQuery("")}
+          >
             <X className="h-4 w-4 text-white" />
           </Button>
         )}

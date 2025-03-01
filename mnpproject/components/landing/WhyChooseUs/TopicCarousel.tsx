@@ -44,7 +44,7 @@ const TopicCarousel = () => {
     };
 
     return (
-        <div className="h-full py-6 pt-10 px-8">
+        <div className="h-full py-6 pt-10 px-4 md:px-8">
             {topics.map((item, index) => (
                 <TopicDetail
                     key={index}
@@ -59,4 +59,4 @@ const TopicCarousel = () => {
     )
 }
 
-export default TopicCarousel
+export default TopicCarousel;

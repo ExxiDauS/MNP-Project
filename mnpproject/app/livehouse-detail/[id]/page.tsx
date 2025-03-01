@@ -81,7 +81,7 @@ const Page = () => {
                 if (!livehouseData) {
                     throw new Error('Livehouse not found');
                 }
-
+              
                 setLivehouse(livehouseData);
                 
                 // Process image
@@ -166,12 +166,22 @@ const Page = () => {
 
     return (
         <>
-            <section className='relative flex justify-self-center w-3/4 mt-24'>
-                {/* Larger aura effect background */}
-                <div className='absolute -inset-10 bg-gradient-to-r from-purple-500/30 via-pink-500/30 to-purple-500/30 blur-2xl rounded-4xl'></div>
+        <section className="relative flex justify-self-center w-full mt-24  max-w-5xl mx-auto4 px-4 sm:px-6 md:px-8 mb-10">
+            {/* Larger aura effect background */}
+            <div className="absolute inset-0 p-10 bg-gradient-to-r from-purple-500/30 via-pink-500/30 to-purple-500/30 blur-2xl rounded-4xl"></div>
 
-                {/* Solid background content container */}
-                <div className='relative flex flex-col w-full m-2 bg-custom-background-elevated outline outline-custom-purple-light outline-offset-2 rounded-3xl'>
+            {/* Content container */}
+            <div className="relative flex flex-col w-full bg-custom-background-elevated outline outline-custom-purple-light outline-offset-2 rounded-3xl p-4 sm:p-6 md:p-10">
+                <DetailHeader 
+                    name={livehouse.name} 
+                    address={livehouse.address} 
+                    price={livehouse.price} 
+                    id={params.id} 
+                />
+                
+                <div className="mb-4 sm:mb-6">
+                    <ImageGallery images={livehouse.images} />
+                </div>
 
                     <DetailHeader
                         name={livehouse.name}
@@ -192,7 +202,8 @@ const Page = () => {
                         </div>
                     </div>
                 </div>
-            </section>
+            </div>
+        </section>
         </>
     );
 };

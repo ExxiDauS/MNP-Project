@@ -130,7 +130,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ livehousePrice, livehouseName
   return (
     <div className="mx-6 my-6 p-6 bg-gradient-card shadow-md rounded-xl">
       <form onSubmit={handleBookNow} className="space-y-6">
-        <div className="grid grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Left Column - Date & Time Selection */}
           <div className="p-4 space-y-4">
             <h3 className="text-lg font-semibold mb-4 text-custom-text-primary">Select Date & Time</h3>
