@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/navigation-menu";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -206,6 +207,7 @@ export default function Navbar() {
     </NavigationMenuList>
   );
 
+
   return (
     <nav className="fixed top-0 z-50 w-full bg-gradient-to-b from-black via-black/80 to-transparent px-6 py-4">
       <div className="flex items-center justify-between">
@@ -219,7 +221,9 @@ export default function Navbar() {
         </div>
 
         <div className="flex items-center space-x-4">
+
           {renderUserProfile()}
+
         </div>
       </div>
     </nav>
