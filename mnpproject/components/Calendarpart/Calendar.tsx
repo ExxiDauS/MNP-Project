@@ -8,7 +8,7 @@ const Calendar = () => {
 
         <iframe
           src="https://calendar.google.com/calendar/embed?src=07c40aaf3fd7e1d130c872d6110c19fc05a245c00bcea44b45e6b41787bcfb57%40group.calendar.google.com&ctz=Asia%2FBangkok"
-          className=" h-[600px] sm:w-[300px] md:w-[600px] rounded-lg shadow-md"
+          className=" h-[600px] sm:w-[300px] md:w-[600px] lg:w-[800px] rounded-lg shadow-md"
         ></iframe>
       </div>
     </div>
