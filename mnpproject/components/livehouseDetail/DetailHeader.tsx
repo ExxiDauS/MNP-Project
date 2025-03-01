@@ -6,7 +6,7 @@ import BackButton from "../buttons/BackButton";
 interface DetailHeaderProps {
   name: string;
   address: string;
-  price: number;
+  price: string;
   id: string;
 }
 
