@@ -107,9 +107,9 @@ export default function PaymentDialog({
 
                 <div className="flex flex-col items-center space-y-2 py-2">
                     <Card className="w-full">
-                        <CardContent className="pt-4 px-4">
+                        <CardContent className="pt-4 px-4 ">
                             {/* Two-column layout for QR and payment info */}
-                            <div className="flex flex-row gap-4">
+                            <div className="flex flex-col sm:flex-row gap-6 sm:gap-8">
                                 {/* QR Code Column */}
                                 <div className="flex-shrink-0">
                                     <div className="bg-white p-1 rounded-md">

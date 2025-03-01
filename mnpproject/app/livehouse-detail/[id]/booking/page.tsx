@@ -21,9 +21,9 @@ const Page = () => {
     }
 
     return (
-        <section className="relative flex justify-center w-full max-w-5xl mx-auto mt-16 px-4 sm:px-6 md:px-8">
+        <section className="relative flex justify-center w-full max-w-5xl mx-auto mt-24 px-4 sm:px-6 md:px-8 mb-10">
             {/* Aura background effect */}
-            <div className="absolute -inset-10 bg-gradient-to-r from-purple-500/30 via-pink-500/30 to-purple-500/30 blur-2xl rounded-4xl"></div>
+            <div className="absolute inset-0 p-10 bg-gradient-to-r from-purple-500/30 via-pink-500/30 to-purple-500/30 blur-2xl rounded-4xl"></div>
 
             {/* Content container */}
             <div className="relative flex flex-col w-full bg-custom-background-elevated outline outline-custom-purple-light outline-offset-2 rounded-3xl p-4 sm:p-6 md:p-10">

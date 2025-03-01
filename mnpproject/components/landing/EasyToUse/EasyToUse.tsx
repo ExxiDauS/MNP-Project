@@ -24,14 +24,14 @@ const EasyToUse = () => {
         </div>
 
         {/* Responsive Grid Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-8 items-center">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-8 items-stretch">
           {steps.map((step, index) => (
-            <div key={index} className="relative flex flex-col items-center">
+            <div key={index} className="relative flex flex-col items-center h-full">
               <StepCard index={index + 1} title={step.title} description={step.description} icon={step.icon} />
               
               {/* Show arrow only on medium+ screens */}
               {index < steps.length - 1 && (
-                <div className="hidden md:block absolute top-1/2 -right-5 transform -translate-y-1/2">
+                <div className="hidden md:block absolute top-1/2 -right-8 transform -translate-y-1/2">
                   <MoveRight className="text-custom-purple-deeper size-10" />
                 </div>
               )}

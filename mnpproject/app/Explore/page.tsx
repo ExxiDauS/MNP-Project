@@ -6,9 +6,7 @@ import MainExPart from "@/components/Explorepart/MainExPart";
 const page = () => {
   return (
     <>
-      <div className="pt-20">
-        <PopularLivehouses></PopularLivehouses>
-      </div>
+      <PopularLivehouses></PopularLivehouses>
       <MainExPart></MainExPart>
     </>
   );

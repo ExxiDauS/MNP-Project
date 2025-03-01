@@ -58,9 +58,8 @@ const SearchBar = () => {
             <CommandList>
               <CommandGroup heading="Suggestions" className=" bg-[#1b181a]">
                 {filteredSuggestions.map((house) => (
-                  <a href={`/livehouse-detail/${house.id}`}>
+                  <a href={`/livehouse-detail/${house.id}`} key={house.id}>
                     <CommandItem
-                      key={house.id}
                       className="flex items-center pxS-3 py-2 text-sm text-gray-300 bg-[#1b181a] cursor-pointer rounded-md"
                       onClick={() => {
                         setSearchQuery(house.name);
