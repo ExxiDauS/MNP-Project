@@ -3,7 +3,7 @@ import ContactItem from './ContactItem';
 import { Mail, Facebook, Instagram, Phone } from 'lucide-react';
 
 
-interface ContactDetail {
+export interface ContactDetail {
   type: string;
   label: string;
   value: string;

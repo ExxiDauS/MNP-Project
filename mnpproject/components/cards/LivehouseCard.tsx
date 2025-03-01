@@ -1,18 +1,40 @@
+'use client';
+
 import React from "react";
+import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { MapPin } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useUser } from '@/contexts/UserContext';
 
 interface LivehouseCardProps {
   id: string,
-  card_size: number,
+  card_size?: number,
   bg_image: string,
   location: string,
   name: string
 }
 
 const LivehouseCard: React.FC<LivehouseCardProps> = ({ id, bg_image, location, name }) => {
+  const router = useRouter();
+  const { user } = useUser();
+
+  const handleClick = (e: React.MouseEvent) => {
+    // Prevent default link behavior
+    e.preventDefault();
+    
+    // Check authentication
+    if (!user) {
+      router.push('/sign-in');
+      return;
+    }
+    
+    // If authenticated, allow navigation to proceed
+    router.push(`/livehouse-detail/${id}`);
+  };
+
   return (
-    <a href={`/livehouse-detail/${id}`} className="block">
+    <Link href={`/livehouse-detail/${id}`} onClick={handleClick} className="block">
       <div className="p-2">
         <Card
           className="bg-black overflow-hidden relative group transform transition-all duration-300 hover:scale-105 
@@ -46,7 +68,7 @@ const LivehouseCard: React.FC<LivehouseCardProps> = ({ id, bg_image, location, n
           </CardContent>
         </Card>
       </div>
-    </a>
+    </Link>
   );
 };
 

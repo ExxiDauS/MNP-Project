@@ -19,7 +19,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = ({
   return (
     <div className="px-4 md:px-6 pt-6">
       {/* Back button */}
-      <BackButton className="mb-4" href="/" />
+      <BackButton className="mb-4" href="/main-landing" />
 
       <div className="flex flex-row sm:flex-row md:flex-row justify-between items-start md:items-center w-full gap-4">
         {/* Left section */}

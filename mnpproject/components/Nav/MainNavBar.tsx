@@ -1,14 +1,14 @@
-"use client";
+'use client'
 
-import React, { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import MobileNav from "./MobileNav";
 import NavLink from "./NavLink";
 import SearchBar from "./SearchBar";
-import { useUser } from "@/contexts/UserContext";
+import { useUser } from '@/contexts/UserContext';
 import {
   NavigationMenu,
-  NavigationMenuList,
+  NavigationMenuList
 } from "@/components/ui/navigation-menu";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -26,11 +26,11 @@ export default function Navbar() {
   const { user, signOut, isLoading } = useUser();
   const router = useRouter();
   const [navLoading, setNavLoading] = useState(true);
-
+  
   // Add direct localStorage check for redundancy
   useEffect(() => {
     try {
-      const storedUser = localStorage.getItem("user");
+      const storedUser = localStorage.getItem('user');
       if (storedUser) {
         const userData = JSON.parse(storedUser);
         console.log("User data from localStorage:", userData);
@@ -39,7 +39,6 @@ export default function Navbar() {
       console.error("Error reading user from localStorage:", error);
     }
   }, []);
-
   // Initialize loading state
   useEffect(() => {
     // Set a small delay to ensure user context has loaded
@@ -51,41 +50,43 @@ export default function Navbar() {
   }, [isLoading]);
 
   const handleSignIn = () => {
-    router.push("/sign-in");
+
+    router.push('/sign-in');
   };
 
   const getInitials = (name: string) => {
     return name
-      .split(" ")
-      .map((part) => part[0])
-      .join("")
+      .split(' ')
+      .map(part => part[0])
+      .join('')
       .toUpperCase()
       .slice(0, 2);
   };
 
   // Function to handle authentication check for navigation
   const handleNavigation = (path: string) => {
+    
     // Special case for Home navigation based on role
-    if (path === "/main-landing") {
-      if (user && user.role && user.role.toLowerCase().trim() === "manager") {
-        window.location.href = "/manager-landing";
+    if (path === '/main-landing') {
+      if (user && user.role && user.role.toLowerCase().trim() === 'manager') {
+        window.location.href = '/manager-landing';
       } else {
-        window.location.href = "/main-landing";
+        window.location.href = '/main-landing';
       }
       return;
     }
-
+    
     // About is accessible without sign-in
-    if (path === "/about") {
+    if (path === '/about') {
       router.push(path);
       return;
     }
-
+    
     // For other links, check if user is signed in
     if (user) {
       router.push(path);
     } else {
-      router.push("/sign-in");
+      router.push('/sign-in');
     }
   };
 
@@ -103,18 +104,12 @@ export default function Navbar() {
     return user ? (
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="hover:bg-zinc-800 rounded-full size-11"
-          >
+          <Button variant="ghost" size="icon" className="hover:bg-zinc-800 rounded-full size-11">
             <Avatar className="size-8">
               {user.profile_image && user.profile_image.data.length > 0 ? (
-                <AvatarImage
-                  src={`data:image/jpeg;base64,${Buffer.from(
-                    user.profile_image.data
-                  ).toString("base64")}`}
-                  alt={user.name}
+                <AvatarImage 
+                  src={`data:image/jpeg;base64,${Buffer.from(user.profile_image.data).toString('base64')}`} 
+                  alt={user.name} 
                 />
               ) : (
                 <AvatarFallback>{getInitials(user.name)}</AvatarFallback>
@@ -122,10 +117,7 @@ export default function Navbar() {
             </Avatar>
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent
-          align="end"
-          className="w-56 bg-zinc-800 text-zinc-100 border-zinc-700"
-        >
+        <DropdownMenuContent align="end" className="w-56 bg-zinc-800 text-zinc-100 border-zinc-700">
           <div className="flex items-center justify-start gap-2 p-2">
             <div className="flex flex-col space-y-1 leading-none">
               <p className="font-medium">{user.name}</p>
@@ -133,28 +125,28 @@ export default function Navbar() {
             </div>
           </div>
           <DropdownMenuSeparator className="bg-zinc-700" />
-          {user.role === "manager" && (
-            <DropdownMenuItem
+          {user.role === 'manager' && (
+            <DropdownMenuItem 
               className="cursor-pointer hover:bg-zinc-700"
-              onClick={() => router.push("/manager-landing")}
+              onClick={() => router.push('/manager-landing')}
             >
               แดชบอร์ดผู้จัดการ
             </DropdownMenuItem>
           )}
-          <DropdownMenuItem
+          <DropdownMenuItem 
             className="cursor-pointer hover:bg-zinc-700"
-            onClick={() => router.push("/profile")}
+            onClick={() => router.push('/profile')}
           >
             โปรไฟล์
           </DropdownMenuItem>
-          <DropdownMenuItem
+          <DropdownMenuItem 
             className="cursor-pointer hover:bg-zinc-700"
-            onClick={() => router.push("/booking")}
+            onClick={() => router.push('/booking')}
           >
             การจองของฉัน
           </DropdownMenuItem>
           <DropdownMenuSeparator className="bg-zinc-700" />
-          <DropdownMenuItem
+          <DropdownMenuItem 
             className="cursor-pointer text-red-500 hover:bg-red-950 hover:text-red-400"
             onClick={signOut}
           >
@@ -164,15 +156,15 @@ export default function Navbar() {
       </DropdownMenu>
     ) : (
       <div className="flex space-x-3">
-        <Button
+        <Button 
           onClick={handleSignIn}
           variant="outline"
           className="border bg-transparent text-custom-text-primary hover:bg-zinc-100 hover:text-black"
         >
           เข้าสู่ระบบ
         </Button>
-        <Button
-          onClick={() => router.push("/sign-up")}
+        <Button 
+          onClick={() => router.push('/sign-up')}
           className="bg-custom-purple text-custom-text-primary hover:bg-custom-purple-light hover:text-black"
         >
           สมัครสมาชิก
@@ -194,25 +186,22 @@ export default function Navbar() {
 
   const renderNavItems = () => (
     <NavigationMenuList className="space-x-2">
-      <div onClick={() => handleNavigation("/main-landing")}>
+      <div onClick={() => handleNavigation('/main-landing')}>
         <NavLink>หน้าหลัก</NavLink>
       </div>
       {/* Only show Explore link if user is not a manager */}
-      {(!user ||
-        (user &&
-          user.role &&
-          user.role.toLowerCase().trim() !== "manager")) && (
-        <div onClick={() => handleNavigation("/Explore")}>
+      {(!user || (user && user.role && user.role.toLowerCase().trim() !== 'manager')) && (
+        <div onClick={() => handleNavigation('/Explore')}>
           <NavLink>สำรวจ</NavLink>
         </div>
       )}
-      <div onClick={() => handleNavigation("/booking")}>
+      <div onClick={() => handleNavigation('/booking')}>
         <NavLink>การจอง</NavLink>
       </div>
-      <div onClick={() => handleNavigation("/about")}>
+      <div onClick={() => handleNavigation('/about')}>
         <NavLink>เกี่ยวกับ</NavLink>
       </div>
-      <div onClick={() => !user && router.push("/sign-in")}>
+      <div onClick={() => !user && router.push('/sign-in')}>
         <SearchBar />
       </div>
     </NavigationMenuList>
@@ -230,7 +219,11 @@ export default function Navbar() {
           </NavigationMenu>
         </div>
 
-        <div className="flex items-center space-x-4">{renderUserProfile()}</div>
+        <div className="flex items-center space-x-4">
+
+          {renderUserProfile()}
+
+        </div>
       </div>
     </nav>
   );
