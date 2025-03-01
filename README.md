@@ -2,6 +2,5 @@
 
 ### Daily Recommend By T4E🍓
 [![spotify-github-profile](https://spotify-github-profile.kittinanx.com/api/view?uid=qgiw2ogctywitpjgfj8fu1nq5&cover_image=true&theme=default&show_offline=false&background_color=121212&interchange=false)](https://github.com/kittinan/spotify-github-profile)
-
 ### Daily Recommend By KwnxpN🍓
 [![spotify-github-profile](https://spotify-github-profile.kittinanx.com/api/view?uid=31tyn7aekhozhau5esmbvfvvqrhi&cover_image=true&theme=default&show_offline=false&background_color=121212&interchange=false)](https://github.com/kittinan/spotify-github-profile)
