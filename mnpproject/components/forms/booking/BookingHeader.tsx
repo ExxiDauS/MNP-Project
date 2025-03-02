@@ -5,8 +5,8 @@ import { MapPin } from "lucide-react";
 interface BookingHeaderProps {
   name: string;
   address: string;
-  artistName: string;
-  price: number;
+  artistName: string | undefined;
+  price: string;
   id: string;
 }
 
@@ -22,7 +22,7 @@ const BookingHeader: React.FC<BookingHeaderProps> = ({
       {/* Back button */}
       <BackButton className="mb-4" href={`/livehouse-detail/${id}`} />
 
-      <div className="flex flex-col md:flex-row justify-between items-start w-full">
+      <div className="flex flex-col md:flex-row justify-between items-start w-full px-2">
         {/* Left section */}
         <div className="space-y-2">
           <h1 className="text-2xl font-bold text-custom-text-primary">

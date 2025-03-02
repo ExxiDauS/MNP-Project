@@ -4,32 +4,69 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import { notFound } from 'next/navigation';
 
-import livehouses from '@/public/data/livehouses.json';
 import facilities from '@/public/data/facilities.json';
 
 import BookingHeader from '@/components/forms/booking/BookingHeader';
 import BookingForm from '@/components/forms/booking/BookingForm';
 
+import { useUser } from '@/contexts/UserContext';
+
+interface BufferImage {
+    type: string,
+    data: number[]
+}
+
+interface Livehouse {
+    livehouse_id: string;
+    user_id: string;
+    name: string;
+    location: string;
+    province: string;
+    description: string;
+    price_per_hour: string;
+    sample_image01: BufferImage | null,
+    sample_image02: BufferImage | null,
+    sample_image03: BufferImage | null,
+    sample_image04: BufferImage | null,
+    sample_image05: BufferImage | null,
+}
+
+interface LivehouseResponse {
+    livehouse: Livehouse;
+}
+
 const page = () => {
+    const { user } = useUser();
     const [isLoading, setIsLoading] = useState(true);
+    const [livehouseData, setLivehouseData] = useState<Livehouse | null>(null);
     const params = useParams<{ id: string }>();
 
-    // Simulate loading data
+    // Fetch livehouse data from API
     useEffect(() => {
-        const loadData = async () => {
+        const fetchLivehouse = async () => {
             try {
-                // Simulate network delay - you can remove this in production
-                // and replace with your actual data fetching logic
-                await new Promise(resolve => setTimeout(resolve, 1000));
+                const response = await fetch(`http://localhost:5000/api/livehouse/get-livehouse/${params.id}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`API request failed with status: ${response.status}`);
+                }
+                
+                const data: LivehouseResponse = await response.json();
+                setLivehouseData(data.livehouse);
                 setIsLoading(false);
             } catch (error) {
-                console.error("Error loading data:", error);
+                console.error("Error fetching livehouse data:", error);
                 setIsLoading(false);
             }
         };
 
-        loadData();
-    }, []);
+        fetchLivehouse();
+    }, [params.id]);
 
     // Show loading state
     if (isLoading) {
@@ -40,12 +77,8 @@ const page = () => {
         );
     }
 
-    // Find the livehouse by id from the URL
-    const livehouse = livehouses.livehouses.find(
-        (house) => house.id.toString() === params.id
-    );
-
-    if (!livehouse) {
+    // Check if livehouse data was fetched
+    if (!livehouseData) {
         notFound();
     }
 
@@ -55,8 +88,8 @@ const page = () => {
             <div className="absolute inset-0 p-10 bg-gradient-to-r from-purple-500/30 via-pink-500/30 to-purple-500/30 blur-2xl rounded-4xl"></div>
 
             <div className='relative flex flex-col w-full m-2 bg-custom-background-elevated outline outline-custom-purple-light outline-offset-2 rounded-3xl'>
-                <BookingHeader name={livehouse.name} address={livehouse.address} artistName={"Kawin"} price={livehouse.price} id={params.id}/>
-                <BookingForm livehousePrice={livehouse.price} livehouseName={livehouse.name} facilitiesData={facilities.facilities}/>
+                <BookingHeader name={livehouseData.name} address={livehouseData.location} artistName={user?.username} price={livehouseData.price_per_hour} id={params.id}/>
+                <BookingForm artistId={user?.user_id} livehouseId={params.id} livehousePrice={parseFloat(livehouseData.price_per_hour)} livehouseName={livehouseData.name} facilitiesData={facilities.facilities}/>
             </div>
         </section>
     );

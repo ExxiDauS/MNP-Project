@@ -1,7 +1,7 @@
 {
     "facilities": [
       {
-        "id": "microphone",
+        "id": "mic",
         "name": "Microphone",
         "details": "Shure SM58",
         "pricePerHour": 300
@@ -31,7 +31,7 @@
         "pricePerHour": 400
       },
       {
-        "id": "paMonitor",
+        "id": "pa_monitor",
         "name": "PA Monitor",
         "details": "QSC K12.2",
         "pricePerHour": 350

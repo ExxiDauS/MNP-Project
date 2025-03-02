@@ -2,7 +2,6 @@ import React from 'react';
 import ContactItem from './ContactItem';
 import { Mail, Facebook, Instagram, Phone } from 'lucide-react';
 
-
 export interface ContactDetail {
   type: string;
   label: string;
@@ -22,12 +21,13 @@ const iconMap: Record<string, React.ElementType> = {
 };
 
 const Contacts: React.FC<ContactsProps> = ({ contacts }) => {
-
   return (
-    <div className="w-full pb-6 py-3 h-full">
-      <h2 className="text-xl font-semibold mb-4 text-custom-text-primary">Contacts</h2>
-      <div className="bg-gradient-card rounded-lg">
-        <div className="">
+    <div className="w-full py-2 md:py-3 h-full flex flex-col">
+      <h2 className="text-lg md:text-xl font-semibold mb-3 text-custom-text-primary">
+        Contacts
+      </h2>
+      <div className="bg-gradient-card rounded-lg h-full flex-grow overflow-hidden">
+        <div className="h-full overflow-y-auto">
           {contacts.map((contact, index) => (
             <ContactItem
               key={index}
