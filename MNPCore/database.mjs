@@ -255,6 +255,7 @@ export async function create_booking(
   total_price,
   status,
   guitar,
+  keyboard,
   bass,
   drum,
   mic,
@@ -265,8 +266,8 @@ export async function create_booking(
     const end = new Date(end_time);
 
     const [result] = await pool.query(
-      `INSERT INTO mnp_booking (user_id, livehouse_id, start_time, end_time, total_price, status, guitar, bass, drum, mic, pa_monitor)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      `INSERT INTO mnp_booking (user_id, livehouse_id, start_time, end_time, total_price, status, guitar, keyboard, bass, drum, mic, pa_monitor)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         user_id,
         livehouse_id,
@@ -275,6 +276,7 @@ export async function create_booking(
         total_price,
         status,
         guitar,
+        keyboard,
         bass,
         drum,
         mic,

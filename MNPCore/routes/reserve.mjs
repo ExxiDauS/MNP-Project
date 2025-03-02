@@ -3,7 +3,11 @@
 // reject reserve
 // edit reserve
 import { Router } from "express";
-import { create_booking, get_booking_by_id, get_booking_by_user_id } from "../database.mjs";
+import {
+  create_booking,
+  get_booking_by_user_id,
+} from "../database.mjs";
+import multer from "multer";
 
 const handleServerError = (res, error, message = "Internal Server Error") => {
   console.error("Server Error:", error);
@@ -15,7 +19,9 @@ const handleServerError = (res, error, message = "Internal Server Error") => {
 
 const router = Router();
 
-router.post("/create-booking", async (req, res) => {
+const upload = multer();
+
+router.post("/create-booking", upload.none(), async (req, res) => {
   try {
     const {
       user_id,
@@ -24,11 +30,13 @@ router.post("/create-booking", async (req, res) => {
       end_time,
       total_price,
       guitar,
+      keyboard,
       bass,
       drum,
       mic,
       pa_monitor,
     } = req.body;
+
     const result = await create_booking(
       user_id,
       livehouse_id,
@@ -37,6 +45,7 @@ router.post("/create-booking", async (req, res) => {
       total_price,
       "Pending",
       guitar || 0,
+      keyboard || 0,
       bass || 0,
       drum || 0,
       mic || 0,
