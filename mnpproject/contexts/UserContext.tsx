@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/alert-dialog";
 
 export interface UserProfile {
-  user_id: number;
+  user_id: string;
   username: string;
   email: string;
   role: string;

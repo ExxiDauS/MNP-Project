@@ -13,8 +13,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Upload, X } from "lucide-react";
-import Image, { StaticImageData } from "next/image";
+import { Upload, X, AlertTriangle } from "lucide-react";
+import Image from "next/image";
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 interface PaymentDialogProps {
     isOpen: boolean;
@@ -22,9 +23,8 @@ interface PaymentDialogProps {
     livehouseName: string;
     livehousePrice: number;
     facilitiesPrice: number;
-    qrCodeUrl: StaticImageData;
-    onPaymentComplete?: () => void;
-    onFileUpload?: (file: File) => void;
+    qrCodeUrl: string;
+    onPaymentComplete?: (file: File) => void;
 }
 
 export default function PaymentDialog({
@@ -33,12 +33,12 @@ export default function PaymentDialog({
     livehouseName,
     livehousePrice,
     facilitiesPrice,
-    qrCodeUrl, // Placeholder image
-    onPaymentComplete = () => { },
-    onFileUpload = () => {}
+    qrCodeUrl,
+    onPaymentComplete = () => { }
 }: PaymentDialogProps) {
     const [file, setFile] = useState<File | null>(null);
     const [isDragging, setIsDragging] = useState<boolean>(false);
+    const [validationError, setValidationError] = useState<string>("");
     const fileInputRef = useRef<HTMLInputElement>(null);
     const totalPrice: number = livehousePrice + facilitiesPrice;
 
@@ -47,9 +47,7 @@ export default function PaymentDialog({
         if (e.target.files && e.target.files[0]) {
             const uploadedFile = e.target.files[0];
             setFile(uploadedFile);
-            if (onFileUpload) {
-                onFileUpload(uploadedFile);
-            }
+            setValidationError(""); // Clear any previous validation errors
         }
     };
 
@@ -61,9 +59,7 @@ export default function PaymentDialog({
         if (e.dataTransfer.files && e.dataTransfer.files[0]) {
             const droppedFile = e.dataTransfer.files[0];
             setFile(droppedFile);
-            if (onFileUpload) {
-                onFileUpload(droppedFile);
-            }
+            setValidationError(""); // Clear any previous validation errors
         }
     };
 
@@ -86,16 +82,18 @@ export default function PaymentDialog({
         }
     };
 
-    // Handle payment completion
+    // Handle payment completion with validation
     const handlePaymentComplete = (): void => {
-        console.log('Payment completed with file:', file ? {
-            fileName: file.name,
-            fileType: file.type,
-            fileSize: `${(file.size / 1024).toFixed(2)} KB`
-        } : 'No file uploaded');
+        if (!file) {
+            setValidationError("Please upload payment proof before confirming.");
+            return;
+        }
+
+        // Call the onPaymentComplete callback with the file
+        onPaymentComplete(file);
+        
+        // Reset state
         removeFile();
-        onPaymentComplete();
-        onOpenChange(false);
     };
 
     return (
@@ -158,7 +156,7 @@ export default function PaymentDialog({
 
                                 <div
                                     className={`border-2 border-dashed rounded-lg p-3 mt-1 text-center cursor-pointer transition-colors ${
-                                        isDragging ? 'border-primary bg-primary/5' : 'border-gray-300 hover:border-gray-400'
+                                        isDragging ? 'border-primary bg-primary/5' : validationError ? 'border-red-500 bg-red-50' : 'border-gray-300 hover:border-gray-400'
                                     }`}
                                     onDragOver={handleDragOver}
                                     onDragLeave={handleDragLeave}
@@ -208,6 +206,15 @@ export default function PaymentDialog({
                                         </div>
                                     )}
                                 </div>
+                                
+                                {/* Validation error message */}
+                                {validationError && (
+                                    <Alert variant="destructive" className="mt-2 py-2">
+                                        <AlertTriangle className="h-4 w-4" />
+                                        <AlertTitle>Error</AlertTitle>
+                                        <AlertDescription>{validationError}</AlertDescription>
+                                    </Alert>
+                                )}
                             </div>
                         </CardContent>
                     </Card>

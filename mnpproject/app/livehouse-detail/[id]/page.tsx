@@ -1,7 +1,6 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'next/navigation'
-import { notFound } from 'next/navigation'
 
 import DetailHeader from '@/components/livehouseDetail/DetailHeader'
 import ImageGallery from '@/components/livehouseDetail/ImageGallery'
@@ -59,7 +58,7 @@ const Page = () => {
     const params = useParams<{ id: string }>();
     const [livehouse, setLivehouse] = useState<Livehouse | null>(null);
     const [contactDetails, setContactDetails] = useState<ContactDetail[]>([]);
-    const [imageSrc, setImageSrc] = useState<string>('');
+    const [images, setImages] = useState<(string | null)[]>([null, null, null, null, null]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
@@ -84,10 +83,15 @@ const Page = () => {
               
                 setLivehouse(livehouseData);
                 
-                // Process image
-                if (livehouseData.sample_image01) {
-                    setImageSrc(bufferToDataUrl(livehouseData.sample_image01));
-                }
+                // Process images
+                const imageArray = [
+                    livehouseData.sample_image01 ? bufferToDataUrl(livehouseData.sample_image01) : null,
+                    livehouseData.sample_image02 ? bufferToDataUrl(livehouseData.sample_image02) : null,
+                    livehouseData.sample_image03 ? bufferToDataUrl(livehouseData.sample_image03) : null,
+                    livehouseData.sample_image04 ? bufferToDataUrl(livehouseData.sample_image04) : null,
+                    livehouseData.sample_image05 ? bufferToDataUrl(livehouseData.sample_image05) : null
+                ];
+                setImages(imageArray);
 
                 // Fetch user data
                 const user_data = await fetch(`http://localhost:5000/api/users/profile/${livehouseData.user_id}`);
@@ -110,26 +114,32 @@ const Page = () => {
                     });
                 }
 
-                details.push({
-                    type: 'phone',
-                    label: 'Phone',
-                    value: user.phone,
-                    url: `-`
-                });
+                if (user.phone) {
+                    details.push({
+                        type: 'phone',
+                        label: 'Phone',
+                        value: user.phone,
+                        url: `-`
+                    });
+                }
 
-                details.push({
-                    type: 'facebook',
-                    label: 'Facebook',
-                    value: user.facebook_name,
-                    url: user.facebook_link
-                });
+                if (user.facebook_name) {
+                    details.push({
+                        type: 'facebook',
+                        label: 'Facebook',
+                        value: user.facebook_name,
+                        url: user.facebook_link
+                    });
+                }
 
-                details.push({
-                    type: 'instagram',
-                    label: 'Instagram',
-                    value: user.instagram_name,
-                    url: user.instagram_link
-                });
+                if (user.instagram_name) {
+                    details.push({
+                        type: 'instagram',
+                        label: 'Instagram',
+                        value: user.instagram_name,
+                        url: user.instagram_link
+                    });
+                }
 
                 setContactDetails(details);
                 setIsLoading(false);
@@ -165,32 +175,38 @@ const Page = () => {
     }
 
     return (
-        <section className="relative flex justify-self-center w-full mt-24  max-w-5xl mx-auto4 px-4 sm:px-6 md:px-8 mb-10">
+        <section className="relative flex justify-center w-full mt-6 md:mt-16 lg:mt-24 max-w-7xl mx-auto px-4 sm:px-6 md:px-8 mb-10">
             {/* Larger aura effect background */}
-            <div className="absolute inset-0 p-10 bg-gradient-to-r from-purple-500/30 via-pink-500/30 to-purple-500/30 blur-2xl rounded-4xl"></div>
+            <div className="absolute inset-0 p-4 sm:p-6 bg-gradient-to-r from-purple-500/30 via-pink-500/30 to-purple-500/30 blur-2xl rounded-4xl"></div>
 
             {/* Content container */}
-            <div className="relative flex flex-col w-full bg-custom-background-elevated outline outline-custom-purple-light outline-offset-2 rounded-3xl p-4 sm:p-6 md:p-10">
-
-                    <DetailHeader
-                        name={livehouse.name}
-                        address={livehouse.location}
-                        price={livehouse.price_per_hour}
-                        id={params.id as string}
+            <div className="relative flex flex-col w-full bg-custom-background-elevated outline outline-custom-purple-light outline-offset-2 rounded-3xl p-4 sm:p-6 md:p-4">
+                <DetailHeader
+                    name={livehouse.name}
+                    address={livehouse.location}
+                    price={livehouse.price_per_hour}
+                    id={params.id as string}
+                />
+                
+                <div className="mb-4 md:mb-6 mt-2 md:mt-4">
+                    <ImageGallery 
+                        image1={images[0]} 
+                        image2={images[1]} 
+                        image3={images[2]} 
+                        image4={images[3]} 
+                        image5={images[4]} 
                     />
-                    <div className="mb-2">
-                        <ImageGallery image1={imageSrc} image2={null} image3={null} image4={null} image5={null} />
-                    </div>
+                </div>
 
-                    <div className="grid grid-cols-5 gap-2 px-6">
-                        <div className="col-span-3">
-                            <Description description={livehouse.description} />
-                        </div>
-                        <div className="col-span-2">
-                            <Contacts contacts={contactDetails} />
-                        </div>
+                <div className="flex flex-col md:flex-row gap-4 px-2 md:px-6">
+                    <div className="w-full md:w-7/12 flex flex-col h-full">
+                        <Description description={livehouse.description} />
+                    </div>
+                    <div className="w-full md:w-5/12">
+                        <Contacts contacts={contactDetails} />
                     </div>
                 </div>
+            </div>
         </section>
     );
 };

@@ -4,7 +4,6 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import MobileNav from "./MobileNav";
 import NavLink from "./NavLink";
-import SearchBar from "./SearchBar";
 import { useUser } from '@/contexts/UserContext';
 import {
   NavigationMenu,
@@ -109,7 +108,7 @@ export default function Navbar() {
               {user.profile_image && user.profile_image.data.length > 0 ? (
                 <AvatarImage 
                   src={`data:image/jpeg;base64,${Buffer.from(user.profile_image.data).toString('base64')}`} 
-                  alt={user.name} 
+                  alt={user.name}
                 />
               ) : (
                 <AvatarFallback>{getInitials(user.name)}</AvatarFallback>
@@ -180,7 +179,6 @@ export default function Navbar() {
       <Skeleton className="w-16 h-8 rounded-md bg-zinc-700" />
       <Skeleton className="w-20 h-8 rounded-md bg-zinc-700" />
       <Skeleton className="w-24 h-8 rounded-md bg-zinc-700" />
-      <Skeleton className="w-36 h-10 rounded-md bg-zinc-700" />
     </NavigationMenuList>
   );
 
@@ -200,9 +198,6 @@ export default function Navbar() {
       </div>
       <div onClick={() => handleNavigation('/about')}>
         <NavLink>เกี่ยวกับ</NavLink>
-      </div>
-      <div onClick={() => !user && router.push('/sign-in')}>
-        <SearchBar />
       </div>
     </NavigationMenuList>
   );
