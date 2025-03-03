@@ -1,40 +1,33 @@
-import React from 'react';
+'use client'
+
+import React, { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import PaymentDialog from '../payments/PaymentDialog';
 import { Check, Clock, Mic, Guitar, Drum, Speaker, Music, Keyboard, X } from 'lucide-react';
+import { BookingData } from '@/app/artist-booking-list/page';
+import { Facilities } from '@/app/artist-booking-list/page';
 
 // Define types for the booking data
-interface Facilities {
-  mic: string;
-  guitar: string;
-  bass: string;
-  drum: string;
-  keyboard: string;
-  pa_monitor: string;
-}
 
-export interface BookingData {
-  stageName: string;
-  startTime: string;
-  endTime: string;
-  totalPrice: string;
-  payment_proof: string | null;
-  status: 'Accept' | 'Decline' | 'Pending';
-  facilities: Facilities;
-}
 
 interface BookingHistoryCardProps {
   booking: BookingData;
+  qrCodeUrl: string;
+  livehouseName: string;
 }
 
-const BookingHistoryCard: React.FC<BookingHistoryCardProps> = ({ booking }) => {
+const BookingHistoryCard: React.FC<BookingHistoryCardProps> = ({ booking, qrCodeUrl, livehouseName }) => {
+  const [isPaymentDialogOpen, setPaymentDialogOpen] = useState(false);
+
   // Format date and time
   const formatDateTime = (dateString: string): string => {
     const date = new Date(dateString);
-    return date.toLocaleTimeString('en-US', { 
-      hour: '2-digit', 
+    return date.toLocaleTimeString('en-US', {
+      hour: '2-digit',
       minute: '2-digit',
-      hour12: true 
+      hour12: true
     });
   };
 
@@ -54,7 +47,7 @@ const BookingHistoryCard: React.FC<BookingHistoryCardProps> = ({ booking }) => {
 
   // Get status badge color
   const getStatusBadgeClass = () => {
-    switch(booking.status) {
+    switch (booking.status) {
       case 'Accept':
         return 'bg-green-700 hover:bg-green-800';
       case 'Decline':
@@ -69,7 +62,7 @@ const BookingHistoryCard: React.FC<BookingHistoryCardProps> = ({ booking }) => {
     <Card className="w-full mx-0 my-4 border border-custom-purple-deeper bg-gradient-card shadow-md">
       {/* Header with studio name and payment/status */}
       <div className="flex justify-between items-center bg-custom-purple-deeper p-4 rounded-t-lg">
-        <h2 className="text-xl font-bold text-white">{booking.stageName}</h2>
+        <h2 className="text-xl font-bold text-white">{livehouseName}</h2>
         <div className="flex gap-2">
           <Badge className={getStatusBadgeClass() + " py-1 px-3"}>
             {booking.status}
@@ -82,6 +75,9 @@ const BookingHistoryCard: React.FC<BookingHistoryCardProps> = ({ booking }) => {
             <Badge className="bg-red-600 hover:bg-red-700 py-1 px-3">
               <X className="mr-1 h-4 w-4" /> Unpaid
             </Badge>
+          )}
+          {(booking.status !== 'Decline' && !booking.payment_proof) && (
+            <Button size="sm" onClick={() => setPaymentDialogOpen(true)} className="h-7 bg-blue-600 hover:bg-blue-700 text-white">Pay Now</Button>
           )}
         </div>
       </div>
@@ -113,7 +109,7 @@ const BookingHistoryCard: React.FC<BookingHistoryCardProps> = ({ booking }) => {
             </div>
           </div>
         </div>
-        
+
         {/* Right column - Facilities */}
         <div className="text-white">
           <div className="font-semibold mb-3">Facilities</div>
@@ -151,6 +147,15 @@ const BookingHistoryCard: React.FC<BookingHistoryCardProps> = ({ booking }) => {
           </div>
         </div>
       </CardContent>
+
+      <PaymentDialog
+        isOpen={isPaymentDialogOpen}
+        onOpenChange={setPaymentDialogOpen}
+        livehouseName={livehouseName}
+        livehousePrice={parseFloat(booking.totalPrice)}
+        facilitiesPrice={0}
+        qrCodeUrl="/path-to-qr-code.jpg"
+      />
     </Card>
   );
 };
