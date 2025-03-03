@@ -140,7 +140,7 @@ export default function Navbar() {
           </DropdownMenuItem>
           <DropdownMenuItem 
             className="cursor-pointer hover:bg-zinc-700"
-            onClick={() => router.push('/booking')}
+            onClick={() => router.push('/artist-booking-list')}
           >
             การจองของฉัน
           </DropdownMenuItem>
@@ -193,7 +193,7 @@ export default function Navbar() {
           <NavLink>สำรวจ</NavLink>
         </div>
       )}
-      <div onClick={() => handleNavigation('/booking')}>
+      <div onClick={() => handleNavigation('/artist-booking-list')}>
         <NavLink>การจอง</NavLink>
       </div>
       <div onClick={() => handleNavigation('/about')}>

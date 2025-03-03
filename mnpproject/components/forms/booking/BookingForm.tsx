@@ -99,7 +99,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ artistId, livehouseId, liveho
     }
   };
 
-  const handlePaymentComplete = (file: File) => {
+  const handlePaymentComplete = async (file: File) => {
     console.log("Payment completed for booking ID:", bookingId);
     console.log("Payment proof file:", {
       name: file.name,
@@ -107,25 +107,57 @@ const BookingForm: React.FC<BookingFormProps> = ({ artistId, livehouseId, liveho
       size: `${(file.size / 1024).toFixed(2)} KB`
     });
 
-    // Show success toast notification
-    toast.success("Payment Confirmed", {
-      description: "Your booking has been successfully confirmed.",
-      duration: 5000,
-      style: {
-        background: "#1a8300",
-        color: "#FFFFFF", // White text for readability
-        borderRadius: "8px",
-        fontWeight: "bold",
-        padding: "12px",
-        boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)", // Light shadow for better visibility
-      },
-    });
+    // Prepare form data for the API request
+    const formData = new FormData();
+    formData.append('image', file);
+    formData.append('booking_id', bookingId);
 
-    // Close payment dialog
-    setIsPaymentDialogOpen(false);
-    router.push("/");
-    // Here you could add code to redirect the user or perform other actions
-    // For example: router.push('/bookings');
+    try {
+      // Make the API call to upload the payment proof
+      const response = await fetch('http://localhost:5000/api/payment/upload', {
+        method: 'PATCH',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to upload payment proof with status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      console.log('Payment proof uploaded successfully:', result);
+
+      // Show success toast notification
+      toast.success("Payment Confirmed", {
+        description: "Your booking has been successfully confirmed.",
+        duration: 5000,
+        style: {
+          background: "#1a8300",
+          color: "#FFFFFF", // White text for readability
+          borderRadius: "8px",
+          fontWeight: "bold",
+          padding: "12px",
+          boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)", // Light shadow for better visibility
+        },
+      });
+
+      // Close payment dialog
+      setIsPaymentDialogOpen(false);
+      router.push("/");
+    } catch (error) {
+      console.error('Error uploading payment proof:', error);
+      toast.error("Payment Upload Failed", {
+        description: "There was an error uploading your payment proof. Please try again.",
+        duration: 5000,
+        style: {
+          background: "#ff4d4f",
+          color: "#FFFFFF",
+          borderRadius: "8px",
+          fontWeight: "bold",
+          padding: "12px",
+          boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+        },
+      });
+    }
   };
 
   // Handle facility toggle with normalization for different naming conventions
