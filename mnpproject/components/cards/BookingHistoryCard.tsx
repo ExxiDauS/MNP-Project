@@ -1,40 +1,50 @@
 'use client'
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import PaymentDialog from '../payments/PaymentDialog';
-import { Check, Clock, Mic, Guitar, Drum, Speaker, Music, Keyboard, X } from 'lucide-react';
+import { Check, Clock, Mic, Guitar, Drum, Speaker, Music, Keyboard } from 'lucide-react';
 import { BookingData } from '@/app/artist-booking-list/page';
 import { Facilities } from '@/app/artist-booking-list/page';
 
-// Define types for the booking data
-
-
 interface BookingHistoryCardProps {
   booking: BookingData;
-  qrCodeUrl: string;
-  livehouseName: string;
 }
 
-const BookingHistoryCard: React.FC<BookingHistoryCardProps> = ({ booking, qrCodeUrl, livehouseName }) => {
-  const [isPaymentDialogOpen, setPaymentDialogOpen] = useState(false);
+const BookingHistoryCard: React.FC<BookingHistoryCardProps> = ({ booking }) => {
+  const [livehouseName, setLivehouseName] = useState<string>('');
+
+  useEffect(() => {
+    const fetchLivehouseName = async () => {
+      try {
+        const response = await fetch(`http://localhost:5000/api/livehouse/get-livehouse/${booking.bookingInfo.livehouse_id}`);
+        const data = await response.json();
+        setLivehouseName(data.name);
+      } catch (error) {
+        console.error('Error fetching livehouse name:', error);
+      }
+    };
+
+    fetchLivehouseName();
+  }, [booking.bookingInfo.livehouse_id]);
 
   // Format date and time
-  const formatDateTime = (dateString: string): string => {
-    const date = new Date(dateString);
-    return date.toLocaleTimeString('en-US', {
+  const formatDateTime = (dateString: string | undefined): string => {
+    if (!dateString) return '';
+    // Ensure the date string is in a format that can be parsed by new Date()
+    const formattedDateString = dateString.replace('T', ' ').replace('.000Z', '');
+    const date = new Date(formattedDateString);
+    return date.toLocaleTimeString('en-GB', {
       hour: '2-digit',
       minute: '2-digit',
-      hour12: true
+      hour12: false
     });
   };
 
   // Calculate duration in hours
   const calculateDuration = (): string => {
-    const start = new Date(booking.startTime);
-    const end = new Date(booking.endTime);
+    const start = new Date(booking.bookingInfo.start_time);
+    const end = new Date(booking.bookingInfo.end_time);
     const durationMs = end.getTime() - start.getTime();
     const durationHours = durationMs / (1000 * 60 * 60);
     return durationHours.toFixed(1);
@@ -42,12 +52,13 @@ const BookingHistoryCard: React.FC<BookingHistoryCardProps> = ({ booking, qrCode
 
   // Get selected facilities
   const selectedFacilities = Object.entries(booking.facilities)
-    .filter(([_, value]) => value === "1")
+    .filter(([_, value]) => value === 1)
     .map(([facility]) => facility as keyof Facilities);
+    console.log("Facilities", selectedFacilities);
 
   // Get status badge color
   const getStatusBadgeClass = () => {
-    switch (booking.status) {
+    switch (booking.bookingInfo.status) {
       case 'Accept':
         return 'bg-green-700 hover:bg-green-800';
       case 'Decline':
@@ -58,27 +69,23 @@ const BookingHistoryCard: React.FC<BookingHistoryCardProps> = ({ booking, qrCode
     }
   };
 
+  // Only render the card if the booking is paid
+  if (!booking.bookingInfo.payment_proof) {
+    return null;
+  }
+
   return (
     <Card className="w-full mx-0 my-4 border border-custom-purple-deeper bg-gradient-card shadow-md">
-      {/* Header with studio name and payment/status */}
+      {/* Header with studio name and status */}
       <div className="flex justify-between items-center bg-custom-purple-deeper p-4 rounded-t-lg">
         <h2 className="text-xl font-bold text-white">{livehouseName}</h2>
         <div className="flex gap-2">
           <Badge className={getStatusBadgeClass() + " py-1 px-3"}>
-            {booking.status}
+            {booking.bookingInfo.status}
           </Badge>
-          {booking.payment_proof ? (
-            <Badge className="bg-green-700 hover:bg-green-800 py-1 px-3">
-              <Check className="mr-1 h-4 w-4" /> Paid
-            </Badge>
-          ) : (
-            <Badge className="bg-red-600 hover:bg-red-700 py-1 px-3">
-              <X className="mr-1 h-4 w-4" /> Unpaid
-            </Badge>
-          )}
-          {(booking.status !== 'Decline' && !booking.payment_proof) && (
-            <Button size="sm" onClick={() => setPaymentDialogOpen(true)} className="h-7 bg-blue-600 hover:bg-blue-700 text-white">Pay Now</Button>
-          )}
+          <Badge className="bg-green-700 hover:bg-green-800 py-1 px-3">
+            <Check className="mr-1 h-4 w-4" /> Paid
+          </Badge>
         </div>
       </div>
 
@@ -93,7 +100,7 @@ const BookingHistoryCard: React.FC<BookingHistoryCardProps> = ({ booking, qrCode
               <span className="font-semibold">Time Slot</span>
             </div>
             <div className="ml-7 space-y-1">
-              <div>{formatDateTime(booking.startTime)} - {formatDateTime(booking.endTime)}</div>
+              <div>{formatDateTime(booking.bookingInfo.start_time)} - {formatDateTime(booking.bookingInfo.end_time)}</div>
               <div className="text-sm text-gray-400">{calculateDuration()} hours</div>
             </div>
           </div>
@@ -105,7 +112,7 @@ const BookingHistoryCard: React.FC<BookingHistoryCardProps> = ({ booking, qrCode
               <span className="font-semibold">Total Price</span>
             </div>
             <div className="ml-7">
-              {Number(booking.totalPrice).toLocaleString()} THB
+              {booking.bookingInfo.total_price} THB
             </div>
           </div>
         </div>
@@ -147,15 +154,6 @@ const BookingHistoryCard: React.FC<BookingHistoryCardProps> = ({ booking, qrCode
           </div>
         </div>
       </CardContent>
-
-      <PaymentDialog
-        isOpen={isPaymentDialogOpen}
-        onOpenChange={setPaymentDialogOpen}
-        livehouseName={livehouseName}
-        livehousePrice={parseFloat(booking.totalPrice)}
-        facilitiesPrice={0}
-        qrCodeUrl="/path-to-qr-code.jpg"
-      />
     </Card>
   );
 };

@@ -25,6 +25,7 @@ interface PaymentDialogProps {
     facilitiesPrice: number;
     qrCodeUrl: string;
     onPaymentComplete?: (file: File) => void;
+    isLoading?: boolean; // Add isLoading prop
 }
 
 export default function PaymentDialog({
@@ -34,13 +35,17 @@ export default function PaymentDialog({
     livehousePrice,
     facilitiesPrice,
     qrCodeUrl,
-    onPaymentComplete = () => { }
+    onPaymentComplete = () => { },
+    isLoading = false, // Default to false
 }: PaymentDialogProps) {
     const [file, setFile] = useState<File | null>(null);
     const [isDragging, setIsDragging] = useState<boolean>(false);
     const [validationError, setValidationError] = useState<string>("");
     const fileInputRef = useRef<HTMLInputElement>(null);
     const totalPrice: number = livehousePrice + facilitiesPrice;
+
+    console.log('Dialog open state:', isOpen);
+    console.log('File selected:', file);
 
     // Handle file selection
     const handleFileChange = (e: ChangeEvent<HTMLInputElement>): void => {
@@ -91,7 +96,7 @@ export default function PaymentDialog({
 
         // Call the onPaymentComplete callback with the file
         onPaymentComplete(file);
-        
+
         // Reset state
         removeFile();
     };
@@ -102,6 +107,18 @@ export default function PaymentDialog({
                 <DialogHeader>
                     <DialogTitle className="text-center font-bold">Payment Details</DialogTitle>
                 </DialogHeader>
+
+                {isLoading && (
+                    <div className="absolute inset-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50">
+                        <div className="bg-white p-6 rounded-lg shadow-lg">
+                            <p className="text-lg font-semibold">Processing Payment...</p>
+                            <div className="mt-4 flex justify-center">
+                                {/* Add a spinner or loading animation here */}
+                                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-purple-500"></div>
+                            </div>
+                        </div>
+                    </div>
+                )}
 
                 <div className="flex flex-col items-center space-y-2 py-2">
                     <Card className="w-full">
@@ -155,9 +172,8 @@ export default function PaymentDialog({
                                 </Label>
 
                                 <div
-                                    className={`border-2 border-dashed rounded-lg p-3 mt-1 text-center cursor-pointer transition-colors ${
-                                        isDragging ? 'border-primary bg-primary/5' : validationError ? 'border-red-500 bg-red-50' : 'border-gray-300 hover:border-gray-400'
-                                    }`}
+                                    className={`border-2 border-dashed rounded-lg p-3 mt-1 text-center cursor-pointer transition-colors ${isDragging ? 'border-primary bg-primary/5' : validationError ? 'border-red-500 bg-red-50' : 'border-gray-300 hover:border-gray-400'
+                                        }`}
                                     onDragOver={handleDragOver}
                                     onDragLeave={handleDragLeave}
                                     onDrop={handleDrop}
@@ -206,7 +222,7 @@ export default function PaymentDialog({
                                         </div>
                                     )}
                                 </div>
-                                
+
                                 {/* Validation error message */}
                                 {validationError && (
                                     <Alert variant="destructive" className="mt-2 py-2">

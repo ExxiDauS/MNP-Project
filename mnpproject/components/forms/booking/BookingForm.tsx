@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
-import { toast } from "sonner";
+import { toast } from 'sonner';
 import { format } from "date-fns";
 
 import DateSelect from '../DateSelect';
@@ -50,6 +50,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ artistId, livehouseId, liveho
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [startTime, setStartTime] = useState<string>('');
   const [endTime, setEndTime] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [selectedFacilities, setSelectedFacilities] = useState<Record<string, string>>({
     guitar: "0",
     bass: "0",
@@ -107,6 +108,9 @@ const BookingForm: React.FC<BookingFormProps> = ({ artistId, livehouseId, liveho
       size: `${(file.size / 1024).toFixed(2)} KB`
     });
 
+    // Set loading state to true
+    setIsLoading(true);
+
     // Prepare form data for the API request
     const formData = new FormData();
     formData.append('image', file);
@@ -142,7 +146,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ artistId, livehouseId, liveho
 
       // Close payment dialog
       setIsPaymentDialogOpen(false);
-      router.push("/");
+      router.push("/artist-booking-list");
     } catch (error) {
       console.error('Error uploading payment proof:', error);
       toast.error("Payment Upload Failed", {
@@ -157,6 +161,9 @@ const BookingForm: React.FC<BookingFormProps> = ({ artistId, livehouseId, liveho
           boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
         },
       });
+    } finally {
+      // Set loading state to false regardless of success or failure
+      setIsLoading(false);
     }
   };
 
@@ -388,6 +395,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ artistId, livehouseId, liveho
         facilitiesPrice={priceBreakdown.facilitiesPrice}
         qrCodeUrl={paymentQrCode}
         onPaymentComplete={handlePaymentComplete}
+        isLoading={isLoading} // Pass the loading state
       />
     </div>
   );
