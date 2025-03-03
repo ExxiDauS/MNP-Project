@@ -31,9 +31,6 @@ interface Livehouse {
     sample_image05: BufferImage | null,
 }
 
-interface LivehouseResponse {
-    livehouse: Livehouse;
-}
 
 const page = () => {
     const { user } = useUser();
@@ -56,8 +53,8 @@ const page = () => {
                     throw new Error(`API request failed with status: ${response.status}`);
                 }
                 
-                const data: LivehouseResponse = await response.json();
-                setLivehouseData(data.livehouse);
+                const data: Livehouse = await response.json();
+                setLivehouseData(data);
                 setIsLoading(false);
             } catch (error) {
                 console.error("Error fetching livehouse data:", error);

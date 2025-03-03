@@ -9,7 +9,7 @@ const ExploreCard = ({
 }: {
   id: string;
   card_size: number;
-  bg_image: string;
+  bg_image: string | null;
   location: string;
   name: string;
 }) => {
@@ -18,7 +18,7 @@ const ExploreCard = ({
       {/* <div className="absolute -inset-10 bg-gradient-to-r from-purple-500/30 via-pink-500/30 to-purple-500/30 blur-2xl rounded-4xl"></div> */}
       <div className="flex flex-col items-center p-4 border border-[#1b181a] rounded-lg shadow-lg bg bg-[#1b181a]">
         <img
-          src={bg_image}
+          src={bg_image ?? ""}
           alt="Event"
           className="w-full h-40 object-cover rounded-lg "
         />

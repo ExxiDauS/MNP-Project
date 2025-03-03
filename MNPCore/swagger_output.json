@@ -81,8 +81,25 @@
       }
     },
     "/api/users/sign-in": {
-      "get": {
+      "post": {
         "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "username": {
+                  "example": "any"
+                },
+                "password": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -375,6 +392,9 @@
                   "example": "any"
                 },
                 "guitar": {
+                  "example": "any"
+                },
+                "keyboard": {
                   "example": "any"
                 },
                 "bass": {

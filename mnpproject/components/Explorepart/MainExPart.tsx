@@ -2,21 +2,61 @@
 import React, { useEffect, useState } from "react";
 import ExploreCardContainer from "./ExploreCardContainer";
 import CSearchBar from "../CustomSearchBar/CSearchBar";
-import livehousesData from "@/public/data/livehouses.json";
 
-const livehouses = livehousesData.livehouses;
+interface BufferImage {
+  type: string;
+  data: number[];
+}
+
+interface Livehouse {
+  livehouse_id: number;
+  user_id: number;
+  name: string;
+  location: string;
+  province: string;
+  description: string;
+  price_per_hour: string;
+  sample_image01: BufferImage | null;
+  sample_image02: BufferImage | null;
+  sample_image03: BufferImage | null;
+  sample_image04: BufferImage | null;
+  sample_image05: BufferImage | null;
+}
 
 const MainExPart = () => {
-  const [searchQuery, setSearchQuery] = useState<string>(""); // ใช้ useState เพื่อเก็บค่าข้อความที่ผู้ใช้ป้อนลงในแถบค้นหา ส่วน setSearchQuery ใช้สำหรับอัปเดตค่าของ searchQuery
-  const [filteredLivehouses, setFilteredLivehouses] = useState(livehouses); // ใช้ useState เพื่อเก็บค่าข้อมูล livehouses ที่ผ่านการกรองจากการค้นหา ค่าเริ่มต้นเป็นข้อมูลทั้งหมดของ livehouses
+  const [searchQuery, setSearchQuery] = useState<string>(""); 
+  const [filteredLivehouses, setFilteredLivehouses] = useState<Livehouse[]>([]);
+  const [livehouses, setLivehouses] = useState<Livehouse[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
-  // Function to handle search input
-  const handleSearch = (query: string) => { // ฟังก์ชันที่ใช้จัดการการค้นหาโดยรับ query (ข้อความที่ผู้ใช้ป้อน)
-    setSearchQuery(query); // อัปเดตค่า searchQuery ด้วยค่าที่รับมา
+  useEffect(() => {
+    const fetchLivehouses = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/api/livehouse/get-livehouse");
+        if (!response.ok) {
+          throw new Error("Failed to fetch livehouses");
+        }
+        const data = await response.json();
+        setLivehouses(data.livehouses);
+        setFilteredLivehouses(data.livehouses);
+      } catch (error) {
+        if (error instanceof Error) {
+          setError(error.message);
+        } else {
+          setError("An unknown error occurred");
+        }
+        console.error("Error fetching livehouses:", error);
+      }
+    };
+    fetchLivehouses();
+  }, []);
+
+  const handleSearch = (query: string) => {
+    setSearchQuery(query);
     const filtered = livehouses.filter((livehouse) =>
-      livehouse.name.toLowerCase().includes(query.toLowerCase()) // ใช้ filter() เพื่อคัดกรองเฉพาะ livehouses ที่มี name ตรงกับข้อความที่ผู้ใช้ป้อน
+      livehouse.name.toLowerCase().includes(query.toLowerCase())
     );
-    setFilteredLivehouses(filtered); // อัปเดตค่า filteredLivehouses ให้เป็นข้อมูลที่กรองแล้ว
+    setFilteredLivehouses(filtered);
   };
 
   return (
@@ -30,6 +70,13 @@ const MainExPart = () => {
           placeholder="Search livehouses..."
         />
       </div>
+
+      {/* Error Message */}
+      {error && (
+        <div className="text-red-500 text-center my-4">
+          {error}
+        </div>
+      )}
 
       {/* Popular Livehouse showcase */}
       <section className="pb-4 mt-6">

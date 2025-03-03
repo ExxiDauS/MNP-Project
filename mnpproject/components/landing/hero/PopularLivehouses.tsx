@@ -2,7 +2,6 @@ import React from 'react';
 import CardsCarousel from '../../cards/CardsCarousel';
 
 const PopularLivehouses = async () => {
-    // const livehouses = livehousesData.livehouses;
     const data = await fetch('http://localhost:5000/api/livehouse/get-livehouse')
     const res = await data.json()
     const livehouses = res.livehouses

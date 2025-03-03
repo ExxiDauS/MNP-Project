@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import React from 'react';
-import Navbar from "@/components/Nav/MainNavBar";
 import { UserProvider } from '@/contexts/UserContext';
 import ErrorBoundary from '@/components/ErrorBoundary';
 

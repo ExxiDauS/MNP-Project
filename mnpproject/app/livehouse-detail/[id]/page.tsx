@@ -46,9 +46,6 @@ interface User {
     phone: string;
 }
 
-interface LivehouseResponse {
-    livehouse: Livehouse;
-}
 
 interface UserResponse {
     user: User;
@@ -74,8 +71,7 @@ const Page = () => {
                     throw new Error('Failed to fetch livehouse data');
                 }
                 
-                const res: LivehouseResponse = await data.json();
-                const livehouseData = res.livehouse;
+                const livehouseData = await data.json();
 
                 if (!livehouseData) {
                     throw new Error('Livehouse not found');
