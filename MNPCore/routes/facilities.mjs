@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { create_facilities, patch_facilities } from "../database.mjs";
+import { create_facilities, get_facilities_by_livehouse, patch_facilities } from "../database.mjs";
 
 const router = Router();
 
@@ -82,6 +82,19 @@ router.patch("/update-facility/:facility_id", async (req, res) => {
         res.status(500).json({
             message: "Error updating facility",
             error: error.message,
+    });
+  }
+});
+
+router.get("/get-facilities/:livehouse_id", async (req, res) => {
+  try {
+    const livehouse_id = req.params.livehouse_id;
+    const facilities = await get_facilities_by_livehouse(livehouse_id);
+    res.status(200).json(facilities);
+  } catch (err) {
+    res.status(500).json({
+      message: "Error getting facilities",
+      error: err.message,
     });
   }
 });

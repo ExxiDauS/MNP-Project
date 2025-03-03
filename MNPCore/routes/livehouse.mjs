@@ -41,24 +41,49 @@ router.get("/get-livehouse/:livehouse_id", async (req, res) => {
     const { livehouse_id } = req.params;
     const livehouse = await get_livehouse_by_id(livehouse_id);
 
-    const images = [];
-    for (let i = 1; i <= 5; i++) {
-      const imageField = `sample_image0${i}`;
-      if (livehouse[imageField]) {
-        images.push({
-          id: i,
-          name: `image${i}`,
-          type: "image/jpeg", // Adjust type based on your actual image type
-          data: `data:image/jpeg;base64,${livehouse[imageField].toString(
-            "base64"
-          )}`,
-        });
-      }
-    }
-    res.status(200).json({
-      livehouse,
-      images,
-    });
+    // Create a modified response object matching your desired pattern
+    // where the image data remains as Buffer type in the response
+    const responseData = {
+      description: livehouse.description,
+      livehouse_id: livehouse.livehouse_id,
+      location: livehouse.location,
+      name: livehouse.name,
+      price_per_hour: livehouse.price_per_hour,
+      province: livehouse.province,
+      sample_image01: livehouse.sample_image01
+        ? {
+            type: "Buffer",
+            data: Array.from(livehouse.sample_image01), // Convert Buffer to array of numbers
+          }
+        : null,
+      sample_image02: livehouse.sample_image02
+        ? {
+            type: "Buffer",
+            data: Array.from(livehouse.sample_image02),
+          }
+        : null,
+      sample_image03: livehouse.sample_image03
+        ? {
+            type: "Buffer",
+            data: Array.from(livehouse.sample_image03),
+          }
+        : null,
+      sample_image04: livehouse.sample_image04
+        ? {
+            type: "Buffer",
+            data: Array.from(livehouse.sample_image04),
+          }
+        : null,
+      sample_image05: livehouse.sample_image05
+        ? {
+            type: "Buffer",
+            data: Array.from(livehouse.sample_image05),
+          }
+        : null,
+      user_id: livehouse.user_id,
+    };
+
+    res.status(200).json(responseData);
   } catch (error) {
     return handleServerError(res, error, "Error fetching livehouse");
   }
@@ -122,11 +147,11 @@ router.patch(
       const { name, location, province, description, price_per_hour } =
         req.body;
 
-      const sampleimg01Buffer = req.files?.sampleimg01?.[0]?.buffer || null;
-      const sampleimg02Buffer = req.files?.sampleimg02?.[0]?.buffer || null;
-      const sampleimg03Buffer = req.files?.sampleimg03?.[0]?.buffer || null;
-      const sampleimg04Buffer = req.files?.sampleimg04?.[0]?.buffer || null;
-      const sampleimg05Buffer = req.files?.sampleimg05?.[0]?.buffer || null;
+      const sampleimg01Buffer = req.files?.sample_image01?.[0]?.buffer || null;
+      const sampleimg02Buffer = req.files?.sample_image02?.[0]?.buffer || null;
+      const sampleimg03Buffer = req.files?.sample_image03?.[0]?.buffer || null;
+      const sampleimg04Buffer = req.files?.sample_image04?.[0]?.buffer || null;
+      const sampleimg05Buffer = req.files?.sample_image05?.[0]?.buffer || null;
 
       const updatedLivehouse = await patch_livehouse(
         livehouse_id,
