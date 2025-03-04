@@ -33,6 +33,7 @@ interface FormData {
   instagram_link: string;
   instagram_name: string;
   profileImage: File | null;
+  verify: File | null;
 }
 
 export default function SignUpForm() {
@@ -49,6 +50,7 @@ export default function SignUpForm() {
     instagram_link: '',
     instagram_name: '',
     profileImage: null,
+    verify: null,
   });
 
   const [isLoading, setIsLoading] = useState(false);
@@ -68,16 +70,16 @@ export default function SignUpForm() {
 
     // Clear the specific field error when user starts typing
     setFieldErrors(prev => ({ ...prev, [name]: '' }));
-    
+
     // Check if field is empty and mark as error immediately
     if (value.trim() === '') {
       const fieldLabel = name === 'username' ? 'ชื่อผู้ใช้' :
-                         name === 'password' ? 'รหัสผ่าน' :
-                         name === 'confirmPassword' ? 'ยืนยันรหัสผ่าน' :
-                         name === 'email' ? 'อีเมล' :
-                         name === 'name' ? 'ชื่อ-นามสกุล' :
-                         name === 'phone' ? 'เบอร์โทรศัพท์' : '';
-      
+        name === 'password' ? 'รหัสผ่าน' :
+          name === 'confirmPassword' ? 'ยืนยันรหัสผ่าน' :
+            name === 'email' ? 'อีเมล' :
+              name === 'name' ? 'ชื่อ-นามสกุล' :
+                name === 'phone' ? 'เบอร์โทรศัพท์' : '';
+
       if (fieldLabel) {
         setFieldErrors(prev => ({ ...prev, [name]: `กรุณากรอก${fieldLabel}` }));
       }
@@ -118,32 +120,32 @@ export default function SignUpForm() {
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
-      
+
       // Validate file type
       const validTypes = ['image/jpeg', 'image/png', 'image/jpg'];
       if (!validTypes.includes(file.type)) {
-        setFieldErrors(prev => ({ 
-          ...prev, 
-          profileImage: 'กรุณาอัปโหลดไฟล์ภาพเฉพาะ JPG, JPEG หรือ PNG เท่านั้น' 
+        setFieldErrors(prev => ({
+          ...prev,
+          profileImage: 'กรุณาอัปโหลดไฟล์ภาพเฉพาะ JPG, JPEG หรือ PNG เท่านั้น'
         }));
         return;
       }
-      
+
       // Validate file size (max 5MB)
       if (file.size > 5 * 1024 * 1024) {
-        setFieldErrors(prev => ({ 
-          ...prev, 
-          profileImage: 'ขนาดไฟล์ต้องไม่เกิน 5MB' 
+        setFieldErrors(prev => ({
+          ...prev,
+          profileImage: 'ขนาดไฟล์ต้องไม่เกิน 5MB'
         }));
         return;
       }
 
       // Clear any previous errors
       setFieldErrors(prev => ({ ...prev, profileImage: '' }));
-      
+
       // Set the file in form data
       setFormData(prev => ({ ...prev, profileImage: file }));
-      
+
       // Create and set image preview
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -152,9 +154,9 @@ export default function SignUpForm() {
       reader.readAsDataURL(file);
     } else {
       // If file selection was cancelled or cleared, set error
-      setFieldErrors(prev => ({ 
-        ...prev, 
-        profileImage: 'กรุณาอัปโหลดรูปโปรไฟล์' 
+      setFieldErrors(prev => ({
+        ...prev,
+        profileImage: 'กรุณาอัปโหลดรูปโปรไฟล์'
       }));
     }
   };
@@ -184,7 +186,8 @@ export default function SignUpForm() {
       { key: 'email', label: 'อีเมล' },
       { key: 'name', label: 'ชื่อ-นามสกุล' },
       { key: 'phone', label: 'เบอร์โทรศัพท์' },
-      { key: 'profileImage', label: 'รูปโปรไฟล์' }
+      { key: 'profileImage', label: 'รูปโปรไฟล์' },
+      { key: 'verify', label: 'หลักฐานเพื่อยืนยันตัวตน' },
     ];
 
     for (const field of requiredFields) {
@@ -232,6 +235,44 @@ export default function SignUpForm() {
     return true;
   };
 
+  // Add this function to handle verify file upload
+  const handleVerifyProofUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+
+      // Validate file type (optional)
+      const validTypes = ['application/pdf', 'image/jpeg', 'image/png', 'image/jpg'];
+      if (!validTypes.includes(file.type)) {
+        setFieldErrors(prev => ({
+          ...prev,
+          verify: 'กรุณาอัปโหลดไฟล์ PDF หรือภาพเฉพาะ JPG, JPEG หรือ PNG เท่านั้น'
+        }));
+        return;
+      }
+
+      // Validate file size (optional, max 5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        setFieldErrors(prev => ({
+          ...prev,
+          verify: 'ขนาดไฟล์ต้องไม่เกิน 5MB'
+        }));
+        return;
+      }
+
+      // Clear any previous errors
+      setFieldErrors(prev => ({ ...prev, verify: '' }));
+
+      // Set the file in form data
+      setFormData(prev => ({ ...prev, verify: file }));
+    } else {
+      // If file selection was cancelled or cleared, set error
+      setFieldErrors(prev => ({
+        ...prev,
+        verify: 'กรุณาอัปโหลดหลักฐานเพื่อยืนยันตัวตน'
+      }));
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
@@ -246,22 +287,23 @@ export default function SignUpForm() {
     try {
       // Create FormData object for multipart/form-data submission (for file upload)
       const formDataToSend = new FormData();
-      
+
       // Append all text fields
       Object.entries(formData).forEach(([key, value]) => {
-        if (key !== 'confirmPassword' && key !== 'profileImage') {
+        if (key !== 'confirmPassword' && key !== 'profileImage' && key !== 'verify') {
           formDataToSend.append(key, value as string);
         }
       });
-      
+
       // Append profile image if exists
       if (formData.profileImage) {
         formDataToSend.append('profileImage', formData.profileImage);
       }
-      
-      // COMMENT: The profile image will be sent as 'profileImage' field in FormData
-      // The backend should handle this multipart/form-data to save the image file
-      // and store the file path or reference in the database
+
+      // Append verify proof if exists
+      if (formData.verify) {
+        formDataToSend.append('verify', formData.verify);
+      }
 
       const response = await fetch('http://localhost:5000/api/users/sign-up', {
         method: 'POST',
@@ -269,8 +311,15 @@ export default function SignUpForm() {
         body: formDataToSend,
       });
 
-      // all data is here
-      const data = await response.json();
+      // Check if the response is JSON
+      const contentType = response.headers.get('content-type');
+      let data;
+      if (contentType && contentType.includes('application/json')) {
+        data = await response.json();
+      } else {
+        data = await response.text();
+        throw new Error(data || 'เกิดข้อผิดพลาดในการสมัครสมาชิก');
+      }
 
       if (!response.ok) {
         throw new Error(data.message || 'เกิดข้อผิดพลาดในการสมัครสมาชิก');
@@ -307,9 +356,9 @@ export default function SignUpForm() {
       {/* Profile Image Upload Section using shadcn/ui Avatar */}
       <div className="space-y-4 flex flex-col items-center mt-3">
         <Label htmlFor="profileImage" className="text-white">รูปโปรไฟล์ *</Label>
-        
+
         <div className="relative">
-          <Avatar 
+          <Avatar
             className={`w-24 h-24 cursor-pointer border-2 ${fieldErrors.profileImage ? 'border-red-500' : 'border-zinc-600'}`}
             onClick={() => fileInputRef.current?.click()}
           >
@@ -318,7 +367,7 @@ export default function SignUpForm() {
               <User className="w-10 h-10 text-zinc-400" />
             </AvatarFallback>
           </Avatar>
-          
+
           {imagePreview && (
             <Button
               type="button"
@@ -330,7 +379,7 @@ export default function SignUpForm() {
               <X className="h-4 w-4" />
             </Button>
           )}
-          
+
           {!imagePreview && (
             <Button
               type="button"
@@ -343,7 +392,7 @@ export default function SignUpForm() {
             </Button>
           )}
         </div>
-        
+
         <input
           ref={fileInputRef}
           id="profileImage"
@@ -353,11 +402,11 @@ export default function SignUpForm() {
           onChange={handleImageUpload}
           className="hidden"
         />
-        
+
         {fieldErrors.profileImage && (
           <p className="text-sm text-red-500 text-center">{fieldErrors.profileImage}</p>
         )}
-        
+
         <p className="text-xs text-zinc-400 text-center max-w-sm">
           อัปโหลดรูปโปรไฟล์ (รองรับไฟล์ JPG, JPEG, PNG ขนาดไม่เกิน 5MB)
         </p>
@@ -478,6 +527,22 @@ export default function SignUpForm() {
               <SelectItem value="manager">ผู้จัดการ</SelectItem>
             </SelectContent>
           </Select>
+        </div>
+
+        <div className="space-y-2 md:col-span-2">
+          <Label htmlFor="verify" className="text-white">หลักฐานเพื่อยืนยันตัวตน</Label>
+          <Input
+            id="verify"
+            name="verify"
+            type="file"
+            accept="application/pdf, image/png, image/jpeg, image/jpg"
+            onChange={handleVerifyProofUpload}
+            className={`bg-zinc-700 border-zinc-600 text-zinc-100 ${fieldErrors.verify ? 'border-red-500 focus:ring-red-500' : ''
+              }`}
+          />
+          {fieldErrors.verify && (
+            <p className="text-sm text-red-500">{fieldErrors.verify}</p>
+          )}
         </div>
 
         {/* Optional Social Media Fields - Full Width */}

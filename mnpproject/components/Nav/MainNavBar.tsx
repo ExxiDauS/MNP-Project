@@ -148,7 +148,7 @@ export default function Navbar() {
           </DropdownMenuItem>
           <DropdownMenuItem 
             className="cursor-pointer hover:bg-zinc-700"
-            onClick={() => router.push('/artist-booking-list')}
+            onClick={() => handleNavigation('/artist-booking-list')}
           >
             การจองของฉัน
           </DropdownMenuItem>
