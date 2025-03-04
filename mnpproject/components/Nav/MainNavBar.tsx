@@ -100,6 +100,14 @@ export default function Navbar() {
       );
     }
 
+    const handleUserProfile = (role: string) => {
+
+      if (role === 'manager') {
+        router.push('/manager-profile');
+      } else {
+        router.push('/artist-profile');
+      }
+    }
     return user ? (
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
@@ -134,7 +142,7 @@ export default function Navbar() {
           )}
           <DropdownMenuItem 
             className="cursor-pointer hover:bg-zinc-700"
-            onClick={() => router.push('/profile')}
+            onClick={() => handleUserProfile(user.role)}
           >
             โปรไฟล์
           </DropdownMenuItem>
