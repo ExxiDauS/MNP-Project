@@ -24,6 +24,7 @@
     "nodemailer": "^6.10.0",
     "promptpay-qr": "^0.5.0",
     "qrcode": "^1.5.4",
+    "socket.io": "^4.8.1",
     "swagger-autogen": "^2.23.7",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1"
