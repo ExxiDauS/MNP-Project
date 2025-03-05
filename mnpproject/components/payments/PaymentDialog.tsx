@@ -44,9 +44,6 @@ export default function PaymentDialog({
     const fileInputRef = useRef<HTMLInputElement>(null);
     const totalPrice: number = livehousePrice + facilitiesPrice;
 
-    console.log('Dialog open state:', isOpen);
-    console.log('File selected:', file);
-
     // Handle file selection
     const handleFileChange = (e: ChangeEvent<HTMLInputElement>): void => {
         if (e.target.files && e.target.files[0]) {

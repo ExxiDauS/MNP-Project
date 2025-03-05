@@ -262,17 +262,15 @@ export async function create_booking(
   pa_monitor
 ) {
   try {
-    const start = new Date(start_time);
-    const end = new Date(end_time);
-
+    console.log(start_time, end_time);
     const [result] = await pool.query(
       `INSERT INTO mnp_booking (user_id, livehouse_id, start_time, end_time, total_price, status, guitar, keyboard, bass, drum, mic, pa_monitor)
      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         user_id,
         livehouse_id,
-        start,
-        end,
+        start_time,
+        end_time,
         total_price,
         status,
         guitar,

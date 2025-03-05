@@ -155,7 +155,7 @@ export default function Navbar() {
           <DropdownMenuSeparator className="bg-zinc-700" />
           <DropdownMenuItem 
             className="cursor-pointer text-red-500 hover:bg-red-950 hover:text-red-400"
-            onClick={signOut}
+            onClick={() => signOut("คุณต้องการออกจากระบบใช่หรือไม่?")}
           >
             ออกจากระบบ
           </DropdownMenuItem>

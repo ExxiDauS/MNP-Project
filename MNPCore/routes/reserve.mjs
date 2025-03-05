@@ -38,7 +38,7 @@ router.post("/create-booking", upload.none(), async (req, res) => {
       mic,
       pa_monitor,
     } = req.body;
-
+    console.log(start_time, end_time);
     const result = await create_booking(
       user_id,
       livehouse_id,
@@ -75,7 +75,8 @@ router.get("/get_booking/:user_id", async (req, res) => {
       const livehouse_id = bookings[i].livehouse_id;
       const livehouseData = await get_livehouse_by_id(livehouse_id);
       const facilitiesData = await get_facilities_by_livehouse(livehouse_id);
-      
+    
+      console.log(bookings[i]);
 
       // calculate time
       const start_time = new Date(bookings[i].start_time);
@@ -96,6 +97,7 @@ router.get("/get_booking/:user_id", async (req, res) => {
         bookings[i].pa_monitor * facilitiesData.pa_monitor_price * total_time;
 
       const livehouse_price = livehouseData.price_per_hour * total_time;
+
       bookingDetails.push({
         bookingInfo: bookings[i],
         livehouse_price: livehouse_price,
