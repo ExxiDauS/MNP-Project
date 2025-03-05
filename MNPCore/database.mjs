@@ -573,3 +573,16 @@ export async function get_booking_by_user_id(user_id){
     throw err;
   }
 }
+
+export async function get_booking_by_livehouse_id(livehouse_id){
+  try {
+    const rows = await pool.query(
+      `SELECT * FROM mnp_booking WHERE livehouse_id = ?`,
+      [livehouse_id]
+    );
+    return rows;
+  } catch (err) {
+    console.log("Error getting booking by user id:", err);
+    throw err;
+  }
+}
