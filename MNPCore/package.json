@@ -6,6 +6,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ./app.mjs",
     "dev": "nodemon ./app.mjs",
+    "dev:server": "nodemon ./server.mjs",
     "swagger-autogen": "node swagger.mjs"
   },
   "keywords": [],
@@ -27,7 +28,8 @@
     "socket.io": "^4.8.1",
     "swagger-autogen": "^2.23.7",
     "swagger-jsdoc": "^6.2.8",
-    "swagger-ui-express": "^5.0.1"
+    "swagger-ui-express": "^5.0.1",
+    "uuid": "^11.1.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.9"
