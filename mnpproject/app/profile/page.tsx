@@ -102,7 +102,7 @@ const ProfilePage = () => {
                             </div>
                             
                             <Button 
-                                onClick={() => router.push("/artist-profile/edit-profile")} 
+                                onClick={() => router.push("/profile/edit-profile")} 
                                 className="mt-6 w-full bg-custom-purple hover:bg-custom-purple-light text-white rounded-full py-6 transition-all shadow-md"
                             >
                                 Edit Profile
