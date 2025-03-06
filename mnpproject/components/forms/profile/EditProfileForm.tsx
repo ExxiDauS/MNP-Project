@@ -301,7 +301,7 @@ const EditProfileForm = () => {
             </div>
 
             <div className="flex justify-end gap-2 pt-4">
-                <Button type="button" variant="outline" disabled={isLoading} onClick={() => router.push("/artist-profile")}>Cancel</Button>
+                <Button type="button" variant="outline" disabled={isLoading} onClick={() => router.push("/profile")}>Cancel</Button>
                 <Button 
                     type="submit" 
                     className='bg-custom-purple text-custom-text-primary hover:bg-custom-purple-light hover:text-black'
