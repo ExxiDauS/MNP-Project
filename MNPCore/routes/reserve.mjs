@@ -5,6 +5,7 @@
 import { Router } from "express";
 import {
   create_booking,
+  get_booking_by_livehouse_id,
   get_booking_by_user_id,
   get_facilities_by_livehouse,
   get_livehouse_by_id,
@@ -117,4 +118,57 @@ router.get("/get_booking/:user_id", async (req, res) => {
     return handleServerError(res, err);
   }
 });
+
+router.get("/get_booking_by_livehouse/:livehouse_id", async (req, res) => {
+  try {
+    const livehouse_id = req.params.livehouse_id;
+    const [bookings] = await get_booking_by_livehouse_id(livehouse_id);
+
+    const bookingDetails = [];
+    for (let i = 0; i < bookings.length; i++) {
+      // get data
+      const livehouse_id = bookings[i].livehouse_id;
+      const livehouseData = await get_livehouse_by_id(livehouse_id);
+      const facilitiesData = await get_facilities_by_livehouse(livehouse_id);
+      
+
+      // calculate time
+      const start_time = new Date(bookings[i].start_time);
+      const end_time = new Date(bookings[i].end_time);
+      const total_time = end_time.getHours() - start_time.getHours();
+      
+      // calculate price
+      const guitar_price =
+        bookings[i].guitar * facilitiesData.guitar_price * total_time;
+      const keyboard_price =
+        bookings[i].keyboard * facilitiesData.keyboard_price * total_time;
+      const bass_price =
+        bookings[i].bass * facilitiesData.bass_price * total_time;
+      const drum_price =
+        bookings[i].drum * facilitiesData.drum_price * total_time;
+      const mic_price = bookings[i].mic * facilitiesData.mic_price * total_time;
+      const pa_monitor_price =
+        bookings[i].pa_monitor * facilitiesData.pa_monitor_price * total_time;
+
+      const livehouse_price = livehouseData.price_per_hour * total_time;
+      bookingDetails.push({
+        bookingInfo: bookings[i],
+        livehouse_price: livehouse_price,
+        facilities_price: guitar_price + keyboard_price + bass_price + drum_price + mic_price + pa_monitor_price,
+        facilities: {
+          guitar: bookings[i].guitar,
+          keyboard: bookings[i].keyboard,
+          bass: bookings[i].bass,
+          drum: bookings[i].drum,
+          mic: bookings[i].mic,
+          pa_monitor: bookings[i].pa_monitor,
+        },
+      });
+    }
+    res.status(200).json(bookingDetails);
+  } catch (err) {
+    return handleServerError(res, err);
+  }
+});
+
 export default router;
