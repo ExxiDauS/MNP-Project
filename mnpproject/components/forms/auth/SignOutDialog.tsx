@@ -16,16 +16,22 @@ interface SignOutDialogProps {
   isOpen: boolean;
   onClose: () => void;
   onConfirm: () => void;
+  message?: string;
 }
 
-export default function SignOutDialog({ isOpen, onClose, onConfirm }: SignOutDialogProps) {
+export default function SignOutDialog({ 
+  isOpen, 
+  onClose, 
+  onConfirm, 
+  message = "คุณต้องการออกจากระบบใช่หรือไม่?" 
+}: SignOutDialogProps) {
   return (
     <AlertDialog open={isOpen} onOpenChange={onClose}>
       <AlertDialogContent className="bg-zinc-800 text-zinc-100 border-zinc-700">
         <AlertDialogHeader>
           <AlertDialogTitle>ยืนยันการออกจากระบบ</AlertDialogTitle>
           <AlertDialogDescription className="text-zinc-400">
-            คุณต้องการออกจากระบบใช่หรือไม่?
+            {message}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

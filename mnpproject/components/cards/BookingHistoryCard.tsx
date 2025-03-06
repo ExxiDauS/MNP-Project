@@ -54,7 +54,6 @@ const BookingHistoryCard: React.FC<BookingHistoryCardProps> = ({ booking }) => {
   const selectedFacilities = Object.entries(booking.facilities)
     .filter(([_, value]) => value === 1)
     .map(([facility]) => facility as keyof Facilities);
-    console.log("Facilities", selectedFacilities);
 
   // Get status badge color
   const getStatusBadgeClass = () => {

@@ -100,6 +100,7 @@ export default function Navbar() {
       );
     }
 
+    // User is signed in
     return user ? (
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
@@ -140,14 +141,14 @@ export default function Navbar() {
           </DropdownMenuItem>
           <DropdownMenuItem 
             className="cursor-pointer hover:bg-zinc-700"
-            onClick={() => router.push('/artist-booking-list')}
+            onClick={() => handleNavigation('/artist-booking-list')}
           >
             การจองของฉัน
           </DropdownMenuItem>
           <DropdownMenuSeparator className="bg-zinc-700" />
           <DropdownMenuItem 
             className="cursor-pointer text-red-500 hover:bg-red-950 hover:text-red-400"
-            onClick={signOut}
+            onClick={() => signOut("คุณต้องการออกจากระบบใช่หรือไม่?")}
           >
             ออกจากระบบ
           </DropdownMenuItem>
