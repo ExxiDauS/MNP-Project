@@ -13,7 +13,7 @@ const page = () => {
 
             {/* Content container */}
             <div className="relative flex flex-col w-full bg-custom-background-elevated outline outline-custom-purple-light outline-offset-2 rounded-3xl p-6">
-                <BackButton href="/artist-profile" />
+                <BackButton href="/profile" />
                 <h2 className="text-xl font-semibold text-white mt-4">Edit Profile</h2>
                 <p className="text-sm text-custom-text-secondary">Update your personal information and social media links</p>
 
