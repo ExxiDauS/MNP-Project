@@ -262,7 +262,6 @@ export async function create_booking(
   pa_monitor
 ) {
   try {
-
     const [result] = await pool.query(
       `INSERT INTO mnp_booking (user_id, livehouse_id, start_time, end_time, total_price, status, guitar, keyboard, bass, drum, mic, pa_monitor)
      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
@@ -561,7 +560,7 @@ export async function get_proof(booking_id) {
   }
 }
 
-export async function get_booking_by_user_id(user_id){
+export async function get_booking_by_user_id(user_id) {
   try {
     const rows = await pool.query(
       `SELECT * FROM mnp_booking WHERE user_id = ?`,
@@ -574,11 +573,11 @@ export async function get_booking_by_user_id(user_id){
   }
 }
 
-export async function get_booking_by_livehouse_id(livehouse_id){
+export async function get_booking_by_manager_id(user_id) {
   try {
     const rows = await pool.query(
-      `SELECT * FROM mnp_booking WHERE livehouse_id = ?`,
-      [livehouse_id]
+      `SELECT  booking_id, mb.user_id, mb.livehouse_id, start_time, end_time, total_price, status, payment_proof, mimetype, mic, guitar, bass, drum, keyboard, pa_monitor FROM mnp_booking as mb JOIN mnp_livehouse as ml ON mb.livehouse_id = ml.livehouse_id WHERE ml.user_id = ?`,
+      [user_id]
     );
     return rows;
   } catch (err) {
