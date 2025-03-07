@@ -197,9 +197,6 @@ export default function Navbar() {
       <div onClick={() => handleNavigation('/artist-booking-list')}>
         <NavLink>การจอง</NavLink>
       </div>
-      <div onClick={() => handleNavigation('/about')}>
-        <NavLink>เกี่ยวกับ</NavLink>
-      </div>
     </NavigationMenuList>
   );
 
@@ -216,9 +213,7 @@ export default function Navbar() {
         </div>
 
         <div className="flex items-center space-x-4">
-
           {renderUserProfile()}
-
         </div>
       </div>
     </nav>
