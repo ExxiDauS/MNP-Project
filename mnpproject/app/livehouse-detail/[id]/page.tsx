@@ -46,7 +46,6 @@ interface User {
     phone: string;
 }
 
-
 interface UserResponse {
     user: User;
 }
@@ -58,8 +57,15 @@ const Page = () => {
     const [images, setImages] = useState<(string | null)[]>([null, null, null, null, null]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const [isClient, setIsClient] = useState(false);
 
     useEffect(() => {
+        setIsClient(true);
+    }, []);
+
+    useEffect(() => {
+        if (!isClient) return;
+
         // Data fetching function
         const fetchData = async () => {
             try {
@@ -92,7 +98,7 @@ const Page = () => {
                 // Fetch user data
                 const user_data = await fetch(`http://localhost:5000/api/users/profile/${livehouseData.user_id}`);
                 if (!user_data.ok) {
-                    throw new Error('Failed to fetch user data');
+                    throw new Error('ไม่สามารถดึงข้อมูล Livehouse ได้ โปรดรีโหลดหน้าเว็บใหม่อีกครั้ง');
                 }
                 
                 const user_res: UserResponse = await user_data.json();
@@ -147,7 +153,7 @@ const Page = () => {
         };
 
         fetchData();
-    }, [params.id]);
+    }, [params.id, isClient]);
 
     // Show loading state
     if (isLoading) {
@@ -163,7 +169,7 @@ const Page = () => {
         return (
             <div className="flex items-center justify-center min-h-screen">
                 <div className="text-center p-6 bg-red-100 rounded-lg">
-                    <h2 className="text-2xl font-bold text-red-800 mb-2">Error</h2>
+                    <h2 className="text-2xl font-bold text-red-800 mb-2">เกิดข้อผิดพลาด</h2>
                     <p className="text-red-600">{error || 'Livehouse not found'}</p>
                 </div>
             </div>

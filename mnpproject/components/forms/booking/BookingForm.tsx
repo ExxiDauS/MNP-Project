@@ -98,12 +98,6 @@ const BookingForm: React.FC<BookingFormProps> = ({ artistId, livehouseId, liveho
   };
 
   const handlePaymentComplete = async (file: File) => {
-    console.log("Payment completed for booking ID:", bookingId);
-    console.log("Payment proof file:", {
-      name: file.name,
-      type: file.type,
-      size: `${(file.size / 1024).toFixed(2)} KB`
-    });
 
     // Set loading state to true
     setIsLoading(true);
@@ -125,11 +119,10 @@ const BookingForm: React.FC<BookingFormProps> = ({ artistId, livehouseId, liveho
       }
 
       const result = await response.json();
-      console.log('Payment proof uploaded successfully:', result);
 
       // Show success toast notification
-      toast.success("Payment Confirmed", {
-        description: "Your booking has been successfully confirmed.",
+      toast.success("การชำระเงินได้รับการยืนยัน", {
+        description: "การจองของคุณได้รับการยืนยันเรียบร้อยแล้ว.",
         duration: 5000,
         style: {
           background: "#1a8300",
@@ -145,9 +138,8 @@ const BookingForm: React.FC<BookingFormProps> = ({ artistId, livehouseId, liveho
       setIsPaymentDialogOpen(false);
       router.push("/artist-booking-list");
     } catch (error) {
-      console.error('Error uploading payment proof:', error);
-      toast.error("Payment Upload Failed", {
-        description: "There was an error uploading your payment proof. Please try again.",
+      toast.error("การอัปโหลดการชำระเงินล้มเหลว", {
+        description: "เกิดข้อผิดพลาดในการอัปโหลดหลักฐานการชำระเงินของคุณ กรุณาลองใหม่อีกครั้ง.",
         duration: 5000,
         style: {
           background: "#ff4d4f",
@@ -241,8 +233,8 @@ const BookingForm: React.FC<BookingFormProps> = ({ artistId, livehouseId, liveho
 
     // Validate date is selected
     if (!date) {
-      toast.error("Date Selection Required", {
-        description: "Please select a date for your booking.",
+      toast.error("จำเป็นต้องเลือกวันที่", {
+        description: "กรุณาเลือกวันที่สำหรับการจองของคุณ.",
         duration: 4000,
         style: {
           background: "#ff4d4f",
@@ -258,8 +250,8 @@ const BookingForm: React.FC<BookingFormProps> = ({ artistId, livehouseId, liveho
 
     // Validate start and end times are selected
     if (!startTime || !endTime) {
-      toast.error("Time Selection Required", {
-        description: "Please select both start and end times for your booking.",
+      toast.error("จำเป็นต้องเลือกเวลา", {
+        description: "กรุณาเลือกเวลาเริ่มต้นและเวลาสิ้นสุดสำหรับการจองของคุณ.",
         duration: 4000,
         style: {
           background: "#ff4d4f",
@@ -309,7 +301,6 @@ const BookingForm: React.FC<BookingFormProps> = ({ artistId, livehouseId, liveho
       }
 
       const booking_id = await response.json();
-      console.log('Booking created successfully:', booking_id);
 
       // Extract booking ID from response
       if (booking_id) {
@@ -321,14 +312,12 @@ const BookingForm: React.FC<BookingFormProps> = ({ artistId, livehouseId, liveho
         // Show payment dialog
         setIsPaymentDialogOpen(true);
       } else {
-        console.error('No booking_id received from API');
-        alert('Booking created but payment information is unavailable');
+        alert('การสร้างการจองสำเร็จ แต่ข้อมูลการชำระเงินไม่พร้อมใช้งาน');
       }
 
     } catch (error) {
-      console.error('Error creating booking:', error);
       // You might want to show an error message to the user here
-      alert('Failed to create booking. Please try again.');
+      alert('การสร้างการจองล้มเหลว กรุณาลองใหม่อีกครั้ง');
     }
   };
 
@@ -337,8 +326,8 @@ const BookingForm: React.FC<BookingFormProps> = ({ artistId, livehouseId, liveho
       <form onSubmit={handleBookNow} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Left Column - Date & Time Selection */}
-          <div className="p-4 space-y-4">
-            <h3 className="text-lg font-semibold mb-4 text-custom-text-primary">Select Date & Time</h3>
+            <div className="p-4 space-y-4">
+            <h3 className="text-lg font-semibold mb-4 text-custom-text-primary">เลือกวันที่และเวลา</h3>
             <DateSelect date={date} onDateChange={setDate} />
             <TimeSelect
               startTime={startTime}
@@ -347,42 +336,42 @@ const BookingForm: React.FC<BookingFormProps> = ({ artistId, livehouseId, liveho
               onEndTimeChange={setEndTime}
               timeSlots={timeSlots}
             />
-          </div>
+            </div>
 
-          {/* Right Column - Facilities Selection */}
-          <div className="p-4">
-            <h3 className="text-lg font-semibold mb-4 text-custom-text-primary">Select Facilities</h3>
+            {/* Right Column - Facilities Selection */}
+            <div className="p-4">
+            <h3 className="text-lg font-semibold mb-4 text-custom-text-primary">เลือกสิ่งอำนวยความสะดวก</h3>
             <FacilitiesCarousel
               facilities={facilitiesData}
               selectedFacilities={Object.keys(selectedFacilities).filter(id => selectedFacilities[id] === "1")}
               onFacilityToggle={handleFacilityToggle}
             />
+            </div>
           </div>
-        </div>
 
-        {/* Price Breakdown */}
-        {startTime && endTime && (
-          <div className="bg-custom-background-elevated rounded-lg p-4 space-y-2 text-custom-text-primary">
+          {/* Price Breakdown */}
+          {startTime && endTime && (
+            <div className="bg-custom-background-elevated rounded-lg p-4 space-y-2 text-custom-text-primary">
             <div className="flex justify-between">
-              <span>Livehouse Rental:</span>
+              <span>ค่าเช่าสถานที่:</span>
               <span>฿{priceBreakdown.totalLivehousePrice}</span>
             </div>
             <div className="flex justify-between">
-              <span>Facilities:</span>
+              <span>ค่าสิ่งอำนวยความสะดวก:</span>
               <span>฿{priceBreakdown.facilitiesPrice}</span>
             </div>
             <div className="flex justify-between font-bold">
-              <span>Total Price:</span>
+              <span>ราคารวม:</span>
               <span>฿{priceBreakdown.totalPrice}</span>
             </div>
-          </div>
-        )}
-        <Button
-          type="submit"
-          className="w-full bg-custom-purple-dark hover:bg-custom-purple text-white"
-        >
-          Book Appointment
-        </Button>
+            </div>
+          )}
+          <Button
+            type="submit"
+            className="w-full bg-custom-purple-dark hover:bg-custom-purple text-white"
+          >
+            จองนัดหมาย
+          </Button>
       </form>
 
       <PaymentDialog

@@ -433,9 +433,9 @@ export default function SignUpForm() {
         </div>
 
         <div className="space-y-2 md:col-span-2">
-          <Label htmlFor="verify" className="text-white">หลักฐานเพื่อยืนยันตัวตน</Label>
+          <Label htmlFor="verify" className="text-white">หลักฐานเพื่อยืนยันตัวตน *</Label>
           <Input
-            id="verify"
+            id="verify" 
             name="verify"
             type="file"
             accept="application/pdf, image/png, image/jpeg, image/jpg"

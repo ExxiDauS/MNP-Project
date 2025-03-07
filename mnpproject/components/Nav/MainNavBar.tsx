@@ -97,6 +97,7 @@ export default function Navbar() {
       return (
         <div className="flex space-x-3">
           <Skeleton className="w-10 h-10 rounded-full bg-zinc-700" />
+          <Skeleton className="w-10 h-10 rounded-full bg-zinc-700" />
         </div>
       );
     }
@@ -191,7 +192,6 @@ export default function Navbar() {
       <Skeleton className="w-20 h-8 rounded-md bg-zinc-700" />
       <Skeleton className="w-16 h-8 rounded-md bg-zinc-700" />
       <Skeleton className="w-20 h-8 rounded-md bg-zinc-700" />
-      <Skeleton className="w-24 h-8 rounded-md bg-zinc-700" />
     </NavigationMenuList>
   );
 

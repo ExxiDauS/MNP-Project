@@ -12,28 +12,24 @@ const TopicCarousel = () => {
 
     const topics: WhyTopic[] = [
         {
-            topic: "Access to Premier Venues",
-            description: "Browse through hundreds of verified livehouses across the country. From intimate cafes to mid-sized music venues, find the perfect stage for your performance."
+            topic: "เข้าถึงสถานที่ชั้นนำ",
+            description: "เรียกดูสถานที่แสดงสดที่ได้รับการยืนยันหลายร้อยแห่งทั่วประเทศ ตั้งแต่คาเฟ่เล็กๆ ไปจนถึงสถานที่แสดงดนตรีขนาดกลาง ค้นหาสถานที่ที่เหมาะสำหรับการแสดงของคุณ"
         },
         {
-            topic: "Simple Booking Process",
-            description: "No more back-and-forth communications. Book your preferred venue instantly with our streamlined 5-step booking system. Save time and focus on your performance."
+            topic: "กระบวนการจองที่ง่าย",
+            description: "ไม่ต้องสื่อสารไปมาอีกต่อไป จองสถานที่ที่คุณต้องการได้ทันทีด้วยระบบการจอง 5 ขั้นตอนที่มีประสิทธิภาพ ประหยัดเวลาและมุ่งเน้นไปที่การแสดงของคุณ"
         },
         {
-            topic: "Clear & Upfront Pricing",
-            description: "See all costs upfront with no hidden fees. Compare venue prices easily and find options that fit your budget. No surprises, just transparent pricing."
+            topic: "ราคาชัดเจนและโปร่งใส",
+            description: "ดูค่าใช้จ่ายทั้งหมดล่วงหน้าโดยไม่มีค่าธรรมเนียมแอบแฝง ค้นหาตัวเลือกที่เหมาะกับงบประมาณของคุณ ไม่มีเซอร์ไพรส์ มีแต่ราคาที่โปร่งใส"
         },
         {
-            topic: "Quality Guaranteed",
-            description: "Every livehouse on our platform is verified and reviewed. Check detailed information about stage setup, equipment, capacity, and real performer reviews."
+            topic: "คุณภาพที่รับประกัน",
+            description: "ทุกสถานที่แสดงสดบนแพลตฟอร์มของเราได้รับการยืนยันและตรวจสอบ สามารถดูข้อมูลรายละเอียดเกี่ยวกับเวที อุปกรณ์"
         },
         {
-            topic: "Safe & Secure",
-            description: "Book with confidence using our secure payment system. Your payment is protected until your performance is completed. We ensure your booking is protected."
-        },
-        {
-            topic: "24/7 Support",
-            description: "Our dedicated support team is always ready to help. Get assistance with bookings, venue questions, or technical issues anytime. We're here for you."
+            topic: "ปลอดภัยและมั่นใจ",
+            description: "จองด้วยความมั่นใจด้วยระบบการชำระเงินที่ปลอดภัยของเรา การชำระเงินของคุณจะได้รับการปกป้องจนกว่าการแสดงของคุณจะเสร็จสิ้น เรารับประกันการจองของคุณ"
         }
     ];
 
