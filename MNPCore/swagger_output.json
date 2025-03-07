@@ -438,6 +438,24 @@
         }
       }
     },
+    "/api/reserve/get_booking_by_livehouse/{livehouse_id}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "livehouse_id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/payment/generateQR/{booking_id}": {
       "get": {
         "description": "",
