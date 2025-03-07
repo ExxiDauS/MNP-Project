@@ -5,7 +5,7 @@
 import { Router } from "express";
 import {
   create_booking,
-  get_booking_by_livehouse_id,
+  get_booking_by_manager_id,
   get_booking_by_user_id,
   get_facilities_by_livehouse,
   get_livehouse_by_id,
@@ -117,10 +117,10 @@ router.get("/get_booking/:user_id", async (req, res) => {
   }
 });
 
-router.get("/get_booking_by_livehouse/:livehouse_id", async (req, res) => {
+router.get("/get_booking_by_livehouse/:user_id", async (req, res) => {
   try {
-    const livehouse_id = req.params.livehouse_id;
-    const [bookings] = await get_booking_by_livehouse_id(livehouse_id);
+    const user_id = req.params.user_id;
+    const [bookings] = await get_booking_by_manager_id(user_id);
 
     const bookingDetails = [];
     for (let i = 0; i < bookings.length; i++) {
