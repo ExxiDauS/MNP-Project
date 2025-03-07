@@ -34,6 +34,8 @@ const BookingHistoryCard: React.FC<BookingHistoryCardProps> = ({ booking }) => {
     // Ensure the date string is in a format that can be parsed by new Date()
     const formattedDateString = dateString.replace('T', ' ').replace('.000Z', '');
     const date = new Date(formattedDateString);
+    // Adjust time to GMT+7 (+7 hours)
+    date.setHours(date.getHours() + 7);
     return date.toLocaleTimeString('en-GB', {
       hour: '2-digit',
       minute: '2-digit',
