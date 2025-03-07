@@ -20,12 +20,13 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Skeleton } from "@/components/ui/skeleton";
+import { MessageCircle } from 'lucide-react';
 
 export default function Navbar() {
   const { user, signOut, isLoading } = useUser();
   const router = useRouter();
   const [navLoading, setNavLoading] = useState(true);
-  
+
   // Add direct localStorage check for redundancy
   useEffect(() => {
     try {
@@ -64,7 +65,7 @@ export default function Navbar() {
 
   // Function to handle authentication check for navigation
   const handleNavigation = (path: string) => {
-    
+
     // Special case for Home navigation based on role
     if (path === '/main-landing') {
       if (user && user.role && user.role.toLowerCase().trim() === 'manager') {
@@ -74,13 +75,13 @@ export default function Navbar() {
       }
       return;
     }
-    
+
     // About is accessible without sign-in
     if (path === '/about') {
       router.push(path);
       return;
     }
-    
+
     // For other links, check if user is signed in
     if (user) {
       router.push(path);
@@ -102,68 +103,79 @@ export default function Navbar() {
 
     // User is signed in
     return user ? (
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="ghost" size="icon" className="hover:bg-zinc-800 rounded-full size-11">
-            <Avatar className="size-8">
-              {user.profile_image && user.profile_image.data.length > 0 ? (
-                <AvatarImage 
-                  src={`data:image/jpeg;base64,${Buffer.from(user.profile_image.data).toString('base64')}`} 
-                  alt={user.name}
-                />
-              ) : (
-                <AvatarFallback>{getInitials(user.name)}</AvatarFallback>
-              )}
-            </Avatar>
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="w-56 bg-zinc-800 text-zinc-100 border-zinc-700">
-          <div className="flex items-center justify-start gap-2 p-2">
-            <div className="flex flex-col space-y-1 leading-none">
-              <p className="font-medium">{user.name}</p>
-              <p className="text-sm text-zinc-400">{user.email}</p>
+      <>
+      <div>
+        <Button
+          onClick={() => router.push('/chat')}
+          size="icon"
+          className="bg-transparent hover:bg-zinc-800 rounded-full size-11"
+        >
+          <MessageCircle size={20} />
+        </Button>
+      </div>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" size="icon" className="hover:bg-zinc-800 rounded-full size-11">
+              <Avatar className="size-8">
+                {user.profile_image && user.profile_image.data.length > 0 ? (
+                  <AvatarImage
+                    src={`data:image/jpeg;base64,${Buffer.from(user.profile_image.data).toString('base64')}`}
+                    alt={user.name}
+                  />
+                ) : (
+                  <AvatarFallback>{getInitials(user.name)}</AvatarFallback>
+                )}
+              </Avatar>
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-56 bg-zinc-800 text-zinc-100 border-zinc-700">
+            <div className="flex items-center justify-start gap-2 p-2">
+              <div className="flex flex-col space-y-1 leading-none">
+                <p className="font-medium">{user.name}</p>
+                <p className="text-sm text-zinc-400">{user.email}</p>
+              </div>
             </div>
-          </div>
-          <DropdownMenuSeparator className="bg-zinc-700" />
-          {user.role === 'manager' && (
-            <DropdownMenuItem 
+            <DropdownMenuSeparator className="bg-zinc-700" />
+            {user.role === 'manager' && (
+              <DropdownMenuItem
+                className="cursor-pointer hover:bg-zinc-700"
+                onClick={() => router.push('/manager-landing')}
+              >
+                แดชบอร์ดผู้จัดการ
+              </DropdownMenuItem>
+            )}
+            <DropdownMenuItem
               className="cursor-pointer hover:bg-zinc-700"
-              onClick={() => router.push('/manager-landing')}
+              onClick={() => router.push(`/profile/${user.user_id}`)}
             >
-              แดชบอร์ดผู้จัดการ
+              โปรไฟล์
             </DropdownMenuItem>
-          )}
-          <DropdownMenuItem 
-            className="cursor-pointer hover:bg-zinc-700"
-            onClick={() => router.push('/profile')}
-          >
-            โปรไฟล์
-          </DropdownMenuItem>
-          <DropdownMenuItem 
-            className="cursor-pointer hover:bg-zinc-700"
-            onClick={() => handleNavigation('/artist-booking-list')}
-          >
-            การจองของฉัน
-          </DropdownMenuItem>
-          <DropdownMenuSeparator className="bg-zinc-700" />
-          <DropdownMenuItem 
-            className="cursor-pointer text-red-500 hover:bg-red-950 hover:text-red-400"
-            onClick={() => signOut("คุณต้องการออกจากระบบใช่หรือไม่?")}
-          >
-            ออกจากระบบ
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+            <DropdownMenuItem
+              className="cursor-pointer hover:bg-zinc-700"
+              onClick={() => handleNavigation('/artist-booking-list')}
+            >
+              การจองของฉัน
+            </DropdownMenuItem>
+            <DropdownMenuSeparator className="bg-zinc-700" />
+            <DropdownMenuItem
+              className="cursor-pointer text-red-500 hover:bg-red-950 hover:text-red-400"
+              onClick={() => signOut("คุณต้องการออกจากระบบใช่หรือไม่?")}
+            >
+              ออกจากระบบ
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </>
     ) : (
       <div className="flex space-x-3">
-        <Button 
+        <Button
           onClick={handleSignIn}
           variant="outline"
           className="border bg-transparent text-custom-text-primary hover:bg-zinc-100 hover:text-black"
         >
           เข้าสู่ระบบ
         </Button>
-        <Button 
+        <Button
           onClick={() => router.push('/sign-up')}
           className="bg-custom-purple text-custom-text-primary hover:bg-custom-purple-light hover:text-black"
         >
