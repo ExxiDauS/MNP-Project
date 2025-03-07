@@ -456,6 +456,36 @@
         }
       }
     },
+    "/api/reserve/change-status/{booking_id}": {
+      "patch": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "booking_id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/payment/generateQR/{booking_id}": {
       "get": {
         "description": "",

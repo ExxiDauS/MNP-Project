@@ -9,6 +9,7 @@ import {
   get_booking_by_user_id,
   get_facilities_by_livehouse,
   get_livehouse_by_id,
+  verify_reserve,
 } from "../database.mjs";
 import multer from "multer";
 
@@ -168,6 +169,17 @@ router.get("/get_booking_by_livehouse/:user_id", async (req, res) => {
     res.status(200).json(bookingDetails);
   } catch (err) {
     return handleServerError(res, err);
+  }
+});
+
+router.patch("/change-status/:booking_id", async (req, res) => {
+  try {
+    const booking_id = req.params.booking_id;
+    const status = req.body.status;
+    const result = await verify_reserve(booking_id, status);
+    res.status(200).json({ result });
+  } catch (error) {
+    return handleServerError(res, error);
   }
 });
 

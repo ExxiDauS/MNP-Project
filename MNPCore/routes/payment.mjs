@@ -136,7 +136,6 @@ router.get("/get_proof/:booking_id", async (req, res) => {
 
 router.patch("/verify/:booking_id", async (req, res) => {
   try {
-    const result = await verify_reserve(req.params.booking_id);
     const booking = await get_booking_by_id(req.params.booking_id);
     const livehouse = await get_livehouse_by_id(booking.livehouse_id);
     const user = await get_user_by_id(booking.user_id);

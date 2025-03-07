@@ -11,7 +11,7 @@ export default function Page() {
 
   
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24">
+    <main className="flex min-h-screen flex-col items-center justify-center p-24 text-secondary">
       <h1 className="text-4xl font-bold mb-4">Welcome to Landing Page 2</h1>
       
       <div className="w-full max-w-2xl">

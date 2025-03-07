@@ -206,8 +206,11 @@ export default function Navbar() {
           <NavLink>สำรวจ</NavLink>
         </div>
       )}
-      <div onClick={() => handleNavigation('/artist-booking-list')}>
+      <div onClick={() => handleNavigation('/manager-landing/pending')}>
         <NavLink>การจอง</NavLink>
+      </div>
+      <div onClick={() => handleNavigation('/manager-landing/Calendar')}>
+        <NavLink>ปฎิทิน</NavLink>
       </div>
     </NavigationMenuList>
   );
