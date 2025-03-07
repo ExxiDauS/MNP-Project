@@ -22,9 +22,6 @@ const MobileNav = () => {
           <a href="#" className="text-zinc-100 hover:text-zinc-300">
             การจอง
           </a>
-          <a href="#" className="text-zinc-100 hover:text-zinc-300">
-            เกี่ยวกับ
-          </a>
         </div>
       </SheetContent>
     </Sheet>

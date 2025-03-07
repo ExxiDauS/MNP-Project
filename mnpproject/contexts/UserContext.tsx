@@ -1,16 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
+import SignOutDialog from '@/components/forms/auth/SignOutDialog'; // Import the SignOutDialog component
 
 export interface UserProfile {
   user_id: string;
@@ -35,7 +26,7 @@ interface UserContextType {
   user: UserProfile | null;
   setUser: React.Dispatch<React.SetStateAction<UserProfile | null>>;
   isLoading: boolean;
-  signOut: () => void;
+  signOut: (customMessage?: string) => void;
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -44,6 +35,7 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<UserProfile | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [showSignOutDialog, setShowSignOutDialog] = useState(false);
+  const [signOutMessage, setSignOutMessage] = useState<string>("คุณต้องการออกจากระบบใช่หรือไม่?");
   
   // Load user from localStorage on initial load and on client-side navigations
   useEffect(() => {
@@ -80,51 +72,40 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
     };
   }, []);
   
-  const signOut = () => {
+  const signOut = (customMessage?: string) => {
+    // Set custom message if provided, otherwise use default
+    setSignOutMessage(customMessage || "คุณต้องการออกจากระบบใช่หรือไม่?");
     setShowSignOutDialog(true);
   };
   
   const confirmSignOut = () => {
     setShowSignOutDialog(false);
   
-  // Wait for dialog to close before clearing user
-  setTimeout(() => {
-    localStorage.removeItem('user');
-    setUser(null);
-    
-    // Use a small delay before navigation  
+    // Wait for dialog to close before clearing user
     setTimeout(() => {
-      window.location.href = '/main-landing';
-    }, 50);
-  }, 100);
+      localStorage.removeItem('user');
+      setUser(null);
+      
+      // Use a small delay before navigation  
+      setTimeout(() => {
+        window.location.href = '/main-landing';
+      }, 50);
+    }, 100);
+  };
+
+  const handleCloseDialog = () => {
+    setShowSignOutDialog(false);
   };
 
   return (
     <UserContext.Provider value={{ user, setUser, isLoading, signOut }}>
       {children}
-      {showSignOutDialog && (
-        <AlertDialog open={showSignOutDialog} onOpenChange={() => setShowSignOutDialog(false)}>
-          <AlertDialogContent className="bg-zinc-800 text-zinc-100 border-zinc-700">
-            <AlertDialogHeader>
-              <AlertDialogTitle>ยืนยันการออกจากระบบ</AlertDialogTitle>
-              <AlertDialogDescription className="text-zinc-400">
-                คุณต้องการออกจากระบบใช่หรือไม่?
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel className="bg-zinc-700 text-zinc-100 hover:bg-zinc-600 hover:text-zinc-100">
-                ยกเลิก
-              </AlertDialogCancel>
-              <AlertDialogAction
-                onClick={confirmSignOut}
-                className="bg-red-600 text-white hover:bg-red-700"
-              >
-                ออกจากระบบ
-              </AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
-      )}
+      <SignOutDialog 
+        isOpen={showSignOutDialog} 
+        onClose={handleCloseDialog} 
+        onConfirm={confirmSignOut}
+        message={signOutMessage}
+      />
     </UserContext.Provider>
   );
 }

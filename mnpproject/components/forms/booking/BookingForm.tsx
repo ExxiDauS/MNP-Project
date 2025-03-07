@@ -73,7 +73,6 @@ const BookingForm: React.FC<BookingFormProps> = ({ artistId, livehouseId, liveho
   // Function to fetch payment QR code
   const fetchPaymentQR = async (bookingId: string) => {
     try {
-      console.log(`Fetching QR code for booking ID: ${bookingId}`);
 
       // Fetch the QR code as an image
       const response = await fetch(`http://localhost:5000/api/payment/generateQR/${bookingId}`, {
@@ -86,11 +85,9 @@ const BookingForm: React.FC<BookingFormProps> = ({ artistId, livehouseId, liveho
 
       // Get the image as a blob
       const imageBlob = await response.blob();
-      console.log('QR code image received as blob:', imageBlob);
 
       // Create a URL for the blob
       const imageUrl = URL.createObjectURL(imageBlob);
-      console.log('Created URL for QR image:', imageUrl);
 
       // Update the state with the image URL
       setPaymentQrCode(imageUrl);
@@ -289,6 +286,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ artistId, livehouseId, liveho
       total_price: priceBreakdown.totalPrice.toString(),
       guitar: selectedFacilities.guitar,
       bass: selectedFacilities.bass,
+      keyboard: selectedFacilities.keyboard,
       drum: selectedFacilities.drum,
       mic: selectedFacilities.mic,
       pa_monitor: selectedFacilities.pa_monitor
