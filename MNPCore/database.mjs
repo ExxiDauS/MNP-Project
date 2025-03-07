@@ -530,11 +530,11 @@ export async function patch_booking(
   }
 }
 
-export async function verify_reserve(booking_id) {
+export async function verify_reserve(booking_id, status) {
   try {
     const [result] = await pool.query(
-      `UPDATE mnp_booking SET status = 'Accept' WHERE booking_id = ?`,
-      [booking_id]
+      `UPDATE mnp_booking SET status = ? WHERE booking_id = ?`,
+      [status, booking_id]
     );
     return result.affectedRows > 0;
   } catch (err) {
