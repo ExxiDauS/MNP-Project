@@ -29,14 +29,38 @@ const BookingHistoryCard: React.FC<BookingHistoryCardProps> = ({ booking }) => {
   }, [booking.bookingInfo.livehouse_id]);
 
   // Format date and time
-  const formatDateTime = (dateString: string | undefined): string => {
+  // Function to format a single date string
+  const formatDateTime = (dateString: string | undefined, isEndTime: boolean = false, startTimeString?: string): string => {
     if (!dateString) return '';
+
     // Ensure the date string is in a format that can be parsed by new Date()
     const formattedDateString = dateString.replace('T', ' ').replace('.000Z', '');
     const date = new Date(formattedDateString);
     // Adjust time to GMT+7 (+7 hours)
     date.setHours(date.getHours() + 7);
-    return date.toLocaleTimeString('en-GB', {
+
+    // If this is an end time and we have a start time, check if it's an overnight booking
+    if (isEndTime && startTimeString) {
+      const startFormattedDateString = startTimeString.replace('T', ' ').replace('.000Z', '');
+      const startDate = new Date(startFormattedDateString);
+      // Adjust start time to GMT+7
+      startDate.setHours(startDate.getHours() + 7);
+
+      // If end hour is less than start hour, it's likely an overnight booking
+      if (date.getHours() < startDate.getHours() &&
+        date.getDate() === startDate.getDate() &&
+        date.getMonth() === startDate.getMonth() &&
+        date.getFullYear() === startDate.getFullYear()) {
+        // Add one day to the end date
+        date.setDate(date.getDate() + 1);
+      }
+    }
+
+    return date.toLocaleDateString('en-GB', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric'
+    }) + ' ' + date.toLocaleTimeString('en-GB', {
       hour: '2-digit',
       minute: '2-digit',
       hour12: false
@@ -47,7 +71,16 @@ const BookingHistoryCard: React.FC<BookingHistoryCardProps> = ({ booking }) => {
   const calculateDuration = (): string => {
     const start = new Date(booking.bookingInfo.start_time);
     const end = new Date(booking.bookingInfo.end_time);
-    const durationMs = end.getTime() - start.getTime();
+
+    // Handle the case where end time is on the next day (end < start)
+    let durationMs = end.getTime() - start.getTime();
+
+    // If duration is negative, it means the booking spans midnight
+    if (durationMs < 0) {
+      // Add 24 hours (in milliseconds) to account for the next day
+      durationMs += 24 * 60 * 60 * 1000;
+    }
+
     const durationHours = durationMs / (1000 * 60 * 60);
     return durationHours.toFixed(1);
   };
@@ -101,7 +134,8 @@ const BookingHistoryCard: React.FC<BookingHistoryCardProps> = ({ booking }) => {
               <span className="font-semibold">Time Slot</span>
             </div>
             <div className="ml-7 space-y-1">
-              <div>{formatDateTime(booking.bookingInfo.start_time)} - {formatDateTime(booking.bookingInfo.end_time)}</div>
+              <div>Start : {formatDateTime(booking.bookingInfo.start_time)}</div>
+              <div>End : {formatDateTime(booking.bookingInfo.end_time, true, booking.bookingInfo.start_time)}</div>
               <div className="text-sm text-gray-400">{calculateDuration()} hours</div>
             </div>
           </div>
