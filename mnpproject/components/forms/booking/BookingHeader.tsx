@@ -38,10 +38,10 @@ const BookingHeader: React.FC<BookingHeaderProps> = ({
         {/* Right section */}
         <div className="flex flex-col md:ml-4 pt-2">
           <span className="text-lg font-bold text-custom-text-primary">
-            ฿{price} / Hour
+            ฿{price} / ชั่วโมง
           </span>
           <span className="text-lg font-bold text-custom-text-primary">
-            Booking By : {artistName}
+            กำลังจองโดย : {artistName}
           </span>
         </div>
       </div>

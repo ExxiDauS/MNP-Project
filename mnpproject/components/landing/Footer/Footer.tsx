@@ -12,24 +12,6 @@ interface FooterSection {
 }
 
 const Footer = () => {
-    const footerSections: FooterSection[] = [
-        {
-            title: "Company",
-            links: [
-                { label: "About Us", href: "/about" },
-                { label: "Our Services", href: "/services" },
-                { label: "Privacy Policy", href: "/privacy" },
-            ]
-        },
-        {
-            title: "Get Help",
-            links: [
-                { label: "FAQ", href: "/faq" },
-                { label: "Booking", href: "/booking" },
-                { label: "Payment Options", href: "/payment" },
-            ]
-        },
-    ];
 
     const creators = [
         {
@@ -61,28 +43,9 @@ const Footer = () => {
     return (
         <footer className="bg-custom-background-surface py-16 px-4">
             <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 text-center sm:text-left">
-                {footerSections.map((section) => (
-                    <div key={section.title} className="space-y-4">
-                        <h2 className="text-white font-semibold relative mb-8">
-                            {section.title}
-                            <span className="absolute -bottom-2 left-1/2 sm:left-0 transform -translate-x-1/2 sm:translate-x-0 w-12 h-0.5 bg-custom-purple-dark"></span>
-                        </h2>
-                        <ul className="space-y-2">
-                            {section.links.map((link) => (
-                                <li key={link.label}>
-                                    <a href={link.href}>
-                                        <div className="text-custom-text-secondary hover:text-custom-text-primary hover:ml-4 transform transition-all duration-300 inline-block">
-                                            {link.label}
-                                        </div>
-                                    </a>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                ))}
                 <div className="space-y-6 col-span-1 sm:col-span-2 md:col-span-2">
                     <h2 className="text-white font-semibold relative mb-8">
-                        Made with suffer by
+                        สร้างด้วยความทรมาน
                         <span className="absolute -bottom-2 left-1/2 sm:left-0 transform -translate-x-1/2 sm:translate-x-0 w-20 h-0.5 bg-custom-purple-dark"></span>
                     </h2>
                     <div className="flex flex-wrap justify-center sm:justify-between gap-6">

@@ -32,7 +32,7 @@ const FacilitySelect: React.FC<FacilitySelectProps> = ({ facility, checked, onCh
         className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 flex-grow flex justify-between text-custom-text-primary"
       >
         <span>{facility.name} - {facility.details}</span>
-        <span>฿{facility.pricePerHour} / Hour</span>
+        <span>฿{facility.pricePerHour} / ชั่วโมง</span>
       </label>
     </div>
   )
