@@ -137,14 +137,6 @@ export default function Navbar() {
               </div>
             </div>
             <DropdownMenuSeparator className="bg-zinc-700" />
-            {user.role === 'manager' && (
-              <DropdownMenuItem
-                className="cursor-pointer hover:bg-zinc-700"
-                onClick={() => router.push('/manager-landing')}
-              >
-                แดชบอร์ดผู้จัดการ
-              </DropdownMenuItem>
-            )}
             <DropdownMenuItem
               className="cursor-pointer hover:bg-zinc-700"
               onClick={() => router.push(`/profile/${user.user_id}`)}
