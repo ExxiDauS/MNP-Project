@@ -15,7 +15,6 @@ import {
 } from "lucide-react";
 import { BookingData } from "@/app/artist-booking-list/page";
 import { Facilities } from "@/app/artist-booking-list/page";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import AvatarComponent from "../avatar/avatarComponent";
 
 interface BookingHistoryCardProps {

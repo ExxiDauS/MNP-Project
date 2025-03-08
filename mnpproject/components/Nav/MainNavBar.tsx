@@ -206,6 +206,7 @@ export default function Navbar() {
           <NavLink>สำรวจ</NavLink>
         </div>
       )}
+      
       <div onClick={() => handleNavigation('/manager-landing/pending')}>
         <NavLink>การจอง</NavLink>
       </div>
