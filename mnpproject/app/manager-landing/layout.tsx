@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import React from 'react';
 import { UserProvider } from '@/contexts/UserContext';
-import ErrorBoundary from '@/components/ErrorBoundary';
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,16 +28,8 @@ export default function ManagerLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-custom-background-primary`}
-      >
-        <ErrorBoundary>
           <UserProvider>
             {children}
           </UserProvider>
-        </ErrorBoundary>
-      </body>
-    </html>
   );
 }

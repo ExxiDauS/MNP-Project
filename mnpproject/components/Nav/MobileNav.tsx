@@ -1,3 +1,5 @@
+'use client';
+
 import React from "react";
 import { 
   Sheet, 
@@ -7,8 +9,12 @@ import {
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
+import { useUser } from '@/contexts/UserContext';
 
 const MobileNav = () => {
+  const { user } = useUser();
+  const role = user?.role?.toLowerCase().trim(); // Normalize role name
+
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -21,15 +27,26 @@ const MobileNav = () => {
           <SheetTitle className="text-zinc-100">เมนู</SheetTitle>
         </div>
         <div className="flex flex-col space-y-4 p-4">
-          <a href="/" className="text-zinc-100 hover:text-zinc-300">
-            หน้าหลัก
-          </a>
-          <a href="/Explore" className="text-zinc-100 hover:text-zinc-300">
-            สำรวจ
-          </a>
-          <a href="/artist-booking-list" className="text-zinc-100 hover:text-zinc-300">
-            การจอง
-          </a>
+          {/* Common links for all users */}
+          {/* <a href="/" className="text-zinc-100 hover:text-zinc-300">หน้าหลัก</a> */}
+
+          {/* Regular users' menu */}
+          {(!user || role !== 'manager') && (
+            <>
+              <a href="/" className="text-zinc-100 hover:text-zinc-300">หน้าหลัก</a>
+              <a href="/Explore" className="text-zinc-100 hover:text-zinc-300">สำรวจ</a>
+              <a href="/artist-booking-list" className="text-zinc-100 hover:text-zinc-300">การจอง</a>
+            </>
+          )}
+
+          {/* Manager-specific menu */}
+          {role === 'manager' && (
+            <>
+              <a href="/manager-landing" className="text-zinc-100 hover:text-zinc-300">หน้าหลัก</a>
+              <a href="/manager-landing/pending" className="text-zinc-100 hover:text-zinc-300">การจอง</a>
+              <a href="/manager-landing/Calendar" className="text-zinc-100 hover:text-zinc-300">ปฏิทิน</a>
+            </>
+          )}
         </div>
       </SheetContent>
     </Sheet>

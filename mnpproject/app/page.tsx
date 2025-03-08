@@ -1,5 +1,13 @@
-import { redirect } from 'next/navigation'
+'use client'
+import { redirect } from "next/navigation";
+import { useUser } from "@/contexts/UserContext";
 
 export default function Page() {
-  redirect('/main-landing')
+  const { user } = useUser();
+  console.log(user?.role)
+  if (user?.role === "manager") {
+    redirect("/manager-landing");
+  } else if (user?.role === "artist") {
+    redirect("/main-landing");
+  }
 }
