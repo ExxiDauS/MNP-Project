@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useUser } from '@/contexts/UserContext';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -37,19 +37,11 @@ const EditProfileForm = () => {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
 
-    // Fetch user data - for debugging
-    useEffect(() => {
-        console.log('Component mounted, initial form state:', formData);
-    }, []);
-
     // Handle form field changes
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
-        
-        // Debug what's changing
-        console.log(`Field '${name}' changed to: '${value}'`);
-        
+
         // Clear errors when user starts typing
         setFieldErrors(prev => ({ ...prev, [name]: '' }));
         setError('');
@@ -58,8 +50,7 @@ const EditProfileForm = () => {
     // Handle profile image change
     const handleProfileImageChange = (file: File | null) => {
         setProfileImage(file);
-        console.log('Profile image changed:', file ? file.name : 'null');
-        
+
         if (file) {
             setFieldErrors(prev => ({ ...prev, profileImage: '' }));
         }
@@ -72,23 +63,23 @@ const EditProfileForm = () => {
 
         // Facebook validation
         if (formData.facebook_link.trim() && !formData.facebook_name.trim()) {
-            newFieldErrors.facebook_name = 'Facebook display name is required when providing a link';
+            newFieldErrors.facebook_name = 'ชื่อที่แสดง Facebook จำเป็นเมื่อระบุลิงก์';
             isValid = false;
         }
-        
+
         if (formData.facebook_name.trim() && !formData.facebook_link.trim()) {
-            newFieldErrors.facebook_link = 'Facebook link is required when providing a display name';
+            newFieldErrors.facebook_link = 'ลิงก์ Facebook จำเป็นเมื่อระบุชื่อที่แสดง';
             isValid = false;
         }
 
         // Instagram validation
         if (formData.instagram_link.trim() && !formData.instagram_name.trim()) {
-            newFieldErrors.instagram_name = 'Instagram display name is required when providing a link';
+            newFieldErrors.instagram_name = 'ชื่อที่แสดง Instagram จำเป็นเมื่อระบุลิงก์';
             isValid = false;
         }
-        
+
         if (formData.instagram_name.trim() && !formData.instagram_link.trim()) {
-            newFieldErrors.instagram_link = 'Instagram link is required when providing a display name';
+            newFieldErrors.instagram_link = 'ลิงก์ Instagram จำเป็นเมื่อระบุชื่อที่แสดง';
             isValid = false;
         }
 
@@ -101,73 +92,71 @@ const EditProfileForm = () => {
         e.preventDefault();
         setError('');
         setSuccess('');
-        
+
         // Validate social media fields
         if (!validateSocialMedia()) {
-            setError('Please correct the errors in the form.');
+            setError('กรุณาแก้ไขข้อผิดพลาดในฟอร์ม.');
             return;
         }
-        
+
         setIsLoading(true);
 
         try {
-            // Log the current state of form data before submission
-            console.log('Form submission - current state:', formData);
-            
             // Create FormData object for multipart/form-data submission
             const formDataToSend = new FormData();
-            
+
             // Add all fields that have a value
             let hasData = false;
-            
+
             Object.entries(formData).forEach(([key, value]) => {
                 // Check if the value exists and is not just whitespace
                 if (value !== null && value !== undefined && String(value).trim() !== '') {
                     formDataToSend.append(key, String(value));
-                    console.log(`Added to FormData: ${key} = ${value}`);
                     hasData = true;
-                } else {
-                    console.log(`Skipped empty field: ${key}`);
                 }
             });
-            
+
             if (profileImage) {
                 formDataToSend.append('image', profileImage);
-                console.log('Added image to FormData:', profileImage.name);
                 hasData = true;
             }
-            
+
             if (!hasData) {
-                console.warn('No data to submit! All fields are empty.');
-                setError('Please fill in at least one field before submitting.');
+                console.warn('ไม่มีข้อมูลที่จะส่ง! ทุกช่องว่างเปล่า.');
+                setError('กรุณากรอกข้อมูลอย่างน้อยหนึ่งฟิลด์ก่อนส่ง.');
                 setIsLoading(false);
                 return;
             }
-            
-            // Log FormData contents (for debugging)
-            console.log('FormData entries:');
+            // Validate phone number
+            if (!/^\d{10}$/.test(formData.phone)) {
+                setFieldErrors(prev => ({ ...prev, phone: 'หมายเลขโทรศัพท์ต้องมี 10 หลักเท่านั้น' }));
+                setError('กรุณาแก้ไขข้อผิดพลาดในฟอร์ม.');
+                setIsLoading(false);
+                return;
+            }
+
             for (const pair of formDataToSend.entries()) {
                 console.log(`- ${pair[0]}: ${pair[1]}`);
             }
-            
+
             const response = await fetch(`http://localhost:5000/api/users/edit-profile/${user?.user_id}`, {
                 method: 'PATCH',
                 // Do not set Content-Type header when using FormData
                 body: formDataToSend,
             });
-            
+
             if (!response.ok) {
                 const errorData = await response.json();
-                throw new Error(errorData.message || 'Failed to update profile');
+                throw new Error(errorData.message || 'ไม่สามารถอัปเดตโปรไฟล์ได้');
             }
-            
-            setSuccess('Profile updated successfully!');
-            
+
+            setSuccess('อัปเดตโปรไฟล์เรียบร้อยแล้ว!');
+
             // Force sign out after successful profile update with custom message
             setTimeout(() => {
                 signOut("กรุณาเข้าสู่ระบบใหม่เพื่อดูการเปลี่ยนแปลงโปรไฟล์");
             }, 1500); // Give the user 1.5 seconds to see the success message
-            
+
         } catch (err) {
             console.error('Error updating profile:', err);
             setError(err instanceof Error ? err.message : 'Failed to update profile. Please try again.');
@@ -192,36 +181,38 @@ const EditProfileForm = () => {
 
             {/* Profile Image Upload Component */}
             <AvatarUpload
-                label="Profile Picture"
+                label="รูปโปรไฟล์"
                 errorMessage={fieldErrors.profileImage}
-                helpText="Upload profile picture (JPG, JPEG, PNG files only, max 5MB)"
+                helpText="อัปโหลดรูปโปรไฟล์ (ไฟล์ JPG, JPEG, PNG เท่านั้น, ขนาดสูงสุด 5MB)"
                 onChange={handleProfileImageChange}
                 className="mt-3"
             />
 
-            {/* Name Field */}
             <div className="space-y-2">
-                <Label htmlFor="name" className="text-white">Name</Label>
+                <Label htmlFor="name" className="text-white">ชื่อ</Label>
                 <Input
                     id="name"
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    placeholder="Your full name"
+                    placeholder="ชื่อเต็มของคุณ"
                     className="w-full text-white"
                 />
             </div>
 
             <div className="space-y-2">
-                <Label htmlFor="phone" className="text-white">Phone</Label>
+                <Label htmlFor="phone" className="text-white">โทรศัพท์</Label>
                 <Input
                     id="phone"
                     name="phone"
                     value={formData.phone}
                     onChange={handleChange}
-                    placeholder="Your phone number"
-                    className="w-full text-white"
+                    placeholder="เบอร์โทรศัพท์ 10 หลักของคุณ" 
+                    className={`w-full text-white ${fieldErrors.phone ? 'border-red-500' : ''}`}
                 />
+                {fieldErrors.phone && (
+                    <p className="text-xs text-red-500">{fieldErrors.phone}</p>
+                )}
             </div>
 
             <Separator className="my-4" />
@@ -230,13 +221,13 @@ const EditProfileForm = () => {
             <div className="space-y-4">
                 <h3 className="text-sm font-medium text-white">Facebook</h3>
                 <div className="space-y-2">
-                    <Label htmlFor="facebook_name" className="text-custom-text-secondary">Display Name</Label>
+                    <Label htmlFor="facebook_name" className="text-custom-text-secondary">ชื่อที่แสดง</Label>
                     <Input
                         id="facebook_name"
                         name="facebook_name"
                         value={formData.facebook_name}
                         onChange={handleChange}
-                        placeholder="How you want your Facebook profile to be displayed"
+                        placeholder="ชื่อที่แสดงบน Facebook ของคุณ"
                         className={`w-full text-white ${fieldErrors.facebook_name ? 'border-red-500' : ''}`}
                     />
                     {fieldErrors.facebook_name && (
@@ -244,7 +235,7 @@ const EditProfileForm = () => {
                     )}
                 </div>
                 <div className="space-y-2">
-                    <Label htmlFor="facebook_link" className="text-custom-text-secondary">Profile Link</Label>
+                    <Label htmlFor="facebook_link" className="text-custom-text-secondary">ลิงค์ Facebook</Label>
                     <Input
                         id="facebook_link"
                         name="facebook_link"
@@ -257,7 +248,7 @@ const EditProfileForm = () => {
                         <p className="text-xs text-red-500">{fieldErrors.facebook_link}</p>
                     )}
                     <p className="text-xs text-muted-foreground">
-                        Enter the complete URL to your Facebook profile
+                        ป้อน URL ที่สมบูรณ์ที่ไปยังโปรไฟล์ Facebook ของคุณ
                     </p>
                 </div>
             </div>
@@ -268,7 +259,7 @@ const EditProfileForm = () => {
             <div className="space-y-4">
                 <h3 className="text-sm font-medium text-white">Instagram</h3>
                 <div className="space-y-2">
-                    <Label htmlFor="instagram_name" className="text-custom-text-secondary">Display Name</Label>
+                    <Label htmlFor="instagram_name" className="text-custom-text-secondary">ชื่อที่แสดง</Label>
                     <Input
                         id="instagram_name"
                         name="instagram_name"
@@ -282,7 +273,7 @@ const EditProfileForm = () => {
                     )}
                 </div>
                 <div className="space-y-2">
-                    <Label htmlFor="instagram_link" className="text-custom-text-secondary">Profile Link</Label>
+                    <Label htmlFor="instagram_link" className="text-custom-text-secondary">ลิงค์ Instragram</Label>
                     <Input
                         id="instagram_link"
                         name="instagram_link"
@@ -295,19 +286,19 @@ const EditProfileForm = () => {
                         <p className="text-xs text-red-500">{fieldErrors.instagram_link}</p>
                     )}
                     <p className="text-xs text-muted-foreground">
-                        Enter the complete URL to your Instagram profile
+                        ป้อน URL ที่สมบูรณ์ที่ไปยังโปรไฟล์ Instagram ของคุณ
                     </p>
                 </div>
             </div>
 
             <div className="flex justify-end gap-2 pt-4">
-                <Button type="button" variant="outline" disabled={isLoading} onClick={() => router.push("/profile")}>Cancel</Button>
-                <Button 
-                    type="submit" 
+                <Button type="button" variant="outline" disabled={isLoading} onClick={() => router.push(`/profile/${user?.user_id}`)}>ยกเลิก</Button>
+                <Button
+                    type="submit"
                     className='bg-custom-purple text-custom-text-primary hover:bg-custom-purple-light hover:text-black'
                     disabled={isLoading}
                 >
-                    {isLoading ? 'Saving...' : 'Save Changes'}
+                    {isLoading ? 'กำลังบันทึก...' : 'บันทึกการเปลี่ยนแปลงแล้ว'}
                 </Button>
             </div>
         </form>

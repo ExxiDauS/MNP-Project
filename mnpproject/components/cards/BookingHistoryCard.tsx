@@ -91,7 +91,7 @@ const BookingHistoryCard: React.FC<BookingHistoryCardProps> = ({ booking }) => {
     .map(([facility]) => facility as keyof Facilities);
 
   // Get status badge color
-  const getStatusBadgeClass = () => {
+  const getStatusBadgeClassBackground = () => {
     switch (booking.bookingInfo.status) {
       case 'Accept':
         return 'bg-green-700 hover:bg-green-800';
@@ -103,6 +103,18 @@ const BookingHistoryCard: React.FC<BookingHistoryCardProps> = ({ booking }) => {
     }
   };
 
+  const getStatusBadgeClassName = () => {
+    switch (booking.bookingInfo.status) {
+      case 'Accept':
+        return 'ยืนยันแล้ว';
+      case 'Decline':
+        return 'ปฏิเสธ';
+      case 'Pending':
+      default:
+        return 'รอการยืนยัน';
+    }
+  };
+
   // Only render the card if the booking is paid
   if (!booking.bookingInfo.payment_proof) {
     return null;
@@ -111,14 +123,14 @@ const BookingHistoryCard: React.FC<BookingHistoryCardProps> = ({ booking }) => {
   return (
     <Card className="w-full mx-0 my-4 border border-custom-purple-deeper bg-gradient-card shadow-md">
       {/* Header with studio name and status */}
-      <div className="flex justify-between items-center bg-custom-purple-deeper p-4 rounded-t-lg">
-        <h2 className="text-xl font-bold text-white">{livehouseName}</h2>
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center bg-custom-purple-deeper p-4 rounded-t-lg">
+        <h2 className="text-xl font-bold text-white mb-2 md:mb-0">{livehouseName}</h2>
         <div className="flex gap-2">
-          <Badge className={getStatusBadgeClass() + " py-1 px-3"}>
-            {booking.bookingInfo.status}
+          <Badge className={getStatusBadgeClassBackground() + " py-1 px-3"}>
+            {getStatusBadgeClassName()}
           </Badge>
           <Badge className="bg-green-700 hover:bg-green-800 py-1 px-3">
-            <Check className="mr-1 h-4 w-4" /> Paid
+            <Check className="mr-1 h-4 w-4" /> จ่ายแล้ว
           </Badge>
         </div>
       </div>
@@ -131,12 +143,12 @@ const BookingHistoryCard: React.FC<BookingHistoryCardProps> = ({ booking }) => {
           <div className="text-white">
             <div className="flex items-center mb-2">
               <Clock className="mr-2 h-5 w-5 text-indigo-300" />
-              <span className="font-semibold">Time Slot</span>
+              <span className="font-semibold">ช่วงเวลา</span>
             </div>
             <div className="ml-7 space-y-1">
-              <div>Start : {formatDateTime(booking.bookingInfo.start_time)}</div>
-              <div>End : {formatDateTime(booking.bookingInfo.end_time, true, booking.bookingInfo.start_time)}</div>
-              <div className="text-sm text-gray-400">{calculateDuration()} hours</div>
+              <div>เริ่มต้น : {formatDateTime(booking.bookingInfo.start_time)}</div>
+              <div>สิ้นสุด : {formatDateTime(booking.bookingInfo.end_time, true, booking.bookingInfo.start_time)}</div>
+              <div className="text-sm text-gray-400">{calculateDuration()} ชั่วโมง</div>
             </div>
           </div>
 
@@ -144,7 +156,7 @@ const BookingHistoryCard: React.FC<BookingHistoryCardProps> = ({ booking }) => {
           <div className="text-white">
             <div className="flex items-center mb-2">
               <div className="mr-2 h-5 w-5 text-indigo-300 flex items-center justify-center font-bold">฿</div>
-              <span className="font-semibold">Total Price</span>
+              <span className="font-semibold">ราคารวม</span>
             </div>
             <div className="ml-7">
               {booking.bookingInfo.total_price} THB
@@ -154,36 +166,36 @@ const BookingHistoryCard: React.FC<BookingHistoryCardProps> = ({ booking }) => {
 
         {/* Right column - Facilities */}
         <div className="text-white">
-          <div className="font-semibold mb-3">Facilities</div>
+          <div className="font-semibold mb-3">สิ่งอำนวยความสะดวก</div>
           <div className="flex flex-wrap gap-2">
             {selectedFacilities.includes('mic') && (
               <Badge className="bg-[#1a1e2c] hover:bg-[#252a3c] border border-indigo-800 py-1.5 px-3">
-                <Mic className="mr-1.5 h-4 w-4" /> Mic
+                <Mic className="mr-1.5 h-4 w-4" /> ไมโครโฟน
               </Badge>
             )}
             {selectedFacilities.includes('guitar') && (
               <Badge className="bg-[#1a1e2c] hover:bg-[#252a3c] border border-indigo-800 py-1.5 px-3">
-                <Guitar className="mr-1.5 h-4 w-4" /> Guitar
+                <Guitar className="mr-1.5 h-4 w-4" /> กีตาร์
               </Badge>
             )}
             {selectedFacilities.includes('bass') && (
               <Badge className="bg-[#1a1e2c] hover:bg-[#252a3c] border border-indigo-800 py-1.5 px-3">
-                <Music className="mr-1.5 h-4 w-4" /> Bass
+                <Music className="mr-1.5 h-4 w-4" /> เบส
               </Badge>
             )}
             {selectedFacilities.includes('drum') && (
               <Badge className="bg-[#1a1e2c] hover:bg-[#252a3c] border border-indigo-800 py-1.5 px-3">
-                <Drum className="mr-1.5 h-4 w-4" /> Drum
+                <Drum className="mr-1.5 h-4 w-4" /> กลอง
               </Badge>
             )}
             {selectedFacilities.includes('keyboard') && (
               <Badge className="bg-[#1a1e2c] hover:bg-[#252a3c] border border-indigo-800 py-1.5 px-3">
-                <Keyboard className="mr-1.5 h-4 w-4" /> Keyboard
+                <Keyboard className="mr-1.5 h-4 w-4" /> คีย์บอร์ด
               </Badge>
             )}
             {selectedFacilities.includes('pa_monitor') && (
               <Badge className="bg-[#1a1e2c] hover:bg-[#252a3c] border border-indigo-800 py-1.5 px-3">
-                <Speaker className="mr-1.5 h-4 w-4" /> Pa monitor
+                <Speaker className="mr-1.5 h-4 w-4" /> พีเอ มอนิเตอร์
               </Badge>
             )}
           </div>

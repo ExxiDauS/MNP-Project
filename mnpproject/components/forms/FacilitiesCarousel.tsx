@@ -11,8 +11,7 @@ interface FacilitiesCarouselProps {
 const FacilitiesCarousel: React.FC<FacilitiesCarouselProps> = ({ facilities, selectedFacilities, onFacilityToggle }) => {
   return (
     <div className="space-y-2">
-          <h3 className="text-sm font-medium text-custom-text-primary">Select Facilities</h3>
-          <div className="space-y-2">
+          <div className="space-y-2 mt-7">
             {facilities.map((facility) => (
               <FacilitySelect
                 key={facility.id}

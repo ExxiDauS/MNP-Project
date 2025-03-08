@@ -97,6 +97,7 @@ export default function Navbar() {
       return (
         <div className="flex space-x-3">
           <Skeleton className="w-10 h-10 rounded-full bg-zinc-700" />
+          <Skeleton className="w-10 h-10 rounded-full bg-zinc-700" />
         </div>
       );
     }
@@ -136,14 +137,6 @@ export default function Navbar() {
               </div>
             </div>
             <DropdownMenuSeparator className="bg-zinc-700" />
-            {user.role === 'manager' && (
-              <DropdownMenuItem
-                className="cursor-pointer hover:bg-zinc-700"
-                onClick={() => router.push('/manager-landing')}
-              >
-                แดชบอร์ดผู้จัดการ
-              </DropdownMenuItem>
-            )}
             <DropdownMenuItem
               className="cursor-pointer hover:bg-zinc-700"
               onClick={() => router.push(`/profile/${user.user_id}`)}
@@ -191,7 +184,6 @@ export default function Navbar() {
       <Skeleton className="w-20 h-8 rounded-md bg-zinc-700" />
       <Skeleton className="w-16 h-8 rounded-md bg-zinc-700" />
       <Skeleton className="w-20 h-8 rounded-md bg-zinc-700" />
-      <Skeleton className="w-24 h-8 rounded-md bg-zinc-700" />
     </NavigationMenuList>
   );
 
@@ -229,9 +221,7 @@ export default function Navbar() {
         </div>
 
         <div className="flex items-center space-x-4">
-
           {renderUserProfile()}
-
         </div>
       </div>
     </nav>

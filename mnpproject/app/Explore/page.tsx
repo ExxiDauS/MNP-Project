@@ -5,10 +5,10 @@ import MainExPart from "@/components/Explorepart/MainExPart";
 
 const page = () => {
   return (
-    <>
+    <section className="mt-24">
       <PopularLivehouses></PopularLivehouses>
       <MainExPart></MainExPart>
-    </>
+    </section>
   );
 };
 

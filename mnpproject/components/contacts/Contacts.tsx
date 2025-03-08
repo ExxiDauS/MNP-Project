@@ -24,7 +24,7 @@ const Contacts: React.FC<ContactsProps> = ({ contacts }) => {
   return (
     <div className="w-full py-2 md:py-3 h-full flex flex-col">
       <h2 className="text-lg md:text-xl font-semibold mb-3 text-custom-text-primary">
-        Contacts
+        ช่องทางติดต่อ
       </h2>
       <div className="bg-gradient-card rounded-lg h-full flex-grow overflow-hidden">
         <div className="h-full overflow-y-auto">

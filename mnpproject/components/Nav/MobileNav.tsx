@@ -1,5 +1,10 @@
 import React from "react";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { 
+  Sheet, 
+  SheetContent, 
+  SheetTrigger,
+  SheetTitle 
+} from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
 
@@ -12,6 +17,9 @@ const MobileNav = () => {
         </Button>
       </SheetTrigger>
       <SheetContent side="left" className="w-64 bg-black p-0">
+        <div className="px-4 pt-4">
+          <SheetTitle className="text-zinc-100">เมนู</SheetTitle>
+        </div>
         <div className="flex flex-col space-y-4 p-4">
           <a href="/" className="text-zinc-100 hover:text-zinc-300">
             หน้าหลัก
@@ -19,7 +27,7 @@ const MobileNav = () => {
           <a href="/Explore" className="text-zinc-100 hover:text-zinc-300">
             สำรวจ
           </a>
-          <a href="#" className="text-zinc-100 hover:text-zinc-300">
+          <a href="/artist-booking-list" className="text-zinc-100 hover:text-zinc-300">
             การจอง
           </a>
         </div>

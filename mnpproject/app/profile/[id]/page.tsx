@@ -72,6 +72,13 @@ const ProfilePage = () => {
         fetchUserData();
     }, [params.id]);
 
+    const getRoleName = () => {
+        switch (user?.role) {
+            case 'manager': return 'ผู้จัดการ';
+            case 'artist': return 'ศิลปิน';
+        }
+    }
+
     // Prepare contact details only when user data is available
     const contacts: ContactDetail[] = user ? [
         {
@@ -112,13 +119,13 @@ const ProfilePage = () => {
         return (
             <div className="flex justify-center items-center h-screen">
                 <div className="text-center p-6 bg-red-100 rounded-lg">
-                    <h2 className="text-xl font-semibold text-red-700">Error Loading Profile</h2>
+                    <h2 className="text-xl font-semibold text-red-700">เกิดข้อผิดพลาดในการโหลดโปรไฟล์</h2>
                     <p className="mt-2 text-red-600">{error}</p>
                     <Button
                         onClick={() => router.push('/')}
                         className="mt-4 bg-red-600 hover:bg-red-700 text-white"
                     >
-                        Return Home
+                        กลับหน้าหลัก
                     </Button>
                 </div>
             </div>
@@ -126,7 +133,7 @@ const ProfilePage = () => {
     }
 
     return (
-        <section className="relative flex justify-center w-full mt-6 md:mt-16 lg:mt-24 max-w-4xl mx-auto px-4 sm:px-6 md:px-8 mb-10">
+        <section className="relative flex justify-center w-full mt-20 lg:mt-24 max-w-4xl mx-auto px-4 sm:px-6 md:px-8 mb-10">
             {/* Background gradient effect */}
             <div className="absolute inset-0 bg-gradient-to-b from-purple-900/30 via-purple-800/20 to-purple-900/30 blur-xl rounded-3xl"></div>
 
@@ -167,7 +174,7 @@ const ProfilePage = () => {
 
                             <div className="flex items-center mt-4 justify-center lg:justify-start">
                                 <div className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-purple-900/50 text-purple-200 border border-purple-500/30">
-                                    {(user?.role ?? '').charAt(0).toUpperCase() + (user?.role ?? '').slice(1)}
+                                    {getRoleName()}
                                     {user?.verify_status === 1 &&
                                         <BadgeCheck className="w-4 h-4 ml-1 text-purple-300" />
                                     }
@@ -175,10 +182,10 @@ const ProfilePage = () => {
                             </div>
 
                             <Button
-                                onClick={() => router.push(`/profile/edit-profile/${params.id}`)}
+                                onClick={() => router.push(`/edit-profile`)}
                                 className="mt-6 w-full bg-custom-purple hover:bg-custom-purple-light text-white rounded-full py-6 transition-all shadow-md"
                             >
-                                Edit Profile
+                                แก้ไขโปรไฟล์
                             </Button>
                         </div>
                     </div>
@@ -196,4 +203,4 @@ const ProfilePage = () => {
     );
 };
 
-export default ProfilePage;
+export default ProfilePage

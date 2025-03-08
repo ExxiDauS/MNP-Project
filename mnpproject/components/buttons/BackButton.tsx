@@ -14,7 +14,7 @@ const BackButton: React.FC<BackButtonProps> = ({ href, className = '' }) => {
         className={`flex items-center text-custom-text-primary hover:text-custom-purple transition-colors ${className}`}
       >
         <ChevronLeft className="w-5 h-5" />
-        <span>Back</span>
+        <span>ย้อนกลับ</span>
       </button>
     </a>
   );

@@ -4,23 +4,23 @@ import StepCard from './StepCard';
 
 const EasyToUse = () => {
   const steps = [
-    { icon: <Search className="w-12 h-12 text-custom-purple-dark" />, title: "Select Livehouse", description: "Browse and choose from our wide selection of livehouses based on your preferences" },
-    { icon: <Calendar className="w-12 h-12 text-custom-purple-dark" />, title: "Select\nDate & Time", description: "Pick your preferred performance date and time from available slots" },
-    { icon: <FileText className="w-12 h-12 text-custom-purple-dark" />, title: "Input Form", description: "Fill in your details and performance requirements" },
-    { icon: <CreditCard className="w-12 h-12 text-custom-purple-dark" />, title: "Payment", description: "Secure your booking with our easy payment process" },
-    { icon: <CheckCircle className="w-12 h-12 text-custom-purple-dark" />, title: "Finish", description: "Receive confirmation and get ready for your performance!" }
+    { icon: <Search className="w-12 h-12 text-custom-purple-dark" />, title: "เลือก Livehouse", description: "เรียกดูและเลือกจาก livehouse ที่หลากหลายตามความต้องการของคุณ" },
+    { icon: <Calendar className="w-12 h-12 text-custom-purple-dark" />, title: "เลือก\nวันและเวลา", description: "เลือกวันที่และเวลาที่คุณต้องการแสดงจากช่วงเวลาที่มีอยู่" },
+    { icon: <FileText className="w-12 h-12 text-custom-purple-dark" />, title: "กรอกแบบฟอร์ม", description: "กรอกรายละเอียดและความต้องการในการแสดงของคุณ" },
+    { icon: <CreditCard className="w-12 h-12 text-custom-purple-dark" />, title: "ชำระเงิน", description: "ยืนยันการจองของคุณด้วยกระบวนการชำระเงินที่ง่ายดาย" },
+    { icon: <CheckCircle className="w-12 h-12 text-custom-purple-dark" />, title: "เสร็จสิ้น", description: "รับการยืนยันและเตรียมพร้อมสำหรับการแสดงของคุณ!" }
   ];
 
   return (
     <div className="py-24 my-20 pb-28">
       <div className="max-w-6xl mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold mb-4 text-custom-text-primary">
-            {"From Search to Stage,\nJust 5 Steps Away"}
-          </h2>
-          <p className="text-xl text-custom-text-secondary">
-            Your journey from finding to performing, simplified
-          </p>
+            <h2 className="text-4xl font-bold mb-4 text-custom-text-primary">
+            {"จากการค้นหาสู่เวที\nเพียง 5 ขั้นตอน"}
+            </h2>
+            <p className="text-xl text-custom-text-secondary">
+            การเดินทางของคุณจากการค้นหาสู่การแสดง นั้นง่ายดาย
+            </p>
         </div>
 
         {/* Responsive Grid Layout */}
