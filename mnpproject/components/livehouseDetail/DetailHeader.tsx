@@ -37,11 +37,11 @@ const DetailHeader: React.FC<DetailHeaderProps> = ({
         {/* Right section */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4">
           <span className="text-lg md:text-2xl font-bold text-custom-text-primary whitespace-nowrap">
-            ฿{price} / Hour
+            ฿{price} / ชั่วโมง
           </span>
           <a href={`${id}/booking`}>
             <Button className="bg-custom-purple-dark hover:bg-custom-purple text-white px-4 md:px-6 py-2 md:py-3 whitespace-nowrap">
-              Booking Stage
+              จองเวที
             </Button>
           </a>
         </div>

@@ -17,10 +17,10 @@ const TimeSelect: React.FC<TimeSelectProps> = ({ startTime, endTime, onStartTime
   return (
     <div className="flex space-x-4">
       <div className="flex-1">
-        <label className="text-sm font-medium block mb-2 text-custom-text-primary">Start Time</label>
+        <label className="text-sm font-medium block mb-2 text-custom-text-primary">เวลาเริ่มต้น</label>
         <Select onValueChange={onStartTimeChange} value={startTime}>
           <SelectTrigger>
-            <SelectValue placeholder="Select start time" />
+            <SelectValue placeholder="เลือกเวลาเริ่มต้น" />
           </SelectTrigger>
           <SelectContent>
             {getStartTimeSlots().map((slot) => (
@@ -33,10 +33,10 @@ const TimeSelect: React.FC<TimeSelectProps> = ({ startTime, endTime, onStartTime
       </div>
 
       <div className="flex-1">
-        <label className="text-sm font-medium block mb-2 text-custom-text-primary">End Time</label>
+        <label className="text-sm font-medium block mb-2 text-custom-text-primary">เวลาสิ้นสุด</label>
         <Select onValueChange={onEndTimeChange} value={endTime}>
           <SelectTrigger>
-            <SelectValue placeholder="Select end time" />
+            <SelectValue placeholder="เลือกเวลาสิ้นสุด" />
           </SelectTrigger>
           <SelectContent>
             {getEndTimeSlots().map((slot) => (

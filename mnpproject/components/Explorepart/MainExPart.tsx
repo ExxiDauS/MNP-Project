@@ -67,7 +67,7 @@ const MainExPart = () => {
       <div className="my-4 flex justify-center">
         <CSearchBar
           handleSearch={handleSearch}
-          placeholder="Search livehouses..."
+          placeholder="ค้นหา livehouses..."
         />
       </div>
 

@@ -14,18 +14,18 @@ interface DateSelectProps {
 const DateSelect: React.FC<DateSelectProps> = ({ date, onDateChange }) => {
   return (
     <div className="flex flex-col space-y-2">
-      <label className="text-sm font-medium text-custom-text-primary">Select Date</label>
+      <label className="text-sm font-medium text-custom-text-primary">เลือกวันที่</label>
       <Popover>
         <PopoverTrigger asChild>
           <Button
-            variant={"outline"}
-            className={cn(
-              "w-full justify-start text-left font-normal",
-              !date && "text-muted-foreground"
-            )}
+        variant={"outline"}
+        className={cn(
+          "w-full justify-start text-left font-normal",
+          !date && "text-muted-foreground"
+        )}
           >
-            <CalendarIcon className="mr-2 h-4 w-4" />
-            {date ? format(date, "yyyy-MM-dd") : <span>Pick a date</span>}
+        <CalendarIcon className="mr-2 h-4 w-4" />
+        {date ? format(date, "yyyy-MM-dd") : <span>เลือกวันที่</span>}
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-auto p-0">

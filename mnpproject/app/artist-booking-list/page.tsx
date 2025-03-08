@@ -64,11 +64,7 @@ const BookingsPage: React.FC = () => {
 
         const data: BookingData[] = await response.json();
 
-        // Log the full response
-        console.log('Full Bookings API Response:', data);
-
         setBookings(data);
-        console.log("this is booking", bookings);
       } catch (err) {
         const errorMessage = err instanceof Error ? err.message : 'An unknown error occurred';
         console.error('Error fetching bookings:', err);
@@ -111,11 +107,11 @@ const BookingsPage: React.FC = () => {
       {/* Content container */}
       <div className="relative flex flex-col w-full bg-custom-background-elevated outline outline-custom-purple-light outline-offset-2 rounded-3xl p-4 md:p-6 m-6 mt-14 md:mt-10 ">
         <BackButton href='/' className='mt-2'/>
-        <h1 className="text-2xl md:text-3xl font-bold text-center mb-6 text-white">My Bookings</h1>
+        <h1 className="text-2xl md:text-3xl font-bold text-center mb-6 text-white">การจองของฉัน</h1>
 
         {/* If no bookings */}
         {bookings.length === 0 ? (
-          <div className="text-center text-white">No bookings found</div>
+          <div className="text-center text-white">ไม่พบการจอง</div>
         ) : (
           // Map through the bookings data
           bookings.map((booking) => (

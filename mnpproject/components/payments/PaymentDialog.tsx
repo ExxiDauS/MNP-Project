@@ -87,7 +87,7 @@ export default function PaymentDialog({
     // Handle payment completion with validation
     const handlePaymentComplete = (): void => {
         if (!file) {
-            setValidationError("Please upload payment proof before confirming.");
+            setValidationError("กรุณาอัปโหลดหลักฐานการชำระเงินก่อนยืนยัน");
             return;
         }
 
@@ -102,13 +102,13 @@ export default function PaymentDialog({
         <Dialog open={isOpen} onOpenChange={onOpenChange}>
             <DialogContent className="sm:max-w-md max-h-[90vh] overflow-y-auto">
                 <DialogHeader>
-                    <DialogTitle className="text-center font-bold">Payment Details</DialogTitle>
+                    <DialogTitle className="text-center font-bold">รายละเอียดการชำระเงิน</DialogTitle>
                 </DialogHeader>
 
                 {isLoading && (
                     <div className="absolute inset-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50">
                         <div className="bg-white p-6 rounded-lg shadow-lg">
-                            <p className="text-lg font-semibold">Processing Payment...</p>
+                            <p className="text-lg font-semibold">กำลังดำเนินการชำระเงิน...</p>
                             <div className="mt-4 flex justify-center">
                                 {/* Add a spinner or loading animation here */}
                                 <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-purple-500"></div>
@@ -127,13 +127,13 @@ export default function PaymentDialog({
                                     <div className="bg-white p-1 rounded-md">
                                         <Image
                                             src={qrCodeUrl}
-                                            alt="Payment QR Code"
+                                            alt="QR Code สำหรับการชำระเงิน"
                                             width={120}
                                             height={120}
                                             className="mx-auto"
                                         />
                                     </div>
-                                    <p className="text-xs text-gray-500 text-center mt-1">Scan to pay</p>
+                                    <p className="text-xs text-gray-500 text-center mt-1">สแกนเพื่อชำระเงิน</p>
                                 </div>
 
                                 {/* Payment Information Column */}
@@ -144,19 +144,19 @@ export default function PaymentDialog({
                                     </div>
 
                                     <div className="flex justify-between text-sm">
-                                        <span className="text-gray-600">Livehouse Price</span>
+                                        <span className="text-gray-600">ราคาสำหรับ Livehouse</span>
                                         <span>฿{livehousePrice}</span>
                                     </div>
 
-                                    <div className="flex justify-between text-sm">
-                                        <span className="text-gray-600">Facilities Price</span>
+                                    <div className="flex justify-between items-center text-sm">
+                                        <span className="text-gray-600">ราคาสำหรับสิ่งอำนวยความสะดวก</span>
                                         <span>฿{facilitiesPrice}</span>
                                     </div>
 
                                     <Separator className="my-1" />
 
                                     <div className="flex justify-between">
-                                        <span className="font-semibold">Total Price</span>
+                                        <span className="font-semibold">ราคารวม</span>
                                         <span className="font-bold">฿{totalPrice}</span>
                                     </div>
                                 </div>
@@ -165,7 +165,7 @@ export default function PaymentDialog({
                             {/* File Upload Section */}
                             <div className="mt-4">
                                 <Label htmlFor="payment-proof" className="text-xs font-medium mb-1 block">
-                                    Upload Payment Proof
+                                    อัปโหลดหลักฐานการชำระเงิน
                                 </Label>
 
                                 <div
@@ -214,7 +214,7 @@ export default function PaymentDialog({
                                                 <Upload size={12} className="text-primary" />
                                             </div>
                                             <div>
-                                                <p className="text-xs font-medium">Click to upload or drop files here</p>
+                                                <p className="text-xs font-medium">คลิกเพื่ออัปโหลดหรือวางไฟล์ที่นี่</p>
                                             </div>
                                         </div>
                                     )}
@@ -224,7 +224,7 @@ export default function PaymentDialog({
                                 {validationError && (
                                     <Alert variant="destructive" className="mt-2 py-2">
                                         <AlertTriangle className="h-4 w-4" />
-                                        <AlertTitle>Error</AlertTitle>
+                                        <AlertTitle>เกิดข้อผิดพลาด</AlertTitle>
                                         <AlertDescription>{validationError}</AlertDescription>
                                     </Alert>
                                 )}
@@ -238,13 +238,13 @@ export default function PaymentDialog({
                             className="w-1/2 py-1 h-8 text-sm"
                             onClick={() => onOpenChange(false)}
                         >
-                            Cancel
+                            ยกเลิก
                         </Button>
                         <Button
                             className="w-1/2 py-1 h-8 text-sm"
                             onClick={handlePaymentComplete}
                         >
-                            Confirm Payment
+                            ยืนยันการชำระเงิน
                         </Button>
                     </div>
                 </div>
