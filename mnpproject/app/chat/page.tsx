@@ -2,22 +2,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import { io, Socket } from "socket.io-client";
 import { useUser } from "@/contexts/UserContext";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Send, X } from "lucide-react";
-import Image from "next/image";
 import BackButton from "@/components/buttons/BackButton";
+import ChatHeader from "@/components/chatComponent/ChatHeader";
+import Message from "@/components/chatComponent/Message";
+import ChatInput from "@/components/chatComponent/ChatInput";
 
-// Define types
-interface MessageProps {
-  content: string;
-  own: boolean;
-  username?: string;
-}
-
-interface ChatInputProps {
-  onSendMessage: (message: string) => void;
-}
 
 interface MessageType {
   content: string;
@@ -31,115 +20,6 @@ interface UserContextType {
   };
 }
 
-// Enhanced Message component with username display
-const Message: React.FC<MessageProps> = ({ content, own, username }) => {
-  return (
-    <div
-      className={`flex ${own ? "justify-end" : "justify-start"} mb-4 w-full`}
-    >
-      <div
-        className={`max-w-[80%] px-4 py-2 rounded-2xl ${
-          own
-            ? "bg-purple-600 text-white rounded-tr-none"
-            : "bg-gray-700 text-white rounded-tl-none"
-        }`}
-      >
-        {!own && username && (
-          <p className="text-xs text-gray-300 font-semibold mb-1">{username}</p>
-        )}
-        <p className="text-sm md:text-base">{content}</p>
-      </div>
-    </div>
-  );
-};
-
-// Enhanced ChatInput component with emoji support
-const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage }) => {
-  const [message, setMessage] = useState<string>("");
-  const [showEmojiPicker, setShowEmojiPicker] = useState<boolean>(false);
-
-  // Simple emoji list
-  const emojis = ["😊", "😂", "❤️", "👍", "🎉", "🔥", "😎", "🤔", "😢", "😍"];
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (message.trim()) {
-      onSendMessage(message);
-      setMessage("");
-    }
-  };
-
-  const addEmoji = (emoji: string) => {
-    setMessage((prev) => prev + emoji);
-    setShowEmojiPicker(false);
-  };
-
-  return (
-    <div className="w-full mt-4">
-      {showEmojiPicker && (
-        <div className="flex flex-wrap gap-2 p-2 bg-gray-700 rounded-lg mb-2">
-          {emojis.map((emoji) => (
-            <button
-              key={emoji}
-              onClick={() => addEmoji(emoji)}
-              className="text-xl hover:bg-gray-600 p-1 rounded"
-            >
-              {emoji}
-            </button>
-          ))}
-          <button
-            onClick={() => setShowEmojiPicker(false)}
-            className="text-gray-400 hover:text-gray-200"
-          >
-            <X size={16} />
-          </button>
-        </div>
-      )}
-      <form
-        onSubmit={handleSubmit}
-        className="flex w-full items-center space-x-2"
-      >
-        <button
-          type="button"
-          onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-          className="p-2 rounded text-gray-400 hover:text-gray-200 hover:bg-gray-700"
-        >
-          😊
-        </button>
-        <Input
-          type="text"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          placeholder="พิมพ์บทสนทนาที่นี่..."
-          className="flex-grow bg-gray-700 border-gray-600 text-white placeholder-gray-400 focus:ring-purple-500 focus:border-purple-500"
-        />
-        <Button
-          type="submit"
-          className="bg-purple-600 hover:bg-purple-700 text-white"
-        >
-          <Send size={18} />
-        </Button>
-      </form>
-    </div>
-  );
-};
-
-// Added ChatHeader component
-const ChatHeader = () => {
-  return (
-    <div className="flex items-center justify-between p-4 border-b border-gray-700">
-      <div className="flex items-center space-x-3">
-        <div className="relative h-10 w-10 rounded-full overflow-hidden bg-purple-500 flex items-center justify-center">
-          <span className="text-white font-bold">C</span>
-        </div>
-        <div>
-          <h2 className="text-lg font-semibold text-white">Chat Room</h2>
-          <p className="text-xs text-gray-400">Active now</p>
-        </div>
-      </div>
-    </div>
-  );
-};
 
 // Main Page component
 export default function Page() {
@@ -164,8 +44,6 @@ export default function Page() {
   }, [messages]);
 
   useEffect(() => {
-    // const socketInstance: Socket = io("http://localhost:5001");
-    // For development, use the same URL if your server is running on the same domain
     const socketInstance: Socket = io(
       process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:5001"
     );
@@ -220,15 +98,6 @@ export default function Page() {
         user: username,
       });
       // Stop typing indicator when sending a message
-      socket.emit("stop_typing");
-    }
-  };
-
-  // Handle typing indicator
-  const handleTyping = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (socket && e.target.value) {
-      socket.emit("typing", username);
-    } else if (socket) {
       socket.emit("stop_typing");
     }
   };
