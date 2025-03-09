@@ -96,7 +96,7 @@ const CardsCarousel = ({
                                     id={(livehouse.livehouse_id).toString()}
                                     card_size={cardSize}
                                     bg_image={imageSrc}
-                                    location={livehouse.location}
+                                    location={livehouse.province}
                                     name={livehouse.name}
                                 />
                             </CarouselItem>

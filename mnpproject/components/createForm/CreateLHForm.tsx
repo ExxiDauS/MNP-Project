@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation"; // Import useRouter
 
 const CreateLHForm = () => {
   const router = useRouter(); // Initialize the router
-
+  const [showModal, setShowModal] = useState(false);
   const { user } = useUser();
   const [formData, setFormData] = useState<{
     user_id: string;
@@ -70,32 +70,30 @@ const CreateLHForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     // console.log("Form Data: ", JSON.stringify(formData));
-    console.log("Form Data: ", formData)
-
     // Code ข้างล่างคาดว่ารันได้ แต่ยังไม่ได้ทำส่วนของรูปเพราะไม่มี api
     // Prepare form data to send in the request (without images)
-    const dataToSend = {
-      user_id: user?.user_id,
-      name: formData.name,
-      location: formData.location,
-      province: formData.province,
-      description: formData.description,
-      price_per_hour: Number(formData.price_per_hour),
-    };
+    const dataToSend = new FormData();
+    dataToSend.append("user_id", user?.user_id || "");
+    dataToSend.append("name", formData.name);
+    dataToSend.append("location", formData.location);
+    dataToSend.append("province", formData.province);
+    dataToSend.append("description", formData.description);
+    dataToSend.append("price_per_hour", formData.price_per_hour);
+  
+    // Append images if they exist
+    formData.images.forEach((file, index) => {
+      if (file) {
+        dataToSend.append(`sample_image0${index + 1}`, file);
+      }
+    });
 
     console.log("Data being sent:", dataToSend);
 
     try {
-      const response = await fetch(
-        "http://localhost:5000/api/livehouse/create-livehouse",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json", // Sending as JSON
-          },
-          body: JSON.stringify(dataToSend), // Send form data as JSON
-        }
-      );
+      const response = await fetch("http://localhost:5000/api/livehouse/create-livehouse", {
+        method: "POST",
+        body: dataToSend, // No JSON.stringify() needed
+      });
 
       const responseData = await response.json(); // Try getting server response
       console.log("Server response:", responseData);
@@ -118,7 +116,7 @@ const CreateLHForm = () => {
         {/* Image Upload Section */}
         <div className="space-y-4">
           <Label htmlFor="images" className="text-white">
-            อัปโหลดรูปภาพ (สูงสุด 5 รูป)
+            อัปโหลดรูปภาพ
           </Label>
 
           {/* Image Uploads */}
@@ -223,7 +221,9 @@ const CreateLHForm = () => {
           </Button>
         </div>
       </form>
+      
     </div>
+    
   );
 };
 

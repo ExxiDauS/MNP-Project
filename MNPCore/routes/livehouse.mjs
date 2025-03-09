@@ -3,6 +3,7 @@ import {
   create_livehouse,
   get_all_livehouses,
   get_livehouse_by_id,
+  get_livehouse_by_userid,
   patch_livehouse,
 } from "../database.mjs";
 import multer from "multer";
@@ -89,7 +90,7 @@ router.get("/get-livehouse/:livehouse_id", async (req, res) => {
   }
 });
 
-router.get("/get-livehouse/:user_id", async (req, res) => {
+router.get("/get-livehouse-userid/:user_id", async (req, res) => {
   try {
     const { user_id } = req.params;
     const livehouse = await get_livehouse_by_userid(user_id);

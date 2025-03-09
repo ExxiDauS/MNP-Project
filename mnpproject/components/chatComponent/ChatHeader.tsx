@@ -8,8 +8,8 @@ const ChatHeader = () => {
                     <span className="text-white font-bold">C</span>
                 </div>
                 <div>
-                    <h2 className="text-lg font-semibold text-white">Chat Room</h2>
-                    <p className="text-xs text-gray-400">Active now</p>
+                    <h2 className="text-lg font-semibold text-white">ห้องแชท</h2>
+                    <p className="text-xs text-gray-400">กำลังใช้งาน</p>
                 </div>
             </div>
         </div>
