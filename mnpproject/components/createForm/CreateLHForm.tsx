@@ -30,6 +30,36 @@ const CreateLHForm = () => {
     images: [],
   });
 
+  const [facList, setFacility] = useState<{
+    livehouse_id: string;
+    mic: string;
+    guitar: string;
+    bass: string;
+    drum: string;
+    keyboard: string;
+    pa_monitor: string;
+    mic_price: number;
+    guitar_price: number;
+    bass_price: number;
+    drum_price: number;
+    keyboard_price: number;
+    pa_monitor_price: number;
+  }>({
+    livehouse_id: "",
+    mic: "",
+    guitar: "",
+    bass: "",
+    drum: "",
+    keyboard: "",
+    pa_monitor: "",
+    mic_price: 0,
+    guitar_price: 0,
+    bass_price: 0,
+    drum_price: 0,
+    keyboard_price: 0,
+    pa_monitor_price: 0,
+  });
+
   // Ensure the user_id is set when the user data is available
   useEffect(() => {
     if (user?.user_id && !formData.user_id) {
@@ -51,6 +81,18 @@ const CreateLHForm = () => {
     }));
   };
 
+  // Handle price input changes for facilities
+  const handleFacilityPriceChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    facility: string
+  ) => {
+    const { value } = e.target;
+    setFacility((prev) => ({
+      ...prev,
+      [`${facility}_price`]: parseFloat(value) || 0, // Store price as number
+    }));
+  };
+
   // Handle file upload change
   const handleImageChange = (file: File | null, index: number) => {
     const updatedImages = [...formData.images];
@@ -63,6 +105,26 @@ const CreateLHForm = () => {
       ...prev,
       images: updatedImages,
     }));
+  };
+
+  const handleFacilityModelChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    facility: string
+  ) => {
+    const { value } = e.target;
+    setFacility((prev) => ({
+      ...prev,
+      [facility]: value, // เก็บค่าชื่อรุ่นของอุปกรณ์
+    }));
+  };
+
+  const formDataToJson = (formData: FormData) => {
+    const jsonObject: Record<string, any> = {};
+    formData.forEach((value, key) => {
+      // If the value is a File, keep it as is; otherwise, convert it to a string
+      jsonObject[key] = value instanceof File ? value : value.toString();
+    });
+    return jsonObject;
   };
 
   // Handle form submit
@@ -79,7 +141,6 @@ const CreateLHForm = () => {
     dataToSend.append("province", formData.province);
     dataToSend.append("description", formData.description);
     dataToSend.append("price_per_hour", formData.price_per_hour);
-  
     // Append images if they exist
     formData.images.forEach((file, index) => {
       if (file) {
@@ -87,19 +148,65 @@ const CreateLHForm = () => {
       }
     });
 
-    console.log("Data being sent:", dataToSend);
+    const facDataToSend = new FormData();
+
+    facDataToSend.append("mic", facList.mic.toString());
+    facDataToSend.append("guitar", facList.guitar.toString());
+    facDataToSend.append("bass", facList.bass.toString());
+    facDataToSend.append("drum", facList.drum.toString());
+    facDataToSend.append("keyboard", facList.keyboard.toString());
+    facDataToSend.append("pa_monitor", facList.pa_monitor.toString());
+    facDataToSend.append("mic_price", facList.mic_price.toString());
+    facDataToSend.append("guitar_price", facList.guitar_price.toString());
+    facDataToSend.append("bass_price", facList.bass_price.toString());
+    facDataToSend.append("drum_price", facList.drum_price.toString());
+    facDataToSend.append("keyboard_price", facList.keyboard_price.toString());
+    facDataToSend.append(
+      "pa_monitor_price",
+      facList.pa_monitor_price.toString()
+    );
 
     try {
-      const response = await fetch("http://localhost:5000/api/livehouse/create-livehouse", {
-        method: "POST",
-        body: dataToSend, // No JSON.stringify() needed
-      });
+      const response = await fetch(
+        "http://localhost:5000/api/livehouse/create-livehouse",
+        {
+          method: "POST",
+          body: dataToSend, // No JSON.stringify() needed
+        }
+      );
 
       const responseData = await response.json(); // Try getting server response
-      console.log("Server response:", responseData);
+      facDataToSend.append("livehouse_id", responseData.livehouse.livehouse_id);
+
+      // console.log("Server response:", responseData.livehouse.livehouse_id);
 
       if (!response.ok) {
         throw new Error("Failed to submit form");
+      }
+
+      const jsonData = formDataToJson(facDataToSend);
+
+      const jsonString = JSON.stringify(
+        Object.fromEntries(
+          Object.entries(jsonData).filter(
+            ([_, value]) => !(value instanceof File)
+          )
+        )
+      );
+
+      const responseFac = await fetch(
+        "http://localhost:5000/api/facilities/create-facility", // Correct endpoint
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: jsonString,
+        }
+      );
+
+      if (!responseFac.ok) {
+        throw new Error(`Failed to submit facilities`);
       }
 
       // Handle success (you can redirect, show a success message, etc.)
@@ -211,6 +318,55 @@ const CreateLHForm = () => {
           />
         </div>
 
+        <div className="space-y-4">
+          <Label className="text-white">สิ่งอำนวยความสะดวก</Label>
+          <div className="space-y-2">
+            {[
+              { label: "ไมโครโฟน", name: "mic" },
+              { label: "กีต้าร์", name: "guitar" },
+              { label: "เบส", name: "bass" },
+              { label: "กลอง", name: "drum" },
+              { label: "คีย์บอร์ด", name: "keyboard" },
+              { label: "PA Monitor", name: "pa_monitor" },
+            ].map((item) => (
+              <div
+                key={item.name}
+                className="grid grid-cols-3 gap-4 items-center"
+              >
+                {/* Checkbox */}
+                <div className="flex items-center space-x-2">
+                  
+                  <Label htmlFor={item.name} className="text-white">
+                    {item.label}
+                  </Label>
+                </div>
+
+                {/* Model Name Input */}
+                <Input
+                  type="text"
+                  id={`${item.name}_model`}
+                  name={`${item.name}_model`}
+
+                  onChange={(e) => handleFacilityModelChange(e, item.name)}
+                  placeholder={`ชื่อรุ่นของ ${item.label}`}
+                  className="w-full text-white"
+                />
+
+                {/* Price Input */}
+                <Input
+                  type="number"
+                  id={`${item.name}_price`}
+                  name={`${item.name}_price`}
+
+                  onChange={(e) => handleFacilityPriceChange(e, item.name)}
+                  placeholder={`ราคาของ ${item.label} ต่อ1ชั่วโมง`}
+                  className="w-full text-white"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* Submit Button */}
         <div className="flex justify-end gap-2 pt-4">
           <Button
@@ -221,9 +377,7 @@ const CreateLHForm = () => {
           </Button>
         </div>
       </form>
-      
     </div>
-    
   );
 };
 
