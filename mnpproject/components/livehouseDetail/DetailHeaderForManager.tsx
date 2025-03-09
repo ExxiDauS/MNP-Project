@@ -16,7 +16,7 @@ const DetailHeaderForManager: React.FC<DetailHeaderProps> = ({
   return (
     <div className="px-2 md:px-6 pt-4 pb-2 md:pb-4">  
       {/* Back button */}
-      <BackButton className="mb-3" href="/" />
+      <BackButton className="mb-3" href="/manager-landing" />
 
       <div className="flex flex-col sm:flex-row justify-between items-start gap-4">
         {/* Left section */}
