@@ -282,11 +282,7 @@ export default function SignUpForm() {
 
       // Redirect to sign-in page after success
       setTimeout(() => {
-        if (formData.role === 'manager') {
-          router.push('/manager-landing');
-        } else {
-          router.push('/main-landing');
-        }
+          router.push('/sign-in');
       }, 2000);
 
     } catch (err) {

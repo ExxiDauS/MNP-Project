@@ -233,6 +233,9 @@ export default function Navbar() {
           <div onClick={() => handleNavigation("/manager-landing/Calendar")}>
             <NavLink>ปฏิทิน</NavLink>
           </div>
+          <div onClick={() => handleNavigation("/manager-landing/mylivehouse")}>
+            <NavLink>Livehouse ของคุณ</NavLink>
+          </div>
         </>
       )}
     </NavigationMenuList>

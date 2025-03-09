@@ -180,7 +180,7 @@ const Page = () => {
     }
 
     return (
-        <section className="relative flex justify-center w-full mt-6 md:mt-16 lg:mt-24 max-w-7xl mx-auto px-4 sm:px-6 md:px-8 mb-10">
+        <section className="relative flex justify-center w-full mt-20 md:mt-16 lg:mt-24 max-w-7xl mx-auto px-4 sm:px-6 md:px-8 mb-10">
             {/* Larger aura effect background */}
             <div className="absolute inset-0 p-4 sm:p-6 bg-gradient-to-r from-purple-500/30 via-pink-500/30 to-purple-500/30 blur-2xl rounded-4xl"></div>
 

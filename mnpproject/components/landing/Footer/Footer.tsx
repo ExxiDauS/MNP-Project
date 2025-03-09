@@ -1,5 +1,5 @@
 import React from 'react';
-import { Facebook, Twitter, Instagram, Linkedin, Github } from 'lucide-react';
+import { Facebook, Instagram, Github } from 'lucide-react';
 
 interface FooterLink {
     label: string;
@@ -17,17 +17,17 @@ const Footer = () => {
         {
             name: "Kawin Isaramala",
             socials: [
-                { platform: "Facebook", url: "#", icon: Facebook },
-                { platform: "Instagram", url: "#", icon: Instagram },
-                { platform: "LinkedIn", url: "#", icon: Linkedin }
+                { platform: "Facebook", url: "https://www.facebook.com/kawin.tn", icon: Facebook },
+                { platform: "Instagram", url: "https://www.instagram.com/kwnxp.n/?hl=en", icon: Instagram },
+                { platform: "Github", url: "https://github.com/KwnxpN", icon: Github }
             ]
         },
         {
             name: "Kittipit Pinthawornrak",
             socials: [
-                { platform: "Facebook", url: "#", icon: Facebook },
-                { platform: "Instagram", url: "#", icon: Instagram },
-                { platform: "LinkedIn", url: "#", icon: Linkedin }
+                { platform: "Facebook", url: "https://www.facebook.com/kittipit.pinthawornrak", icon: Facebook },
+                { platform: "Instagram", url: "https://www.instagram.com/kp_ptwr/?hl=en", icon: Instagram },
+                { platform: "Github", url: "https://github.com/ExxiDauS", icon: Github }
             ]
         },
         {
@@ -35,7 +35,7 @@ const Footer = () => {
             socials: [
                 { platform: "Facebook", url: "https://www.facebook.com/theerapat.tuanpromrat.2024/?locale=th_TH", icon: Facebook },
                 { platform: "Instagram", url: "https://www.instagram.com/thr_pt/", icon: Instagram },
-                { platform: "LinkedIn", url: "https://github.com/Danny2Forever", icon: Github }
+                { platform: "Github", url: "https://github.com/Danny2Forever", icon: Github }
             ]
         }
     ];

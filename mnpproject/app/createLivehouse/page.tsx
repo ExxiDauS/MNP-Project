@@ -1,5 +1,6 @@
 import React from 'react'
 import CreateLHForm from '@/components/createForm/CreateLHForm'
+import BackButton from '@/components/buttons/BackButton'
 
 const page = () => {
   return (
@@ -9,7 +10,10 @@ const page = () => {
 
       {/* Content container */}
       <div className="relative flex flex-col w-full bg-custom-background-elevated outline outline-custom-purple-light outline-offset-2 rounded-3xl p-4 sm:p-6 md:p-4">
-      <CreateLHForm />
+        <BackButton href='/' />
+        <div className='mt-4'>
+          <CreateLHForm />
+        </div>
       </div>
     </section>
   )

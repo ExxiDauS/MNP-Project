@@ -66,9 +66,9 @@ export default function Page() {
         </div>
       ) : (
         // If livehouse exists, show the menu
-        <div className="w-full max-w-2xl">
+        <div className="w-full max-w-4xl">
           <center><p className="mb-8 ">ยินดีต้อนรับเข้าสู่หน้าหลักของผู้จัดการ! เลือกเมนูด้านล่างเพื่อดำเนินการต่างๆ</p></center>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <Link
               href="/manager-landing/pending"
               className="p-6 border rounded-lg hover:bg-gray-50 hover:text-primary"
@@ -82,6 +82,14 @@ export default function Page() {
             >
               <h2 className="text-2xl font-semibold mb-2">ปฏิทิน</h2>
               <p>ดูข้อมูลการจองในรูปแบบปฏิทิน เพื่อให้คุณสามารถติดตามเหตุการณ์ต่างๆ ได้อย่างสะดวก</p>
+            </Link>
+
+            <Link
+              href="/manager-landing/mylivehouse"
+              className="p-6 border rounded-lg hover:bg-gray-50 hover:text-primary"
+            >
+              <h2 className="text-2xl font-semibold mb-2">Livehouse ของคุณ</h2>
+              <p>ดูข้อมูล Livehouse ของคุณ ตรวจสอบว่าผู้คนเห็น Livehouse ของคุณแบบไหน</p>
             </Link>
           </div>
         </div>

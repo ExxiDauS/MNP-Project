@@ -45,6 +45,7 @@ const MobileNav = () => {
               <a href="/manager-landing" className="text-zinc-100 hover:text-zinc-300">หน้าหลัก</a>
               <a href="/manager-landing/pending" className="text-zinc-100 hover:text-zinc-300">การจอง</a>
               <a href="/manager-landing/Calendar" className="text-zinc-100 hover:text-zinc-300">ปฏิทิน</a>
+              <a href="/manager-landing/mylivehouse" className="text-zinc-100 hover:text-zinc-300">Livehouse ของคุณ</a>
             </>
           )}
         </div>
