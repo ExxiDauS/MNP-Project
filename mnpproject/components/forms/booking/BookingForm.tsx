@@ -7,15 +7,27 @@ import DateSelect from '../DateSelect';
 import TimeSelect from '../TimeSelect';
 import FacilitiesCarousel from '../FacilitiesCarousel';
 import PaymentDialog from '@/components/payments/PaymentDialog';
-
 import { useRouter } from 'next/navigation';
 
+// Import Facility type from FacilitySelect
+import { Facility } from '../FacilitySelect';
 
-interface Facility {
-  id: string;
-  name: string;
-  details: string;
-  pricePerHour: number;
+// New interface to match the provided JSON structure
+interface FacilitiesObject {
+  facilities_id: number;
+  livehouse_id: number;
+  mic: string;
+  guitar: string;
+  bass: string;
+  drum: string;
+  keyboard: string;
+  pa_monitor: string;
+  mic_price: number;
+  guitar_price: number;
+  bass_price: number;
+  drum_price: number;
+  keyboard_price: number;
+  pa_monitor_price: number;
 }
 
 interface BookingFormProps {
@@ -23,7 +35,7 @@ interface BookingFormProps {
   livehouseId: string;
   livehousePrice: number;
   livehouseName: string;
-  facilitiesData: Facility[];
+  facilitiesData: FacilitiesObject | null; // Updated to use the new interface
 }
 
 interface PriceBreakdown {
@@ -45,6 +57,18 @@ const generateTimeSlots = () => {
   return slots;
 };
 
+// Helper function to convert facilities object to array of facility items
+const convertFacilitiesToArray = (facilitiesData: FacilitiesObject): Facility[] => {
+  return [
+    { id: "mic", name: facilitiesData.mic, details: "ไมโครโฟน", pricePerHour: facilitiesData.mic_price },
+    { id: "guitar", name: facilitiesData.guitar, details: "กีตาร์", pricePerHour: facilitiesData.guitar_price },
+    { id: "bass", name: facilitiesData.bass, details: "เบส", pricePerHour: facilitiesData.bass_price },
+    { id: "drum", name: facilitiesData.drum, details: "กลอง", pricePerHour: facilitiesData.drum_price },
+    { id: "keyboard", name: facilitiesData.keyboard, details: "คีย์บอร์ด", pricePerHour: facilitiesData.keyboard_price },
+    { id: "pa_monitor", name: facilitiesData.pa_monitor, details: "ลำโพงมอนิเตอร์", pricePerHour: facilitiesData.pa_monitor_price }
+  ];
+};
+
 const BookingForm: React.FC<BookingFormProps> = ({ artistId, livehouseId, livehousePrice, livehouseName, facilitiesData }) => {
   const router = useRouter();
   const [date, setDate] = useState<Date | undefined>(new Date());
@@ -55,9 +79,9 @@ const BookingForm: React.FC<BookingFormProps> = ({ artistId, livehouseId, liveho
     guitar: "0",
     bass: "0",
     drum: "0",
-    mic: "0",      // Will be used instead of "microphone"
+    mic: "0",
     keyboard: "0",
-    pa_monitor: "0"  // Will be used instead of "paMonitor"
+    pa_monitor: "0"
   });
   const [paymentQrCode, setPaymentQrCode] = useState<string>("");
   const [bookingId, setBookingId] = useState<string>('');
@@ -68,12 +92,14 @@ const BookingForm: React.FC<BookingFormProps> = ({ artistId, livehouseId, liveho
     totalPrice: 0
   });
 
+  // Convert facilitiesData to array format for the FacilitiesCarousel
+  const facilitiesArray = facilitiesData ? convertFacilitiesToArray(facilitiesData) : [];
+  
   const timeSlots = generateTimeSlots();
 
   // Function to fetch payment QR code
   const fetchPaymentQR = async (bookingId: string) => {
     try {
-
       // Fetch the QR code as an image
       const response = await fetch(`http://localhost:5000/api/payment/generateQR/${bookingId}`, {
         method: 'GET',
@@ -91,14 +117,12 @@ const BookingForm: React.FC<BookingFormProps> = ({ artistId, livehouseId, liveho
 
       // Update the state with the image URL
       setPaymentQrCode(imageUrl);
-
     } catch (error) {
       console.error('Error fetching QR code:', error);
     }
   };
 
   const handlePaymentComplete = async (file: File) => {
-
     // Set loading state to true
     setIsLoading(true);
 
@@ -154,22 +178,13 @@ const BookingForm: React.FC<BookingFormProps> = ({ artistId, livehouseId, liveho
     }
   };
 
-  // Handle facility toggle with normalization for different naming conventions
+  // Handle facility toggle
   const handleFacilityToggle = (facilityId: string) => {
-    // Normalize facility IDs to handle duplicate naming
-    let normalizedId = facilityId;
-
-    // Handle common aliases
-    if (facilityId === "microphone") normalizedId = "mic";
-    if (facilityId === "paMonitor") normalizedId = "pa_monitor";
-
-    // Only update if the normalized ID exists in our state
-    if (normalizedId in selectedFacilities) {
-      setSelectedFacilities(prev => ({
-        ...prev,
-        [normalizedId]: prev[normalizedId] === "1" ? "0" : "1"
-      }));
-    }
+    // Update the selected state
+    setSelectedFacilities(prev => ({
+      ...prev,
+      [facilityId]: prev[facilityId] === "1" ? "0" : "1"
+    }));
   };
 
   // Calculate Booking Hours
@@ -197,16 +212,13 @@ const BookingForm: React.FC<BookingFormProps> = ({ artistId, livehouseId, liveho
     const hours = calculateBookingHours();
     const totalLivehousePrice = livehousePrice * hours;
 
-    // Calculate Facilities Price here - using object structure with "0"/"1" values
-    const facilitiesPrice = facilitiesData.reduce((total, facility) => {
-      // Normalize facility ID to handle duplicates
-      let normalizedId = facility.id;
-      if (facility.id === "microphone") normalizedId = "mic";
-      if (facility.id === "paMonitor") normalizedId = "pa_monitor";
-
-      // Only add price if the facility is selected (value is "1") and exists in our state
-      if (normalizedId in selectedFacilities && selectedFacilities[normalizedId] === "1") {
-        return total + (facility.pricePerHour * hours);
+    // Calculate Facilities Price using the new facilitiesData structure
+    const facilitiesPrice = Object.entries(selectedFacilities).reduce((total, [facilityId, isSelected]) => {
+      if (isSelected === "1") {
+        const priceKey = `${facilityId}_price` as keyof FacilitiesObject;
+        // Properly type cast the price value to number
+        const facilityPrice = facilitiesData ? Number(facilitiesData[priceKey]) || 0 : 0;
+        return total + (facilityPrice * hours);
       }
       return total;
     }, 0);
@@ -324,7 +336,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ artistId, livehouseId, liveho
       <form onSubmit={handleBookNow} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Left Column - Date & Time Selection */}
-            <div className="p-4 space-y-4">
+          <div className="p-4 space-y-4">
             <h3 className="text-lg font-semibold mb-4 text-custom-text-primary">เลือกวันที่และเวลา</h3>
             <DateSelect date={date} onDateChange={setDate} />
             <TimeSelect
@@ -334,22 +346,22 @@ const BookingForm: React.FC<BookingFormProps> = ({ artistId, livehouseId, liveho
               onEndTimeChange={setEndTime}
               timeSlots={timeSlots}
             />
-            </div>
+          </div>
 
-            {/* Right Column - Facilities Selection */}
-            <div className="p-4">
+          {/* Right Column - Facilities Selection */}
+          <div className="p-4">
             <h3 className="text-lg font-semibold mb-4 text-custom-text-primary">เลือกสิ่งอำนวยความสะดวก</h3>
             <FacilitiesCarousel
-              facilities={facilitiesData}
+              facilities={facilitiesArray}
               selectedFacilities={Object.keys(selectedFacilities).filter(id => selectedFacilities[id] === "1")}
               onFacilityToggle={handleFacilityToggle}
             />
-            </div>
           </div>
+        </div>
 
-          {/* Price Breakdown */}
-          {startTime && endTime && (
-            <div className="bg-custom-background-elevated rounded-lg p-4 space-y-2 text-custom-text-primary">
+        {/* Price Breakdown */}
+        {startTime && endTime && (
+          <div className="bg-custom-background-elevated rounded-lg p-4 space-y-2 text-custom-text-primary">
             <div className="flex justify-between">
               <span>ค่าเช่าสถานที่:</span>
               <span>฿{priceBreakdown.totalLivehousePrice}</span>
@@ -362,14 +374,14 @@ const BookingForm: React.FC<BookingFormProps> = ({ artistId, livehouseId, liveho
               <span>ราคารวม:</span>
               <span>฿{priceBreakdown.totalPrice}</span>
             </div>
-            </div>
-          )}
-          <Button
-            type="submit"
-            className="w-full bg-custom-purple-dark hover:bg-custom-purple text-white"
-          >
-            จองนัดหมาย
-          </Button>
+          </div>
+        )}
+        <Button
+          type="submit"
+          className="w-full bg-custom-purple-dark hover:bg-custom-purple text-white"
+        >
+          จองนัดหมาย
+        </Button>
       </form>
 
       <PaymentDialog
