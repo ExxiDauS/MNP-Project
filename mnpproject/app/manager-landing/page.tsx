@@ -7,12 +7,15 @@ import { useUser } from "@/contexts/UserContext";
 export default function Page() {
   const { user } = useUser();
   const [livehouseExists, setLivehouseExists] = useState<boolean | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchLivehouseId = async () => {
+      setIsLoading(true);
       try {
         if (!user?.user_id) {
           setLivehouseExists(false);
+          setIsLoading(false);
           return;
         }
         console.log("Fetched livehouseid:", user.user_id);
@@ -31,6 +34,8 @@ export default function Page() {
       } catch (error) {
         console.error("Error fetching livehouse:", error);
         setLivehouseExists(false);
+      } finally {
+        setIsLoading(false);
       }
     };
   
@@ -41,7 +46,14 @@ export default function Page() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-24 text-secondary">
       <h1 className="text-4xl font-bold mb-4">สวัสดี, {user?.username || 'Guest'} </h1>
-      {livehouseExists === false ? (
+      
+      {isLoading ? (
+        // Loading state
+        <div className="text-center">
+          <p className="text-lg mb-4">กำลังโหลด...</p>
+          {/* You can add a spinner here if you want */}
+        </div>
+      ) : livehouseExists === false ? (
         // If no livehouse exists, show this message and button
         <div className="text-center">
           <p className="text-lg text-red-500 mb-10">ตอนนี้คุณยังไม่มี Livehouse</p>

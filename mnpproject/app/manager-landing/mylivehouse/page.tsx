@@ -73,7 +73,7 @@ const Page = () => {
                 setIsLoading(true);
                 
                 // Fetch livehouse data
-                const data = await fetch(`http://localhost:5000/api/livehouse/get-livehouse/${user?.user_id}`);
+                const data = await fetch(`http://localhost:5000/api/livehouse/get-livehouse-userid/${user?.user_id}`);
                 if (!data.ok) {
                     throw new Error('Failed to fetch livehouse data');
                 }
