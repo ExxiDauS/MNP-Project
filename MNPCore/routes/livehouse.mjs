@@ -89,6 +89,60 @@ router.get("/get-livehouse/:livehouse_id", async (req, res) => {
   }
 });
 
+router.get("/get-livehouse/:user_id", async (req, res) => {
+  try {
+    const { user_id } = req.params;
+    const livehouse = await get_livehouse_by_userid(user_id);
+
+    // Create a modified response object matching your desired pattern
+    // where the image data remains as Buffer type in the response
+    const responseData = {
+      description: livehouse.description,
+      livehouse_id: livehouse.livehouse_id,
+      user_id: livehouse.user_id,
+      location: livehouse.location,
+      name: livehouse.name,
+      price_per_hour: livehouse.price_per_hour,
+      province: livehouse.province,
+      sample_image01: livehouse.sample_image01
+        ? {
+            type: "Buffer",
+            data: Array.from(livehouse.sample_image01), // Convert Buffer to array of numbers
+          }
+        : null,
+      sample_image02: livehouse.sample_image02
+        ? {
+            type: "Buffer",
+            data: Array.from(livehouse.sample_image02),
+          }
+        : null,
+      sample_image03: livehouse.sample_image03
+        ? {
+            type: "Buffer",
+            data: Array.from(livehouse.sample_image03),
+          }
+        : null,
+      sample_image04: livehouse.sample_image04
+        ? {
+            type: "Buffer",
+            data: Array.from(livehouse.sample_image04),
+          }
+        : null,
+      sample_image05: livehouse.sample_image05
+        ? {
+            type: "Buffer",
+            data: Array.from(livehouse.sample_image05),
+          }
+        : null,
+      user_id: livehouse.user_id,
+    };
+
+    res.status(200).json(responseData);
+  } catch (error) {
+    return handleServerError(res, error, "Error fetching livehouse");
+  }
+});
+
 router.post(
   "/create-livehouse",
   upload.fields([
