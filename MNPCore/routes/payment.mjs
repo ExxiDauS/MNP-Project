@@ -130,6 +130,7 @@ router.get("/get_proof/:booking_id", async (req, res) => {
 router.patch("/verify/:booking_id", async (req, res) => {
   try {
     const booking = await get_booking_by_id(req.params.booking_id);
+    const status = req.body.status;
     const livehouse = await get_livehouse_by_id(booking.livehouse_id);
     const user = await get_user_by_id(booking.user_id);
     const event = await createEvent(
@@ -139,6 +140,7 @@ router.patch("/verify/:booking_id", async (req, res) => {
       booking.start_time,
       booking.end_time
     );
+    const result = await verify_reserve(booking_id, status);
     const artist_email = await sendMail(user.email, "Booking has been accepted."); // * Accept Case
     res.status(200).json({ message: "Reserve verified", event: event });
   } catch (error) {
