@@ -24,15 +24,6 @@ interface BookingHistoryCardProps {
   booking: BookingData;
 }
 
-const getInitials = (name: string) => {
-  return name
-    .split(" ")
-    .map((part) => part[0])
-    .join("")
-    .toUpperCase()
-    .slice(0, 2);
-};
-
 const BookingHisButManager: React.FC<BookingHistoryCardProps> = ({
   booking,
 }) => {
@@ -81,7 +72,7 @@ const BookingHisButManager: React.FC<BookingHistoryCardProps> = ({
   const updateStatus = async (newStatus: "Accept" | "Decline") => {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/reserve/change-status/${booking.bookingInfo.booking_id}`,
+        `http://localhost:5000/api/payment/verify/${booking.bookingInfo.booking_id}`,
         {
           method: "PATCH",
           headers: {
@@ -259,7 +250,7 @@ const BookingHisButManager: React.FC<BookingHistoryCardProps> = ({
           <span className="font-semibold text-secondary">หลักฐานการโอน</span>
           <img
             src={`data:image/jpeg;base64,${Buffer.from(
-              booking.bookingInfo.payment_proof.data
+              booking.bookingInfo.payment_proof
             ).toString("base64")}`}
             alt="Payment Proof"
             className="max-w-full h-auto rounded-md shadow-md mt-2" // Adding margin for spacing and styling
