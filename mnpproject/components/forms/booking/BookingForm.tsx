@@ -118,8 +118,6 @@ const BookingForm: React.FC<BookingFormProps> = ({ artistId, livehouseId, liveho
         throw new Error(`Failed to upload payment proof with status: ${response.status}`);
       }
 
-      const result = await response.json();
-
       // Show success toast notification
       toast.success("การชำระเงินได้รับการยืนยัน", {
         description: "การจองของคุณได้รับการยืนยันเรียบร้อยแล้ว.",
