@@ -6,24 +6,27 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import LiveHouseImgUpload from "@/components/forms/LiveHouseImgUpload"; // Import your custom AvatarUpload component
 import { useUser } from "@/contexts/UserContext";
+import { useRouter } from "next/navigation"; // Import useRouter
 
 const CreateLHForm = () => {
+  const router = useRouter(); // Initialize the router
+
   const { user } = useUser();
   const [formData, setFormData] = useState<{
     user_id: string;
     name: string;
     location: string;
     province: string;
-    price_per_hour: string;
     description: string;
+    price_per_hour: string;
     images: (File | null)[]; // This ensures that images can hold File objects or null
   }>({
     user_id: "",
     name: "",
     location: "",
     province: "",
-    price_per_hour: "",
     description: "",
+    price_per_hour: "",
     images: [],
   });
 
@@ -63,43 +66,51 @@ const CreateLHForm = () => {
   };
 
   // Handle form submit
-   // Handle form submit and POST to /api/livehouse/create-livehouse
-   const handleSubmit = async (e: React.FormEvent) => {
+  // Handle form submit and POST to /api/livehouse/create-livehouse
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form Data: ", JSON.stringify(formData));
+    // console.log("Form Data: ", JSON.stringify(formData));
+    console.log("Form Data: ", formData)
 
     // Code ข้างล่างคาดว่ารันได้ แต่ยังไม่ได้ทำส่วนของรูปเพราะไม่มี api
-    // // Prepare form data to send in the request (without images)
-    // const dataToSend = {
-    //   user_id: formData.user_id,
-    //   name: formData.name,
-    //   location: formData.location,
-    //   province: formData.province,
-    //   price_per_hour: formData.price_per_hour,
-    //   description: formData.description,
-    // };
+    // Prepare form data to send in the request (without images)
+    const dataToSend = {
+      user_id: user?.user_id,
+      name: formData.name,
+      location: formData.location,
+      province: formData.province,
+      description: formData.description,
+      price_per_hour: Number(formData.price_per_hour),
+    };
 
-    // try {
-    //   const response = await fetch("http://localhost:5000/api/livehouse/create-livehouse", {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json", // Sending as JSON
-    //     },
-    //     body: JSON.stringify(dataToSend), // Send form data as JSON
-    //   });
+    console.log("Data being sent:", dataToSend);
 
-    //   if (!response.ok) {
-    //     throw new Error("Failed to submit form");
-    //   }
+    try {
+      const response = await fetch(
+        "http://localhost:5000/api/livehouse/create-livehouse",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json", // Sending as JSON
+          },
+          body: JSON.stringify(dataToSend), // Send form data as JSON
+        }
+      );
 
-    //   // Handle success (you can redirect, show a success message, etc.)
-    //   console.log("Form submitted successfully");
-    // } catch (error) {
-    //   // Handle error
-    //   console.error("Error during form submission", error);
-    // }
+      const responseData = await response.json(); // Try getting server response
+      console.log("Server response:", responseData);
 
+      if (!response.ok) {
+        throw new Error("Failed to submit form");
+      }
 
+      // Handle success (you can redirect, show a success message, etc.)
+      console.log("Form submitted successfully");
+      router.push("/manager-landing");
+    } catch (error) {
+      // Handle error
+      console.error("Error during form submission", error);
+    }
   };
   return (
     <div>

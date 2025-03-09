@@ -16,6 +16,7 @@ import {
 import { BookingData } from "@/app/artist-booking-list/page";
 import { Facilities } from "@/app/artist-booking-list/page";
 import AvatarComponent from "../avatar/avatarComponent";
+import { useRouter } from "next/navigation"; // Import useRouter
 
 interface BookingHistoryCardProps {
   booking: BookingData;
@@ -39,7 +40,7 @@ const BookingHisButManager: React.FC<BookingHistoryCardProps> = ({
   const [loadingUser, setLoadingUser] = useState<boolean>(false); // To manage loading state for user fetch
   const [showModal, setShowModal] = useState(false);
   const [action, setAction] = useState<"Accept" | "Decline" | null>(null); // Add null as a default state for action
-
+  const router = useRouter(); // Initialize the router
   // Function to handle Accept/Decline button clicks
   const handleActionClick = (actionType: "Accept" | "Decline") => {
     setAction(actionType);
@@ -91,6 +92,8 @@ const BookingHisButManager: React.FC<BookingHistoryCardProps> = ({
       if (!response.ok) throw new Error("Failed to update status");
 
       setStatus(newStatus);
+      router.refresh();
+
     } catch (error) {
       console.error("Error updating booking status:", error);
     }
@@ -132,14 +135,14 @@ const BookingHisButManager: React.FC<BookingHistoryCardProps> = ({
 
   const getStatusBadgeClassName = () => {
     switch (booking.bookingInfo.status) {
-      case 'Accept':
-        return 'ยืนยันแล้ว';
-      case 'Decline':
-        return 'ปฏิเสธ';
-      case 'Pending':
-        return 'รอการยืนยัน';
+      case "Accept":
+        return "ยืนยันแล้ว";
+      case "Decline":
+        return "ปฏิเสธ";
+      case "Pending":
+        return "รอการยืนยัน";
       default:
-        return 'รอการยืนยัน';
+        return "รอการยืนยัน";
     }
   };
 
@@ -153,7 +156,7 @@ const BookingHisButManager: React.FC<BookingHistoryCardProps> = ({
         <h2 className="text-xl font-bold text-white">{livehouseName}</h2>
         <div className="flex gap-2">
           <Badge className={getStatusBadgeClass() + " py-1 px-3"}>
-          {getStatusBadgeClassName()}
+            {getStatusBadgeClassName()}
           </Badge>
           <Badge className="bg-green-700 hover:bg-green-800 py-1 px-3">
             <Check className="mr-1 h-4 w-4" /> จ่ายแล้ว
@@ -287,10 +290,9 @@ const BookingHisButManager: React.FC<BookingHistoryCardProps> = ({
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
           <div className="bg-gray-900 p-8 rounded-md shadow-lg w-full sm:w-1/2 md:w-1/3 lg:w-1/4 text-secondary">
             <center>
-              <div className="text-xl font-bold mb-4 ">คุณต้องการที่จะ {action === "Accept"
-                ? "ยืนยัน"
-                :"ปฏิเสธ"}
-                ?</div>
+              <div className="text-xl font-bold mb-4 ">
+                คุณต้องการที่จะ {action === "Accept" ? "ยืนยัน" : "ปฏิเสธ"}?
+              </div>
             </center>
 
             <div className="flex justify-around gap-4">
