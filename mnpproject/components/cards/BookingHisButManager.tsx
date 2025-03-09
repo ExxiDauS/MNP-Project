@@ -130,6 +130,19 @@ const BookingHisButManager: React.FC<BookingHistoryCardProps> = ({
     }
   };
 
+  const getStatusBadgeClassName = () => {
+    switch (booking.bookingInfo.status) {
+      case 'Accept':
+        return 'ยืนยันแล้ว';
+      case 'Decline':
+        return 'ปฏิเสธ';
+      case 'Pending':
+        return 'รอการยืนยัน';
+      default:
+        return 'รอการยืนยัน';
+    }
+  };
+
   if (!booking.bookingInfo.payment_proof) {
     return null;
   }
@@ -140,10 +153,10 @@ const BookingHisButManager: React.FC<BookingHistoryCardProps> = ({
         <h2 className="text-xl font-bold text-white">{livehouseName}</h2>
         <div className="flex gap-2">
           <Badge className={getStatusBadgeClass() + " py-1 px-3"}>
-            {status}
+          {getStatusBadgeClassName()}
           </Badge>
           <Badge className="bg-green-700 hover:bg-green-800 py-1 px-3">
-            <Check className="mr-1 h-4 w-4" /> Paid
+            <Check className="mr-1 h-4 w-4" /> จ่ายแล้ว
           </Badge>
         </div>
       </div>
@@ -151,7 +164,7 @@ const BookingHisButManager: React.FC<BookingHistoryCardProps> = ({
       <CardContent className="p-6 grid sm:grid-cols-2 md:grid-cols-3 gap-6">
         <div className="space-y-6">
           <div className="flex items-center gap-3 text-white font-semibold">
-            Booked by:
+            จองโดย:
             <Badge className="bg-[#1a1e2c] border border-indigo-800 py-1.5 px-3">
               {loadingUser ? (
                 <div className="text-center text-gray-400">
@@ -159,7 +172,7 @@ const BookingHisButManager: React.FC<BookingHistoryCardProps> = ({
                 </div>
               ) : userProfile ? (
                 <a
-                  href={`/profile/${userProfile.user.user_id}`}
+                  href={`/profileForShow/${userProfile.user.user_id}`}
                   className="flex items-center gap-3 text-white"
                 >
                   <AvatarComponent
@@ -176,7 +189,7 @@ const BookingHisButManager: React.FC<BookingHistoryCardProps> = ({
           <div className="text-white">
             <div className="flex items-center mb-2">
               <Clock className="mr-2 h-5 w-5 text-indigo-300" />
-              <span className="font-semibold">Time Slot</span>
+              <span className="font-semibold">ช่วงเวลา</span>
             </div>
             <div className="ml-7 space-y-1">
               <div>
@@ -184,7 +197,7 @@ const BookingHisButManager: React.FC<BookingHistoryCardProps> = ({
                 {formatDateTime(booking.bookingInfo.end_time)}
               </div>
               <div className="text-sm text-gray-400">
-                {calculateDuration()} hours
+                {calculateDuration()} ชั่วโมง
               </div>
             </div>
           </div>
@@ -194,43 +207,43 @@ const BookingHisButManager: React.FC<BookingHistoryCardProps> = ({
               <div className="mr-2 h-5 w-5 text-indigo-300 flex items-center justify-center font-bold">
                 ฿
               </div>
-              <span className="font-semibold">Total Price</span>
+              <span className="font-semibold">ราคารวม</span>
             </div>
             <div className="ml-7">{booking.bookingInfo.total_price} THB</div>
           </div>
         </div>
 
         <div className="text-white">
-          <div className="font-semibold mb-3">Facilities</div>
+          <div className="font-semibold mb-3">สิ่งอำนวยความสะดวก</div>
           <div className="flex flex-wrap gap-2">
             {selectedFacilities.includes("mic") && (
               <Badge className="bg-[#1a1e2c] hover:bg-[#252a3c] border border-indigo-800 py-1.5 px-3">
-                <Mic className="mr-1.5 h-4 w-4" /> Mic
+                <Mic className="mr-1.5 h-4 w-4" /> ไมโครโฟน
               </Badge>
             )}
             {selectedFacilities.includes("guitar") && (
               <Badge className="bg-[#1a1e2c] hover:bg-[#252a3c] border border-indigo-800 py-1.5 px-3">
-                <Guitar className="mr-1.5 h-4 w-4" /> Guitar
+                <Guitar className="mr-1.5 h-4 w-4" /> กีตาร์
               </Badge>
             )}
             {selectedFacilities.includes("bass") && (
               <Badge className="bg-[#1a1e2c] hover:bg-[#252a3c] border border-indigo-800 py-1.5 px-3">
-                <Music className="mr-1.5 h-4 w-4" /> Bass
+                <Music className="mr-1.5 h-4 w-4" /> เบส
               </Badge>
             )}
             {selectedFacilities.includes("drum") && (
               <Badge className="bg-[#1a1e2c] hover:bg-[#252a3c] border border-indigo-800 py-1.5 px-3">
-                <Drum className="mr-1.5 h-4 w-4" /> Drum
+                <Drum className="mr-1.5 h-4 w-4" /> กลอง
               </Badge>
             )}
             {selectedFacilities.includes("keyboard") && (
               <Badge className="bg-[#1a1e2c] hover:bg-[#252a3c] border border-indigo-800 py-1.5 px-3">
-                <Keyboard className="mr-1.5 h-4 w-4" /> Keyboard
+                <Keyboard className="mr-1.5 h-4 w-4" /> คีย์บอร์ด
               </Badge>
             )}
             {selectedFacilities.includes("pa_monitor") && (
               <Badge className="bg-[#1a1e2c] hover:bg-[#252a3c] border border-indigo-800 py-1.5 px-3">
-                <Speaker className="mr-1.5 h-4 w-4" /> Pa monitor
+                <Speaker className="mr-1.5 h-4 w-4" /> พีเอ มอนิเตอร์
               </Badge>
             )}
           </div>
@@ -257,14 +270,14 @@ const BookingHisButManager: React.FC<BookingHistoryCardProps> = ({
             onClick={() => handleActionClick("Accept")}
             disabled={status !== "Pending"}
           >
-            <Check className="mr-2 h-4 w-4" /> Accept
+            <Check className="mr-2 h-4 w-4" /> ยืนยัน
           </Button>
           <Button
             className="bg-red-700 hover:bg-red-800 text-white px-4 py-2 disabled:opacity-50 disabled:cursor-not-allowed"
             onClick={() => handleActionClick("Decline")}
             disabled={status !== "Pending"}
           >
-            <X className="mr-2 h-4 w-4" /> Decline
+            <X className="mr-2 h-4 w-4" /> ปฏิเสธ
           </Button>
         </div>
       )}
@@ -274,7 +287,10 @@ const BookingHisButManager: React.FC<BookingHistoryCardProps> = ({
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
           <div className="bg-gray-900 p-8 rounded-md shadow-lg w-full sm:w-1/2 md:w-1/3 lg:w-1/4 text-secondary">
             <center>
-              <div className="text-xl font-bold mb-4 ">Confirm {action}?</div>
+              <div className="text-xl font-bold mb-4 ">คุณต้องการที่จะ {action === "Accept"
+                ? "ยืนยัน"
+                :"ปฏิเสธ"}
+                ?</div>
             </center>
 
             <div className="flex justify-around gap-4">
@@ -282,13 +298,13 @@ const BookingHisButManager: React.FC<BookingHistoryCardProps> = ({
                 className="bg-green-700 hover:bg-green-800"
                 onClick={() => updateStatus(action!)}
               >
-                Confirm
+                ตกลง
               </Button>
               <Button
                 className="bg-gray-600 hover:bg-gray-700"
                 onClick={() => setShowModal(false)}
               >
-                Cancel
+                ยกเลิก
               </Button>
             </div>
           </div>

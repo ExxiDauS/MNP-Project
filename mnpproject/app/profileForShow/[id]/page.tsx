@@ -143,7 +143,7 @@ const ProfilePage = () => {
 
                 {/* Back button */}
                 <div className="mb-6">
-                    <BackButton href='/' />
+                    <BackButton href='/manager-landing/pending' />
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -181,12 +181,7 @@ const ProfilePage = () => {
                                 </div>
                             </div>
 
-                            <Button
-                                onClick={() => router.push(`/edit-profile`)}
-                                className="mt-6 w-full bg-custom-purple hover:bg-custom-purple-light text-white rounded-full py-6 transition-all shadow-md"
-                            >
-                                แก้ไขโปรไฟล์
-                            </Button>
+
                         </div>
                     </div>
 

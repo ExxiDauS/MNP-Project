@@ -70,13 +70,6 @@ router.get("/generateQR/:booking_id", async (req, res) => {
 
     res.set("Content-Type", "image/png");
     res.send(buffer);
-    // QRCode.toDataURL(payload, options, (err, url) => {
-    //     if (err) {
-    //         res.status(500).send("Internal server error");
-    //         return;
-    //     }
-    //     res.status(200).json({ url });
-    // });
   } catch (err) {
     return handleServerError(res, err);
   }

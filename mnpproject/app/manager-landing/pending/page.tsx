@@ -110,7 +110,7 @@ const pending: React.FC = () => {
       {/* Content container */}
       <div className="relative flex flex-col w-full bg-custom-background-elevated outline outline-custom-purple-light outline-offset-2 rounded-3xl p-4 md:p-6 m-6 mt-14 md:mt-10 ">
         <BackButton href='/manager-landing' className='mt-2'/>
-        <h1 className="text-2xl md:text-3xl font-bold text-center mb-6 text-white">My Bookings</h1>
+        <h1 className="text-2xl md:text-3xl font-bold text-center mb-6 text-white">การจองที่เข้ามา</h1>
 
         {/* If no bookings */}
         {bookings.length === 0 ? (
