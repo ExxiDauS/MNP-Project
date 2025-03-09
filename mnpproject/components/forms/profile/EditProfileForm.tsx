@@ -298,7 +298,7 @@ const EditProfileForm = () => {
                     className='bg-custom-purple text-custom-text-primary hover:bg-custom-purple-light hover:text-black'
                     disabled={isLoading}
                 >
-                    {isLoading ? 'กำลังบันทึก...' : 'บันทึกการเปลี่ยนแปลงแล้ว'}
+                    {isLoading ? 'กำลังบันทึก...' : 'บันทึกการเปลี่ยนแปลง'}
                 </Button>
             </div>
         </form>

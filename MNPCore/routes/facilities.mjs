@@ -3,6 +3,14 @@ import { create_facilities, get_facilities_by_livehouse, patch_facilities } from
 
 const router = Router();
 
+const handleServerError = (res, error, message = "Internal Server Error") => {
+  console.error("Server Error:", error);
+  return res.status(500).json({
+    error: message,
+    details: error.message,
+  });
+};
+
 router.post("/create-facility", async (req, res) => {
   try {
     const {
@@ -20,7 +28,7 @@ router.post("/create-facility", async (req, res) => {
       keyboard_price,
       pa_monitor_price,
     } = req.body;
-    const [facility] = await create_facilities(
+    const facility = await create_facilities(
       livehouse_id,
       mic,
       guitar,

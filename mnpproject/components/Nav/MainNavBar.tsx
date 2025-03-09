@@ -1,13 +1,13 @@
-'use client'
+"use client";
 
-import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import MobileNav from "./MobileNav";
 import NavLink from "./NavLink";
-import { useUser } from '@/contexts/UserContext';
+import { useUser } from "@/contexts/UserContext";
 import {
   NavigationMenu,
-  NavigationMenuList
+  NavigationMenuList,
 } from "@/components/ui/navigation-menu";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -20,7 +20,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Skeleton } from "@/components/ui/skeleton";
-import { MessageCircle } from 'lucide-react';
+import { MessageCircle } from "lucide-react";
 
 export default function Navbar() {
   const { user, signOut, isLoading } = useUser();
@@ -30,7 +30,7 @@ export default function Navbar() {
   // Add direct localStorage check for redundancy
   useEffect(() => {
     try {
-      const storedUser = localStorage.getItem('user');
+      const storedUser = localStorage.getItem("user");
       if (storedUser) {
         const userData = JSON.parse(storedUser);
         console.log("User data from localStorage:", userData);
@@ -50,34 +50,32 @@ export default function Navbar() {
   }, [isLoading]);
 
   const handleSignIn = () => {
-
-    router.push('/sign-in');
+    router.push("/sign-in");
   };
 
   const getInitials = (name: string) => {
     return name
-      .split(' ')
-      .map(part => part[0])
-      .join('')
+      .split(" ")
+      .map((part) => part[0])
+      .join("")
       .toUpperCase()
       .slice(0, 2);
   };
 
   // Function to handle authentication check for navigation
   const handleNavigation = (path: string) => {
-
     // Special case for Home navigation based on role
-    if (path === '/main-landing') {
-      if (user && user.role && user.role.toLowerCase().trim() === 'manager') {
-        window.location.href = '/manager-landing';
+    if (path === "/main-landing") {
+      if (user && user.role && user.role.toLowerCase().trim() === "manager") {
+        window.location.href = "/manager-landing";
       } else {
-        window.location.href = '/main-landing';
+        window.location.href = "/main-landing";
       }
       return;
     }
 
     // About is accessible without sign-in
-    if (path === '/about') {
+    if (path === "/about") {
       router.push(path);
       return;
     }
@@ -86,7 +84,7 @@ export default function Navbar() {
     if (user) {
       router.push(path);
     } else {
-      router.push('/sign-in');
+      router.push("/sign-in");
     }
   };
 
@@ -105,22 +103,28 @@ export default function Navbar() {
     // User is signed in
     return user ? (
       <>
-      <div>
-        <Button
-          onClick={() => router.push('/chat')}
-          size="icon"
-          className="bg-transparent hover:bg-zinc-800 rounded-full size-11"
-        >
-          <MessageCircle size={20} />
-        </Button>
-      </div>
+        <div>
+          <Button
+            onClick={() => router.push("/chat")}
+            size="icon"
+            className="bg-transparent hover:bg-zinc-800 rounded-full size-11"
+          >
+            <MessageCircle size={20} />
+          </Button>
+        </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon" className="hover:bg-zinc-800 rounded-full size-11">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="hover:bg-zinc-800 rounded-full size-11"
+            >
               <Avatar className="size-8">
                 {user.profile_image && user.profile_image.data.length > 0 ? (
                   <AvatarImage
-                    src={`data:image/jpeg;base64,${Buffer.from(user.profile_image.data).toString('base64')}`}
+                    src={`data:image/jpeg;base64,${Buffer.from(
+                      user.profile_image.data
+                    ).toString("base64")}`}
                     alt={user.name}
                   />
                 ) : (
@@ -129,7 +133,10 @@ export default function Navbar() {
               </Avatar>
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-56 bg-zinc-800 text-zinc-100 border-zinc-700">
+          <DropdownMenuContent
+            align="end"
+            className="w-56 bg-zinc-800 text-zinc-100 border-zinc-700"
+          >
             <div className="flex items-center justify-start gap-2 p-2">
               <div className="flex flex-col space-y-1 leading-none">
                 <p className="font-medium">{user.name}</p>
@@ -143,12 +150,23 @@ export default function Navbar() {
             >
               โปรไฟล์
             </DropdownMenuItem>
+            
+            {user && user.role && user.role.toLowerCase().trim() === 'artist' && (
             <DropdownMenuItem
               className="cursor-pointer hover:bg-zinc-700"
-              onClick={() => handleNavigation('/artist-booking-list')}
+              onClick={() => handleNavigation("/artist-booking-list")}
             >
               การจองของฉัน
-            </DropdownMenuItem>
+            </DropdownMenuItem>)}
+
+            {user && user.role && user.role.toLowerCase().trim() === 'manager' && (
+            <DropdownMenuItem
+              className="cursor-pointer hover:bg-zinc-700"
+              onClick={() => handleNavigation("/manager-landing/pending")}
+            >
+              จัดการการจอง
+            </DropdownMenuItem>)}
+
             <DropdownMenuSeparator className="bg-zinc-700" />
             <DropdownMenuItem
               className="cursor-pointer text-red-500 hover:bg-red-950 hover:text-red-400"
@@ -169,7 +187,7 @@ export default function Navbar() {
           เข้าสู่ระบบ
         </Button>
         <Button
-          onClick={() => router.push('/sign-up')}
+          onClick={() => router.push("/sign-up")}
           className="bg-custom-purple text-custom-text-primary hover:bg-custom-purple-light hover:text-black"
         >
           สมัครสมาชิก
@@ -189,21 +207,34 @@ export default function Navbar() {
 
   const renderNavItems = () => (
     <NavigationMenuList className="space-x-2">
-      <div onClick={() => handleNavigation('/main-landing')}>
+      <div onClick={() => handleNavigation("/main-landing")}>
         <NavLink>หน้าหลัก</NavLink>
       </div>
-      {/* Only show Explore link if user is not a manager */}
-      {(!user || (user && user.role && user.role.toLowerCase().trim() !== 'manager')) && (
-        <div onClick={() => handleNavigation('/Explore')}>
-          <NavLink>สำรวจ</NavLink>
-        </div>
+
+      {/* Check if the user is an artist or a manager */}
+      {(!user ||
+        (user && user.role && user.role.toLowerCase().trim() === "artist")) && (
+        <>
+          <div onClick={() => handleNavigation("/Explore")}>
+            <NavLink>สำรวจ</NavLink>
+          </div>
+          <div onClick={() => handleNavigation("/artist-booking-list")}>
+            <NavLink>การจอง</NavLink>
+          </div>
+        </>
       )}
-      <div onClick={() => handleNavigation('/manager-landing/pending')}>
-        <NavLink>การจอง</NavLink>
-      </div>
-      <div onClick={() => handleNavigation('/manager-landing/Calendar')}>
-        <NavLink>ปฎิทิน</NavLink>
-      </div>
+
+      {/* Only show "การจอง" and "ปฏิทิน" links for managers */}
+      {user && user.role && user.role.toLowerCase().trim() === "manager" && (
+        <>
+          <div onClick={() => handleNavigation("/manager-landing/pending")}>
+            <NavLink>การจอง</NavLink>
+          </div>
+          <div onClick={() => handleNavigation("/manager-landing/Calendar")}>
+            <NavLink>ปฏิทิน</NavLink>
+          </div>
+        </>
+      )}
     </NavigationMenuList>
   );
 
@@ -219,9 +250,7 @@ export default function Navbar() {
           </NavigationMenu>
         </div>
 
-        <div className="flex items-center space-x-4">
-          {renderUserProfile()}
-        </div>
+        <div className="flex items-center space-x-4">{renderUserProfile()}</div>
       </div>
     </nav>
   );

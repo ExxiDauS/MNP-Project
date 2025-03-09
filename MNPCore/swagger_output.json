@@ -285,6 +285,24 @@
         }
       }
     },
+    "/api/livehouse/get-livehouse-userid/{user_id}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/livehouse/create-livehouse": {
       "post": {
         "description": "",

@@ -20,7 +20,7 @@ export default function SignUpPage() {
 
 
     return (
-        <section className='relative flex justify-self-center w-2/5 mt-24'>
+        <section className='relative flex justify-self-center w-full md:w-2/5 mt-24'>
             {/* Larger aura effect background */}
             <div className='absolute -inset-1 bg-gradient-to-r from-purple-500/30 via-pink-500/30 to-purple-500/30 blur-md rounded-3xl'></div>
 

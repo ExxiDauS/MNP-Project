@@ -7,7 +7,7 @@ export default function Page() {
   console.log(user?.role)
   if (user?.role === "manager") {
     redirect("/manager-landing");
-  } else if (user?.role === "artist") {
+  } else if (user?.role === "artist"){
     redirect("/main-landing");
   }
 }
