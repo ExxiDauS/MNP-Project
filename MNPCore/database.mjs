@@ -179,6 +179,14 @@ export async function get_livehouse_by_id(livehouse_id) {
   return rows[0];
 }
 
+export async function get_livehouse_by_userid(user_id) {
+  const [rows] = await pool.query(
+    "SELECT * FROM mnp_livehouse WHERE user_id = ?",
+    [user_id]
+  );
+  return rows[0];
+}
+
 export async function get_all_livehouses() {
   const [rows] = await pool.query("SELECT * FROM mnp_livehouse");
   return rows;
