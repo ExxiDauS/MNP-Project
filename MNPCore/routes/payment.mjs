@@ -16,7 +16,7 @@ import {
 } from "../database.mjs";
 import multer from "multer";
 import { createEvent } from "../utils/calendar.mjs";
-import { sendMail } from "../utils/notification.mjs";
+import { sendMail, sendMailAccept, sendMailManager } from "../utils/notification.mjs";
 
 const router = Router();
 
@@ -93,7 +93,7 @@ router.patch("/upload", upload.single("image"), async (req, res) => {
     const manager = await get_user_by_id(livehouse.user_id);
 
     const artist_email = await sendMail(artist.email, "Payment Proof Uploaded");
-    const manager_email = await sendMail(manager.email, "Need Verification");
+    const manager_email = await sendMailManager(manager.email, "Need Verification");
 
     res.json({
       message: "Image uploaded successfully",
@@ -141,7 +141,7 @@ router.patch("/verify/:booking_id", async (req, res) => {
       booking.end_time
     );
     const result = await verify_reserve(req.params.booking_id, status);
-    const artist_email = await sendMail(user.email, "Booking has been accepted."); // * Accept Case
+    const artist_email = await sendMailAccept(user.email, "Booking has been accepted."); // * Accept Case
     res.status(200).json({ message: "Reserve verified", event: event });
   } catch (error) {
     console.error("Error verifying reserve:", error);

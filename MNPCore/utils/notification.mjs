@@ -17,6 +17,19 @@ async function getHTML() {
   return htmlTemplate;
 }
 
+async function getHTMLAccept() {
+  const templatePath = join(__dirname, "../template/accept.html");
+  const htmlTemplate = await fs.readFile(templatePath, "utf-8");
+
+  return htmlTemplate;
+}
+async function getHTMLManager() {
+  const templatePath = join(__dirname, "../template/manager.html");
+  const htmlTemplate = await fs.readFile(templatePath, "utf-8");
+  return htmlTemplate;
+}
+
+
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
   port: 465,
@@ -31,6 +44,38 @@ const transporter = nodemailer.createTransport({
 export async function sendMail(to, subject) {
   try {
     const htmlTemplate = await getHTML();
+
+    await transporter.sendMail({
+        to: to,
+        subject: subject,
+        html: htmlTemplate,
+  });
+
+  console.log("Email sent"); 
+} catch (err) {
+    console.error("Error:", err);
+    throw err;
+}}
+
+export async function sendMailManager(to, subject) {
+  try {
+    const htmlTemplate = await getHTMLManager();
+
+    await transporter.sendMail({
+        to: to,
+        subject: subject,
+        html: htmlTemplate,
+  });
+
+  console.log("Email sent"); 
+} catch (err) {
+    console.error("Error:", err);
+    throw err;
+}}
+
+export async function sendMailAccept(to, subject) {
+  try {
+    const htmlTemplate = await getHTMLAccept();
 
     await transporter.sendMail({
         to: to,

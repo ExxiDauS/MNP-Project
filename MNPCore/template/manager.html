@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>การแจ้งเตือนการตรวจสอบการจอง</title>
+    <style>
+        body {
+            font-family: 'Thonburi', 'Tahoma', sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+        .email-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+        }
+        .header {
+            background: linear-gradient(to right, #27094d, #3d0a6c);
+            padding: 20px;
+            text-align: center;
+        }
+        .header h1 {
+            color: #ffffff;
+            margin: 0;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .content {
+            padding: 20px;
+            color: #333333;
+        }
+        .notification-box {
+            background-color: #f0e6ff;
+            border-left: 4px solid #6a11cb;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .alert-icon {
+            width: 50px;
+            height: 50px;
+            margin: 0 auto 15px;
+            display: block;
+        }
+        .reserve-details {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .reserve-details p {
+            margin: 5px 0;
+        }
+        .action-buttons {
+            text-align: center;
+            margin: 30px 0;
+        }
+        .button {
+            display: inline-block;
+            text-decoration: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-weight: bold;
+            margin: 0 10px;
+        }
+        .approve-button {
+            background: linear-gradient(45deg, #1a8754, #28a745);
+            color: white;
+        }
+        .reject-button {
+            background: linear-gradient(45deg, #dc3545, #bb2d3b);
+            color: white;
+        }
+        .footer {
+            background-color: #f5f5f5;
+            padding: 15px;
+            text-align: center;
+            font-size: 12px;
+            color: #666666;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="header">
+            <h1>การแจ้งเตือนการตรวจสอบการจอง</h1>
+        </div>
+        
+        <div class="content">
+            <div style="text-align: center; margin-bottom: 20px;">
+                <svg class="alert-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#6a11cb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                </svg>
+            </div>
+            
+            <div class="notification-box">
+                <p style="font-size: 16px; text-align: center; margin: 0;">
+                    <strong>มีการจองใหม่ที่รอการตรวจสอบและอนุมัติ</strong>
+                </p>
+            </div>
+            
+            <p>เรียน ผู้จัดการ,</p>
+            
+            <p>มีการจองใหม่ในระบบที่รอการตรวจสอบและอนุมัติจากท่าน กรุณาดำเนินการตรวจสอบและอนุมัติหรือปฏิเสธการจองดังกล่าว</p>
+            
+            <div class="reserve-details">
+                <p><strong>รหัสการจอง:</strong> RESERVE123456</p>
+                <p><strong>ชื่อผู้จอง:</strong> คุณสมชาย รักดี</p>
+                <p><strong>วันที่จอง:</strong> 10 มีนาคม 2568</p>
+                <p><strong>เวลา:</strong> 14:30 น.</p>
+                <p><strong>รายละเอียด:</strong> จองห้องประชุม A ชั้น 3 สำหรับการประชุม 15 ท่าน</p>
+                <p><strong>สถานะ:</strong> <span style="color: #6a11cb;">รอการตรวจสอบ</span></p>
+            </div>
+            
+            <p>กรุณาดำเนินการภายใน 24 ชั่วโมง เพื่อให้ลูกค้าได้รับการตอบกลับที่รวดเร็ว</p>
+            
+            <p>สามารถเข้าสู่ระบบจัดการการจองเพื่อดำเนินการอนุมัติหรือปฏิเสธการจองได้</p>
+            
+            <p>ขอบคุณ,<br>ระบบแจ้งเตือนอัตโนมัติ</p>
+        </div>
+        
+        <div class="footer">
+            <p>© 2025 บริษัท ตัวอย่าง จำกัด. สงวนลิขสิทธิ์.</p>
+            <p>123 ถนนสุขุมวิท แขวงคลองเตย เขตคลองเตย กรุงเทพฯ 10110</p>
+            <p>อีเมลนี้ถูกส่งอัตโนมัติ โปรดอย่าตอบกลับ</p>
+        </div>
+    </div>
+</body>
+</html>
