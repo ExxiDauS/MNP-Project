@@ -246,7 +246,7 @@ export default function Navbar() {
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-8">
           <MobileNav />
-          <span className="text-zinc-100 text-2xl font-bold">Manop</span>
+          <span className="text-zinc-100 text-2xl font-bold">MNP</span>
 
           <NavigationMenu className="hidden md:flex">
             {navLoading ? renderNavSkeleton() : renderNavItems()}
